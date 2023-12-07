@@ -1,0 +1,45 @@
+[
+    {
+        "id": 1,
+        "nombre": "STYLES",
+        "stock": 1,
+        "precio": 40000,
+        "rutaImagen": "lentes1.webp"
+    },
+    {
+        "id": 2,
+        "nombre": "CLASSY",
+        "stock": 6,
+        "precio": 45000,
+        "rutaImagen": "lentes2.webp"
+    },
+    {
+        "id": 3,
+        "nombre": "RAVER",
+        "stock": 3,
+        "precio": 58000,
+        "rutaImagen": "lentes3.webp"
+    },
+    {
+        "id": 4,
+        "nombre": "RAYBAN",
+        "stock": 4,
+        "precio": 103000,
+        "rutaImagen": "lentes4.webp"
+    },
+    {
+        "id": 5,
+        "nombre": "PARDA",
+        "stock": 2,
+        "precio": 50000,
+        "rutaImagen": "lentes5.webp"
+    },
+    {
+        "id": 6,
+        "nombre": "TECHNO",
+        "stock": 12,
+        "precio": 30000,
+        "rutaImagen": "lentes6.webp"
+    }
+    
+]
