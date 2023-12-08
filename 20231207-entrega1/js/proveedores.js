@@ -5,7 +5,8 @@ const razonInput = document.getElementById("razonInput");
 const rubroInput = document.getElementById("rubroInput");
 const cuitInput = document.getElementById("cuitInput");
 
-const tableBody = document.getElementById("tableBody");
+/* const tableBody = document.getElementById("tableBody"); */
+const tableBody= document.getElementById("tableBody")
 
 let data = JSON.parse(localStorage.getItem("formData")) || [];
 
