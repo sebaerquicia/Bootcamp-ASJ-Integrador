@@ -1,0 +1,95 @@
+<div class="container-fluid px-4 ">
+  <div class="row">
+    <div class="col">
+      <h1 class="mt-4">Ordenes de compra</h1>
+      <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="">Inicio</a></li>
+        <li class="breadcrumb-item active">OrdenesCompra</li>
+      </ol>
+    </div>
+  </div>
+
+<div class="row">
+  <div class="col">
+    <h1>Orden de compra</h1>
+    <div class="row mb-2">
+      <div class="col">
+        <label for="numberInput" class="form-label">Número de Orden: </label>
+        <input
+          type="number"
+          placeholder="Nro de orden"
+          id="numberInput"
+          class="form-control form__input mx-2"
+        />
+      </div>
+
+      <div class="col">
+        <label for="dateInput" class="form-label">Fecha emisión: </label>
+        <input
+          type="date"
+          placeholder="Fecha de emisión"
+          id="dateInput"
+          class="form-control form__input mx-2"
+        />
+      </div>
+      <div class="col">
+        <label for="reciveDateInput" class="form-label">Fecha entrega: </label>
+        <input
+          type="date"
+          placeholder="Fecha de entrega"
+          id="reciveDateInput"
+          class="form-control form__input mx-2"
+        />
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="directionInput" class="form-label">Dirección: </label>
+      <input
+        type="text"
+        placeholder="Dirección de entrega"
+        id="directionInput"
+        class="form-control form__input mx-2"
+      />
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <label for="provInputInput" class="form-label">Proveedor: </label>
+        <input
+          type="text"
+          placeholder="Proveedor"
+          id="provInput"
+          class="form-control form__input mx-2"
+        />
+      </div>
+      <div class="col">
+        <label for="productInput" class="form-label">Productos: </label>
+        <input
+          type="text"
+          placeholder="Productos"
+          id="productInput"
+          class="form-control form__input mx-2"
+        />
+      </div>
+      <div class="col-2">
+        <label for="quantityInput" class="form-label">Cantidad: </label>
+        <input
+          type="number"
+          min="1"
+          value="1"
+          max="10"
+          id="quantityInput"
+          placeholder="Cantidad"
+          class="form-control form__input mx-2"
+        />
+      </div>
+    </div>
+    <br />
+    <div class="mb-3">
+      <p class="h3 m-3">Total: $()</p>
+      <button type="submit" id="submitButton" class="btn btn-success p-2 m-2">
+        Agregar
+      </button>
+    </div>
+  </div>
+</div>
+</div>

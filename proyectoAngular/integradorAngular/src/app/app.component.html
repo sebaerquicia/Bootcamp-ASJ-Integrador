@@ -1,0 +1,28 @@
+<div class="container-fluid ">
+  <div class="row">
+    <div class="col">
+  
+      <app-my-navbar></app-my-navbar>
+      
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-2 ">
+        <aside>
+          <app-my-sidebar></app-my-sidebar>
+        </aside>
+      </div>
+      <div class="col-10">
+        <main>
+          <router-outlet></router-outlet>
+        </main>
+      </div>
+    </div>
+      <div class="row">
+        <div class="col">
+          <footer>
+            <app-my-footer></app-my-footer>
+          </footer>
+        </div>
+      </div>
+  </div>

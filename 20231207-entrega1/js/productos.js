@@ -71,8 +71,8 @@ function saveDataToLocalStorage() {
             deleteData(index);
           });
          card.appendChild(cardContainer)
-         card.appendChild(editButton)
-         card.appendChild(deleteButton)
+         cardContainer.appendChild(editButton)
+         cardContainer.appendChild(deleteButton)
 
     });
   }
