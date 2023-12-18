@@ -1,4 +1,4 @@
-<div class=" container-fluid px-4">
+<div class="container-fluid px-4">
   <div class="row d-flex">
     <div class="col">
       <h1 class="mt-4">Productos</h1>
@@ -11,47 +11,60 @@
   <div class="row">
     <div class="col">
       <h1>Agregar Productos</h1>
-      <form id="formRegister" class="crud__form">
+      <div id="formRegister" class="crud__form">
+        <input
+          type="number"
+          placeholder="ID"
+          id="idInput"
+          class="form__input m-2"
+          [(ngModel)]="formularioProductos.id"
+        />
         <input
           type="text"
           placeholder="Nombre del proveedor"
           id="nameInput"
           class="form__input m-2"
+          [(ngModel)]="formularioProductos.nombreProveedor"
         />
         <input
           type="text"
           placeholder="Codigo/SKU"
           id="codigoInput"
           class="form__input m-2"
+          [(ngModel)]="formularioProductos.codigo"
         />
         <input
           type="text"
           placeholder="Categoria"
           id="categoriaInput"
           class="form__input m-2"
+          [(ngModel)]="formularioProductos.categoria"
         />
         <input
           type="text"
           placeholder="Nombre del Producto"
           id="nameProductInput"
           class="form__input m-2"
+          [(ngModel)]="formularioProductos.nombreProducto"
         />
         <input
           type="text"
           placeholder="Descripcion"
           id="descriptionInput"
           class="form__input m-2"
+          [(ngModel)]="formularioProductos.descripcion"
         />
         <input
           type="number"
           placeholder="Precio"
           id="precioInput"
           class="form__input m-2"
+          [(ngModel)]="formularioProductos.precio"
         />
-        <button type="submit" id="submitButton" class="btn btn-success">
+        <button type="submit" id="submitButton" class="btn btn-success" (click)="enviarFormulario()">
           Agregar
         </button>
-      </form>
+      </div>
     </div>
   </div>
 </div>

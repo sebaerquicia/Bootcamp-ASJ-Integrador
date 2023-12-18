@@ -14,12 +14,25 @@
       <h1>+ Proveedores</h1>
       <div class="row mb-2">
         <div class="col">
+          <label for="idInput" class="form-label">ID: </label>
+          <input
+            name="idInput"
+            type="number"
+            placeholder="Id del Proveedor"
+            id="idInput"
+            class="form-control form__input mx-2"
+            [(ngModel)]="formularioProveedores.id"
+            
+          />
+        </div>
+        <div class="col">
           <label for="nameInput" class="form-label">Nombre: </label>
           <input
             type="text"
             placeholder="Nombre del Proveedor"
             id="nameInput"
             class="form-control form__input mx-2"
+            [(ngModel)]="formularioProveedores.nombre"
           />
         </div>
 
@@ -30,6 +43,7 @@
             placeholder="Rubro"
             id="rubroInput"
             class="form-control form__input mx-2"
+            [(ngModel)]="formularioProveedores.rubro"
           />
         </div>
         <div class="col">
@@ -39,6 +53,7 @@
             placeholder="Razon Social"
             id="razonInput"
             class="form-control form__input mx-2"
+            [(ngModel)]="formularioProveedores.razonSocial"
           />
         </div>
       </div>
@@ -48,22 +63,24 @@
           <input
             type="number"
             placeholder="CUIT"
-            id="numberInput"
+            id="cuitInput"
             class="form-control form__input mx-2"
+            [(ngModel)]="formularioProveedores.cuit"
           />
         </div>
         <div class="col-md-6">
           <label for="emailInput" class="form-label">eMail: </label>
           <input
             type="email"
-            placeholder="CUIT"
+            placeholder="email"
             id="emailInput"
             class="form-control form__input mx-2"
+            [(ngModel)]="formularioProveedores.email"
           />
         </div>
       </div>
       <div class="col-md-3">
-        <button type="submit" id="submitButton" class="btn btn-success p-2 m-2">
+        <button type="submit" id="submitButton" class="btn btn-success p-2 m-2" (click)="enviarFormulario()">
           Agregar
         </button>
       </div>

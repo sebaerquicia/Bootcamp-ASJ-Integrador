@@ -18,7 +18,19 @@
                         <th scope="col">Baja/Modificación</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody" class="table__body"></tbody>
+
+
+                <tbody id="tableBody" class="table__body" *ngFor="let proveedor of proveedores, let i = index">
+                    <tr>    
+                        <th>{{proveedor.nombre}}</th>
+                        <th>{{proveedor.razonSocial}}</th>
+                        <th>{{proveedor.rubro}}</th>
+                        <th>{{proveedor.cuit}}</th>
+                        <th>{{proveedor.email}}</th>
+                        <th><button class="btn btn-warning ">Editar</button><button class="btn btn-danger ">Eliminar</button></th>
+                    </tr>
+
+                </tbody>
         </table>
     </div>
   </div>

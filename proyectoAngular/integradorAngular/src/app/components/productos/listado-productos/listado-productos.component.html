@@ -11,9 +11,31 @@
   <div class="row">
     <div class="col">
       <h3 class="p-5">Productos</h3>
-      <div class="container">
-        <div id="productCards" class="card" style="width: 35rem"></div>
+      <div class="row ">
+        <div class="col p-2 m-2 "*ngFor="let producto of productos, let i = index">
+          
+            <div id="productCards" class="card" style="width: 35rem">
+              <h5 class="card-title">{{producto.nombreProveedor}}</h5>
+              <h6>Producto: {{producto.nombreProducto}}</h6>
+              <hr>
+              <h6 class="card-subtitle mb-2 text-muted">Código/SKU: {{producto.codigo}}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">Categoria: {{producto.categoria}}</h6>
+              <hr>
+              <p class="card-text">Descripción: {{producto.descripcion}}</p>
+              <hr>
+              <h4>Precio: {{producto.precio}}</h4>
+              <div class="row">
+                <div class="col">
+                  <button class="btn btn-warning p-3 m3">Editar</button>
+                  <button class="btn btn-danger p-3 m-3">Eliminar</button>
+                </div>
+              </div>
+             
+            
+          </div>
+        </div>
       </div>
+      
     </div>
   </div>
 </div>

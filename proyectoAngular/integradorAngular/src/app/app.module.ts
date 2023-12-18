@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MyHeaderComponent } from './components/my-header/my-header.component';
@@ -15,6 +16,7 @@ import { AltaProductosComponent } from './components/productos/alta-productos/al
 import { MyMainComponent } from './components/my-main/my-main.component';
 import { AddOrdenComponent } from './components/orden-compra/add-orden/add-orden.component';
 import { ListadoOrdenComponent } from './components/orden-compra/listado-orden/listado-orden.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { ListadoOrdenComponent } from './components/orden-compra/listado-orden/l
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

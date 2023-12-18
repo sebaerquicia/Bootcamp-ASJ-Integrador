@@ -11,14 +11,11 @@ import { ListadoOrdenComponent } from './components/orden-compra/listado-orden/l
 const routes: Routes = [
   { path: 'productos/alta-productos', component: AltaProductosComponent },
   { path: 'proveedores/alta-proveedores', component: AltaProveedoresComponent },
-  { path: 'home', component: MyMainComponent },
   { path: 'orden-compra/add-orden', component: AddOrdenComponent },
   { path: 'productos/listado-productos', component: ListadoProductosComponent },
-  {
-    path: 'proveedores/listado-proveedores',
-    component: ListadoProveedoresComponent,
-  },
+  { path: 'proveedores/listado-proveedores', component: ListadoProveedoresComponent },
   { path: 'orden-compra/listado-orden', component: ListadoOrdenComponent },
+  
   { path: '', component: MyMainComponent },
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
