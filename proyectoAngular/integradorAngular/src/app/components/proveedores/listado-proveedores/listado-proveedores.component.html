@@ -27,7 +27,7 @@
                         <th>{{proveedor.rubro}}</th>
                         <th>{{proveedor.cuit}}</th>
                         <th>{{proveedor.email}}</th>
-                        <th><button class="btn btn-warning ">Editar</button><button class="btn btn-danger ">Eliminar</button></th>
+                        <th><button (click)="editarProveedor(i)"  class="btn btn-warning ">Editar</button><button (click)="eliminarProveedor(i)" class="btn btn-danger ">Eliminar</button></th>
                     </tr>
 
                 </tbody>

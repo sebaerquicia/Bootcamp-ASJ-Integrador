@@ -12,6 +12,7 @@
   <div class="row">
     <div class="col">
       <h1>+ Proveedores</h1>
+      <form action="">
       <div class="row mb-2">
         <div class="col">
           <label for="idInput" class="form-label">ID: </label>
@@ -21,7 +22,7 @@
             placeholder="Id del Proveedor"
             id="idInput"
             class="form-control form__input mx-2"
-            [(ngModel)]="formularioProveedores.id"
+            [(ngModel)]="proveedor.id"
             
           />
         </div>
@@ -32,7 +33,7 @@
             placeholder="Nombre del Proveedor"
             id="nameInput"
             class="form-control form__input mx-2"
-            [(ngModel)]="formularioProveedores.nombre"
+            [(ngModel)]="proveedor.nombre"
           />
         </div>
 
@@ -43,7 +44,7 @@
             placeholder="Rubro"
             id="rubroInput"
             class="form-control form__input mx-2"
-            [(ngModel)]="formularioProveedores.rubro"
+            [(ngModel)]="proveedor.rubro"
           />
         </div>
         <div class="col">
@@ -53,7 +54,7 @@
             placeholder="Razon Social"
             id="razonInput"
             class="form-control form__input mx-2"
-            [(ngModel)]="formularioProveedores.razonSocial"
+            [(ngModel)]="proveedor.razonSocial"
           />
         </div>
       </div>
@@ -65,7 +66,7 @@
             placeholder="CUIT"
             id="cuitInput"
             class="form-control form__input mx-2"
-            [(ngModel)]="formularioProveedores.cuit"
+            [(ngModel)]="proveedor.cuit"
           />
         </div>
         <div class="col-md-6">
@@ -75,13 +76,17 @@
             placeholder="email"
             id="emailInput"
             class="form-control form__input mx-2"
-            [(ngModel)]="formularioProveedores.email"
+            [(ngModel)]="proveedor.email"
           />
         </div>
       </div>
+    </form>
       <div class="col-md-3">
-        <button type="submit" id="submitButton" class="btn btn-success p-2 m-2" (click)="enviarFormulario()">
+        <button type="submit" id="submitButton" class="btn btn-success p-2 m-2" (click)="agregarProveedor()">
           Agregar
+        </button>
+        <button type="button" id="submitButton" class="btn btn-outline-warning  p-2 m-2" (click)="resetearFormulario()">
+          Limpiar Formulario
         </button>
       </div>
     </div>
