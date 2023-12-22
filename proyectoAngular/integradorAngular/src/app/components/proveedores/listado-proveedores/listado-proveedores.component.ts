@@ -13,7 +13,7 @@ import { FormularioProveedor } from '../../../models/proveedor.model';
 })
 export class ListadoProveedoresComponent implements OnInit{
 
-/*   proveedores!: any[]; */
+
 proveedores: FormularioProveedor[]=[]
 
 
@@ -21,10 +21,7 @@ constructor (private proveedoresService: ServicioProveedoresService, private rou
 
 
 ngOnInit(): void {
- /* this.proveedores = this.proveedoresService.obtenerProveedores() */
-/*  localStorage.setItem('proveedores', JSON.stringify(this.proveedores))
- console.log(this.proveedores)
-  */
+
  this.proveedores = this.proveedoresService.proveedores
 
  
@@ -36,8 +33,6 @@ eliminarProveedor(index: number): void {
   //Elimino el proveedor con el index desde el servicio
 }
 editarProveedor(index: number): void {
-  // Implementa la lógica para editar el proveedor y navegar de nuevo al componente de alta
-  // Puedes pasar el proveedor a editar como parámetro en la ruta al componente de alta
   this.router.navigate(['proveedores/alta-proveedores', { editarIndex: index }]);
  
 }
