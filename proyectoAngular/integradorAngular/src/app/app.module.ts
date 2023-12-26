@@ -18,6 +18,7 @@ import { AddOrdenComponent } from './components/orden-compra/add-orden/add-orden
 import { ListadoOrdenComponent } from './components/orden-compra/listado-orden/listado-orden.component';
 import { FormsModule } from '@angular/forms';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,8 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+ 
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,88 +11,195 @@
 
   <div class="row">
     <div class="col">
-      <h1>+ Proveedores</h1>
-      <form #formulario="ngForm" (ngSubmit)="agregarProveedor(formulario)" >
-      <div class="row mb-2">
-        <div class="col">
-          <label for="idInput" class="form-label">ID: </label>
-          <input
-            name="idInput"
-            type="number"
-            placeholder="Id del Proveedor"
-            id="idInput"
-            class="form-control form__input mx-2"
-            [(ngModel)]="proveedor.id"
-            required
-            
-          />
-        
-        </div>
-        <div class="col">
-          <label for="nameInput" class="form-label">Nombre: </label>
-          <input
-          name="nameInput"
-            type="text"
-            placeholder="Nombre del Proveedor"
-            id="nameInput"
-            class="form-control form__input mx-2"
-            [(ngModel)]="proveedor.nombre"
-          />
-        </div>
+      <h2>+ Proveedores</h2>
+      <form #formulario="ngForm" (ngSubmit)="guardarProveedor(formulario)">
+        <div class="row mb-2">
+          <div class="col-md-2">
+            <label for="id" class="form-label">ID: </label>
+            <input
+              name="id"
+              type="number"
+              placeholder="Id del Proveedor"
+              id="idInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.id"
+              required
+            />
+          </div>
+          <div class="col-md-3">
+            <label for="nombre" class="form-label">Nombre: </label>
+            <input
+              name="nombre"
+              type="text"
+              placeholder="Nombre del Proveedor"
+              id="nameInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.nombre"
+              required
+              minlength="4"
+              maxlength="20"
+            />
+          </div>
 
-        <div class="col">
-          <label for="rubroInput" class="form-label">Rubro: </label>
-          <input
-          name="rubroInput"
-            type="text"
-            placeholder="Rubro"
-            id="rubroInput"
-            class="form-control form__input mx-2"
-            [(ngModel)]="proveedor.rubro"
-          />
+          <div class="col-md-2">
+            <label for="rubro" class="form-label">Rubro: </label>
+            <input
+              name="rubro"
+              type="text"
+              placeholder="Rubro"
+              id="rubroInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.rubro"
+              required
+            />
+          </div>
+          <div class="col-md-1">
+            <label for="razonSocial" class="form-label">Razón social: </label>
+            <select
+              class="form-select"
+              name="razonSocial"
+              id="razonInput"
+              [(ngModel)]="proveedor.razonSocial"
+              required
+            >
+              <option value="SRL">SRL</option>
+              <option value="SA">SA</option>
+              <option value="SAS">SAS</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label for="cuit" class="form-label">CUIT: </label>
+            <input
+              name="cuit"
+              type="number"
+              placeholder="CUIT"
+              id="cuitInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.cuit"
+              minLength="12"
+              maxLength="12"
+              required
+            />
+          </div>
+          <div class="col-md-1">
+            <label for="iva" class="form-label">IVA: </label>
+            <select
+              class="form-select"
+              name="iva"
+              id="ivaInput"
+              [(ngModel)]="proveedor.iva"
+              required
+            >
+              <option value="RI">Responsable Inscripto</option>
+              <option value="M">Monotributista</option>
+              <option value="EX">Exento</option>
+              <option value="CF">Consumidor Final</option>
+            </select>
+          </div>
         </div>
-        <div class="col">
-          <label for="razonInput" class="form-label">Razón social: </label>
-          <select name="razonInput" id="razonInput"[(ngModel)]="proveedor.razonSocial">
-            <option value="SRL">SRL</option>
-            <option value="SA">SA</option>
-            <option value="SAS">SAS</option>
-          </select>
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <label for="calle" class="form-label">Calle y nro: </label>
+            <input
+              name="calle"
+              type="text"
+              placeholder="Ej: Calle Falsa 123"
+              id="calleInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.calle"
+              required
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="localidad" class="form-label">Localidad: </label>
+            <input
+              name="localidad"
+              type="text"
+              placeholder="Localidad"
+              id="localidadInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.localidad"
+              required
+            />
+          </div>
+          <div class="col-md-1">
+            <label for="cp" class="form-label">Codigo Postal: </label>
+            <input
+              name="cp"
+              type="text"
+              placeholder="Código postal"
+              id="cpInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.cp"
+              required
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="provincia" class="form-label">Provincia: </label>
+            <input
+              name="provincia"
+              type="text"
+              placeholder="Provincia"
+              id="provinciaInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.provincia"
+              required
+            />
+          </div>
+          <div class="col-md-1">
+            <label for="pais" class="form-label">Pais: </label>
+            <select
+              class="form-select"
+              name="pais"
+              id="paisInput"
+              [(ngModel)]="proveedor.pais"
+              required
+            >
+              <option value="ARG">Argentina</option>
+              <option value="URU">Uruguay</option>
+              <option value="BRA">Brasil</option>
+              <option value="CHI">Chile</option>
+            </select>
+          </div>
+          
+          <div class="col-md-3">
+            <label for="email" class="form-label">eMail: </label>
+            <input
+              name="email"
+              type="email"
+              placeholder="eMail@email.com"
+              id="emailInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.email"
+              required
+            />
+          </div>
+          <div class="col-md-3 ">
+            <label for="telefono" class="form-label">Tel: </label>
+            <input
+              name="telefono"
+              type="number"
+              placeholder="Teléfono"
+              id="telefonoInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.telefono"
+              required
+            />
+          </div>
         </div>
-      </div>
-      <div class="row mb-3">
         <div class="col-md-3">
-          <label for="cuitInput" class="form-label">CUIT: </label>
-          <input
-          name="cuitInput"
-            type="number"
-            placeholder="CUIT"
-            id="cuitInput"
-            class="form-control form__input mx-2"
-            [(ngModel)]="proveedor.cuit"
-          />
-        </div>
-        <div class="col-md-6">
-          <label for="emailInput" class="form-label">eMail: </label>
-          <input
-          name="emailInput"
-            type="email"
-            placeholder="email"
-            id="emailInput"
-            class="form-control form__input mx-2"
-            [(ngModel)]="proveedor.email"
-          />
-        </div>
-      </div>
-    </form>
-      <div class="col-md-3">
-        <button type="submit" id="submitButton" class="btn btn-success p-2 m-2">
+          <button type="submit" id="submitButton" class="btn btn-success p-2 m-2">
           Agregar
         </button>
-        <button type="button" class="btn btn-outline-warning  p-2 m-2" (click)="resetearFormulario1(formulario)">
+        <button
+          type="button"
+          class="btn btn-outline-warning p-2 m-2"
+          (click)="resetearFormulario1(formulario)"
+        >
           Limpiar Formulario
         </button>
       </div>
+    </form>
     </div>
   </div>
 </div>

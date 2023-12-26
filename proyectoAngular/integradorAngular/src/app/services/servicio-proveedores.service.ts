@@ -1,34 +1,37 @@
 import { Injectable } from '@angular/core';
-import { proveedores } from '../data/proveedores';
 import { FormularioProveedor } from '../models/proveedor.model';
 
-
-/* let data = proveedores
- */
 @Injectable({
   providedIn: 'root'
 })
 export class ServicioProveedoresService {
-  proveedores: FormularioProveedor [] =[]
-  obtenerProveedores(){
-    return proveedores;
-  }
-  agregarProveedor(proveedor: FormularioProveedor): void {
-    this.proveedores.push(proveedor);
-  }
-
-  eliminarProveedor(index: number): void {
-    this.proveedores.splice(index, 1);
-  }
   
-  actualizarProveedor(index: number, proveedor: FormularioProveedor): void {
-    this.proveedores[index] = proveedor;
+  proveedores: FormularioProveedor[] =[];
+  
+  private proveedoresKey = 'proveedores';
+  
+  getProveedores(): any[] {
+    const proveedoresString = localStorage.getItem(this.proveedoresKey);
+    this.proveedores = proveedoresString ? JSON.parse(proveedoresString) : [];
+    return this.proveedores
   }
+  guardarProveedor(proveedor: FormularioProveedor): void {
+    const proveedores = this.getProveedores();
+    proveedores.push(proveedor);
+    localStorage.setItem(this.proveedoresKey, JSON.stringify(proveedores));
+  }
+  eliminarProveedor(index: number): void {
+    const proveedores = this.getProveedores();
+    if (this.proveedores.length > 0){
+      proveedores.splice(index, 1);
+      localStorage.setItem(this.proveedoresKey, JSON.stringify(proveedores));
+    }
+  }
+  actualizarProveedor(index: number, proveedor: FormularioProveedor): void {
+    const proveedores = this.getProveedores()
+    proveedores.splice(index, 1, proveedor);
+    localStorage.setItem(this.proveedoresKey, JSON.stringify(proveedores));
 
-
-  enviarLista(proveedor: FormularioProveedor){
-    console.log(proveedor)
-    this.proveedores.push(proveedor)
   }
 
 }

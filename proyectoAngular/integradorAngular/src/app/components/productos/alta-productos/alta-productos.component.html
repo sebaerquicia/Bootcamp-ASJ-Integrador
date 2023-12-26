@@ -8,63 +8,146 @@
       </ol>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <h1>Agregar Productos</h1>
-      <div id="formRegister" class="crud__form">
-        <input
-          type="number"
-          placeholder="ID"
-          id="idInput"
-          class="form__input m-2"
-          [(ngModel)]="formularioProductos.id"
-        />
-        <input
-          type="text"
-          placeholder="Nombre del proveedor"
-          id="nameInput"
-          class="form__input m-2"
-          [(ngModel)]="formularioProductos.nombreProveedor"
-        />
-        <input
-          type="text"
-          placeholder="Codigo/SKU"
-          id="codigoInput"
-          class="form__input m-2"
-          [(ngModel)]="formularioProductos.codigo"
-        />
-        <input
-          type="text"
-          placeholder="Categoria"
-          id="categoriaInput"
-          class="form__input m-2"
-          [(ngModel)]="formularioProductos.categoria"
-        />
-        <input
-          type="text"
-          placeholder="Nombre del Producto"
-          id="nameProductInput"
-          class="form__input m-2"
-          [(ngModel)]="formularioProductos.nombreProducto"
-        />
-        <input
-          type="text"
-          placeholder="Descripcion"
-          id="descriptionInput"
-          class="form__input m-2"
-          [(ngModel)]="formularioProductos.descripcion"
-        />
-        <input
-          type="number"
-          placeholder="Precio"
-          id="precioInput"
-          class="form__input m-2"
-          [(ngModel)]="formularioProductos.precio"
-        />
-        <button type="submit" id="submitButton" class="btn btn-success" (click)="enviarFormulario()">
-          Agregar
-        </button>
+  <h2>+ Productos</h2>
+  <form #formulario="ngForm" (ngSubmit)="guardarProducto(formulario)">
+    <div id="formRegister" class="crud__form">
+    <div class="row">
+      <div class="col-md-1">
+          <label for="id" class="form-label">ID: </label>
+          <input
+            name="id"
+            type="number"
+            placeholder="ID"
+            id="id"
+            class="form-control form__input m-2"
+            [(ngModel)]="producto.id"
+            required
+          />
+          </div>
+          <div class="col-md-3">
+
+            <label for="nombre" class="form-label">Producto: </label>
+            <input
+            name="nombre"
+            type="text"
+            placeholder="Nombre del Producto"
+ 
+            class="form-control form__input m-2"
+            [(ngModel)]="producto.nombre"
+            required
+            />
+          </div>
+          <div class="col-md-2">
+
+            <label for="codigo" class="form-label">Código/SKU: </label>
+            <input
+            name="codigo"
+            type="text"
+            placeholder="Codigo/SKU"
+            
+            class="form-control form__input m-2"
+            [(ngModel)]="producto.codigo"
+            required
+            />
+          </div>
+  
+          <div class="col-md-3">
+            <label for="nombreProv" class="form-label">Proveedor: </label>
+            <select
+              class="form-select"
+              name="nombreProv"
+      
+              [(ngModel)]="producto.nombreProv"
+              required
+            >
+              <option *ngFor="let proveedor of proveedores" [value]="proveedor">{{ proveedor }}</option>
+            </select>
+          </div>
+ 
+          <div class="col-md-1">
+            <label for="categoria" class="form-label">Categoría: </label>
+            <select
+              class="form-select"
+              name="categoria"
+       
+              [(ngModel)]="producto.categoria"
+              required
+            >
+              <option value="ALI">Alimentos</option>
+              <option value="DEP">Deportes</option>
+              <option value="ROP">Ropa</option>
+              <option value="SAL">Higiene y salud</option>
+              <option value="ELE">Electrodomésticos</option>
+            </select>
+          </div>
+          <div class="row">
+
+         
+          <div class="col-md-4">
+
+            <label for="descripcion" class="form-label">Descripción del producto: </label>
+            <input
+            name="descripcion"
+            type="text"
+            placeholder="Descripción"
+            class="form-control form__input m-2"
+            [(ngModel)]="producto.descripcion"
+            required
+            />
+          </div>
+          <div class="col-md-1">
+
+            <label for="precio" class="form-label">Precio: $</label>
+            <input
+            name="precio"
+            type="number"
+            placeholder="Precio"
+ 
+            class="form-control form__input m-2"
+            [(ngModel)]="producto.precio"
+            required
+            />
+          </div>
+        </div>
+          <div class="row">
+
+            <div class="col-md-3">
+              
+              <label for="url" class="form-label">URL Imágen: </label>
+              <input
+              name="url"
+              type="text"
+              placeholder="URL imagen"
+       
+              class="form-control form__input m-2"
+              [(ngModel)]="producto.url"
+              />
+            </div>
+            <div class="row">
+              
+              <div class="col">
+                
+                <button
+                type="submit"
+                id="submitButton"
+                class="btn btn-success"
+                >
+                Agregar
+              </button>
+             
+                <button
+                type="button"
+                class="btn btn-outline-warning p-2 m-2"
+                (click)="resetearFormulario1(formulario)"
+                >
+                Limpiar Formulario
+              </button>
+           
+          </div>
+        </div>
       </div>
+      </div>
+     
     </div>
-  </div>
+  </form>
 </div>

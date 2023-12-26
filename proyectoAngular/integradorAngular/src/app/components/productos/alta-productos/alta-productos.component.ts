@@ -1,37 +1,79 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServicioProductosService } from '../../../services/servicio-productos.service';
+import { NgForm } from '@angular/forms';
+import { Producto } from '../../../models/producto.model';
+import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-alta-productos',
   templateUrl: './alta-productos.component.html',
-  styleUrl: './alta-productos.component.css'
+  styleUrl: './alta-productos.component.css',
 })
-export class AltaProductosComponent {
-  constructor(private servicioProductos: ServicioProductosService) {}
+export class AltaProductosComponent implements OnInit {
+  constructor(
+    private productosService: ServicioProductosService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
+  proveedores: string[] = [];
 
-  public formularioProductos = {
-      id: '',
-      nombreProveedor:'',
-      codigo:'',
-      categoria: '',
-      nombreProducto:'',
-      descripcion: '',
-      precio: '',
+  public producto: Producto = {
+    id: '',
+    nombreProv: '',
+    codigo: '',
+    categoria: '',
+    nombre: '',
+    descripcion: '',
+    precio: '',
+    url: '',
+
+  
   };
-  enviarFormulario() {
-    console.log(this.formularioProductos)
-    this.servicioProductos.enviarLista(this.formularioProductos);
-    alert('Se agregó correctamente el proveedor')
-    this.resetarFormulario();
-  }
-    resetarFormulario() {
-      this.formularioProductos = {
-        id: '',
-        nombreProveedor:'',
-        codigo:'',
-        categoria: '',
-        nombreProducto:'',
-        descripcion: '',
-        precio: '',
-    };
+
+  ngOnInit(): void {
+    this.proveedores = this.productosService.getNombresProveedores();
+
+    const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
+
+    if (editarIndex !== null) {
+      const index = parseInt(editarIndex, 10);
+
+      if (
+        !isNaN(index) &&
+        index >= 0 &&
+        index < this.productosService.productos.length
+      ) {
+        // Carga los datos del producto original al formulario
+        this.producto = { ...this.productosService.productos[index] };
+      }
     }
+  }
+
+
+  guardarProducto(formulario: NgForm): void {
+    if (formulario.valid) {
+      const producto = formulario.value;
+      console.log(formulario.value)
+      const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
+      const index = editarIndex ? parseInt(editarIndex, 10) : -1;
+      if (index !== -1) {
+        // Actualiza el producto si está editando
+        this.productosService.actualizarProducto(index, producto);
+        alert('Se editó el producto correctamente')
+      } else {
+        // Agrega el producto si está agregando
+        this.productosService.guardarProducto(producto);
+        alert('Se agregó el producto correctamente')
+        formulario.reset();
+      }
+
+      this.router.navigate(['productos/listado-productos']);
+    } else {
+      alert('Debes completar todos los campos del formulario');
+    }
+  }
+  
+  resetearFormulario1(formulario: NgForm): void {
+    formulario.resetForm();
+  }
 }
