@@ -37,7 +37,8 @@ eliminarProveedor(index: number): void {
   //Elimino el proveedor con el index desde el servicio
 }
 editarProveedor(index: number, proveedor: FormularioProveedor): void {
-
+  this.proveedoresService.modoEdicion = true;
+  this.proveedoresService.proveedorEnEdicion = proveedor;
   this.proveedoresService.actualizarProveedor(index, proveedor);
   this.actualizarLista();
   this.router.navigate(['proveedores/alta-proveedores', { editarIndex: index }]);

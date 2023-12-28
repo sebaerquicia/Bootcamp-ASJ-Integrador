@@ -23,6 +23,7 @@
               min="0"
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.id"
+              [disabled]="modoEdicion"
               required
             />
           </div>
@@ -74,14 +75,16 @@
             <label for="cuit" class="form-label">CUIT: </label>
             <input
               name="cuit"
-              type="number"
+              type="text"
               placeholder="CUIT"
               id="cuitInput"
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.cuit"
               minlength="11"
               maxlength="11"
-              (ngModelChange)="validarCuit()"
+              (input)="validarCuit()"
+              pattern="[0-9]*" 
+              [disabled]="modoEdicion"
               required
             />
             <span *ngIf="!cuitValido" class="text-danger">El CUIT debe tener 11 dígitos.</span>
@@ -199,12 +202,14 @@
         </div>
         <div class="col-md-3">
           <button type="submit" id="submitButton" class="btn btn-success p-2 m-2">
-          Agregar
-        </button>
+            {{ modoEdicion ? 'Actualizar' : 'Agregar' }}
+          </button>
         <button
           type="button"
           class="btn btn-outline-warning p-2 m-2"
           (click)="resetearFormulario1(formulario)"
+          [attr.disabled]="modoEdicion ? true : null"
+
         >
           Limpiar Formulario
         </button>

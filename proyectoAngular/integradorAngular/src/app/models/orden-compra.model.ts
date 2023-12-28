@@ -1,5 +1,5 @@
 export interface Orden {
-    nro: number;
+    nro: number | undefined;
     fecha:string;
     fechaEntrega: string;
     direccion: string;

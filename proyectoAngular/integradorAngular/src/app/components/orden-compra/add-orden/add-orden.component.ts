@@ -8,7 +8,6 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Producto } from '../../../models/producto.model';
 import { FormularioProveedor } from '../../../models/proveedor.model';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-add-orden',
@@ -21,14 +20,14 @@ export class AddOrdenComponent implements OnInit {
     private productosService: ServicioProductosService,
     private proveedoresService: ServicioProveedoresService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
+
     private route: ActivatedRoute
   ) {}
 
   proveedores: any[] = [];
   productos: any[] = [];
   productosFiltrados: Producto[] = [];
-  proveedoresLocal: any[] =[]
+  proveedoresLocal: any[] = [];
 
   public orden: Orden = {
     nro: 0,
@@ -36,7 +35,7 @@ export class AddOrdenComponent implements OnInit {
     fechaEntrega: '',
     direccion: '',
     proveedor: '',
-    productos:[],
+    productos: [],
     total: 0,
   };
 
@@ -46,17 +45,16 @@ export class AddOrdenComponent implements OnInit {
       this.orden = JSON.parse(storedOrdenCompra);
     }
     this.proveedores = this.productosService.getNombresProveedores();
-  
-  // Recuperar proveedores del localStorage
-  const proveedoresString = localStorage.getItem('proveedores');
-  this.proveedoresLocal= proveedoresString ? JSON.parse(proveedoresString) : [];
-  
-  // Recuperar productos del localStorage
-  const productosString = localStorage.getItem('productos');
-  this.productos = productosString ? JSON.parse(productosString) : [];
 
+    // Recuperar proveedores del localStorage
+    const proveedoresString = localStorage.getItem('proveedores');
+    this.proveedoresLocal = proveedoresString
+      ? JSON.parse(proveedoresString)
+      : [];
 
-
+    // Recuperar productos del localStorage
+    const productosString = localStorage.getItem('productos');
+    this.productos = productosString ? JSON.parse(productosString) : [];
 
     const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
 
@@ -74,24 +72,22 @@ export class AddOrdenComponent implements OnInit {
     }
   }
 
-
-
   guardarOrden(formulario: NgForm): void {
+   
     if (formulario.valid) {
-      const orden = formulario.value;
-      console.log(formulario.value)
+      const orden = formulario.value
+      orden.productos = this.orden.productos
       const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
       const index = editarIndex ? parseInt(editarIndex, 10) : -1;
       if (index !== -1) {
         // Actualiza la orden si está editando
-
         this.ordenesService.actualizarOrden(index, orden);
-        alert('Se editó la orden correctamente')
+        alert('Se editó la orden correctamente');
       } else {
         // Agrega el producto si está agregando
-
         this.ordenesService.guardarOrden(orden);
-        alert('Se agregó la orden correctamente')
+        console.log(orden)
+        alert('Se agregó la orden correctamente');
         formulario.reset();
       }
 
@@ -100,58 +96,42 @@ export class AddOrdenComponent implements OnInit {
       alert('Debes completar todos los campos del formulario');
     }
   }
-  
+
   // Filtrar la lista de productos según el proveedor seleccionado
   onProveedorSeleccionado(): void {
     const proveedorSeleccionado = this.orden.proveedor;
 
     if (proveedorSeleccionado) {
-      this.productosFiltrados = this.productos.filter(producto =>
-        producto.nombreProv === proveedorSeleccionado
+      this.productosFiltrados = this.productos.filter(
+        (producto) => producto.nombreProv === proveedorSeleccionado
       );
-    } 
-   /*  const productoSeleccionado = this.productos.find(producto =>
-      producto.nombre === this.orden.producto
-    );
- */
-
-
-    /* if (productoSeleccionado) {
-      let total:number=0
-     for (let index = 0; index < this.orden.producto.length; index++) {
-      total += this.orden.producto[index].precio *this.orden.producto[index].cantidad
-     }
-     this.orden.total = total
-      console.log(this.orden.total);
-    } else {
-      this.orden.total = 0;
     }
-  
-    this.cdr.detectChanges(); */
-
   }
 
+  cargarProducto(producto: any, cantidad: any) {
 
-
-
-  cargarProducto(producto: any,cantidad:any){
-    console.log(`Producto: ${producto.nombre}, Cantidad: ${cantidad}`);
     const nuevoProducto: ProductoOrden = {
       nombre: producto.nombre,
-      cantidad: cantidad,
-      precio: producto.precio,
-  }
-  console.log('entra ',nuevoProducto)
+      cantidad: Number(cantidad),
+      precio: Number(producto.precio),
+    };
+    if(!this.orden.productos){
+      this.orden.productos = []
+    }
 
-  /* if (!Array.isArray(this.orden.productos))  { */
-    this.orden.productos = [];
-    this.orden.productos.push(nuevoProducto)
-    console.log('despues del push', this.orden.productos, 'arreglo completo', this.orden)
-    this.orden.total += cantidad * producto.precio;
-    localStorage.setItem('ordenes', JSON.stringify(this.orden));
-  /*  } */ 
+    const productoRepetido = this.orden.productos.find(prod => prod.nombre == nuevoProducto.nombre)
+    if (productoRepetido){
+      productoRepetido.cantidad = nuevoProducto.cantidad
+    }else{
+
+      this.orden.productos.push(structuredClone(nuevoProducto));
+      
+      this.orden.total += Number(nuevoProducto.cantidad * producto.precio);
+      console.log(this.orden.total)
+    }
   
-}
+  
+  }
 
   resetearFormulario1(formulario: NgForm): void {
     formulario.resetForm();

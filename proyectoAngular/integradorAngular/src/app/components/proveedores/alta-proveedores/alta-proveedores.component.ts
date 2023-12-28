@@ -11,21 +11,22 @@ import { NgForm } from '@angular/forms';
   styleUrl: './alta-proveedores.component.css',
 })
 export class AltaProveedoresComponent implements OnInit {
+
   proveedores:any[]=[]
   public proveedor: FormularioProveedor = {
-    id: 0,
+    id: undefined,
     nombre: '',
     razonSocial: '',
     rubro: '',
-    cuit: 0,
+    cuit: undefined,
     iva: '',
     calle: '',
-    cp: 0,
+    cp: undefined,
     localidad: '',
     provincia: '',
     pais: '',
     email: '',
-    telefono: 0,
+    telefono: undefined,
   };
 
 
@@ -62,10 +63,18 @@ export class AltaProveedoresComponent implements OnInit {
       }
     }
   }
+  get modoEdicion(): boolean {
+    return this.proveedoresService.modoEdicion;
+  }
 
+  get proveedorEnEdicion(): any {
+    return this.proveedoresService.proveedorEnEdicion;
+  }
 
   //cuando apreto el boton agregar..
   guardarProveedor(formulario: NgForm): void {
+    console.log(this.proveedor)
+    console.log(formulario.valid)
     if (formulario.valid) {
     // Verifica si el nombre ya existe
     const nombreExistente = this.proveedores.some(proveedor => proveedor.nombre === this.proveedor.nombre);
@@ -84,14 +93,19 @@ export class AltaProveedoresComponent implements OnInit {
       return;
     } */
       const proveedor = formulario.value;
+      proveedor.cuit = this.proveedor.cuit
+      proveedor.id = this.proveedor.id
       const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
       const index = editarIndex ? parseInt(editarIndex, 10) : -1;
-
+      console.log(index)
       if (index !== -1) {
+        
         // Actualiza el proveedor si está editando
-     
+
         this.proveedoresService.actualizarProveedor(index, proveedor);
         alert('Se edito el proveedor correctamente')
+        this.proveedoresService.modoEdicion = false
+        
       } else {
         // Agrega el proveedor si está agregando
         this.proveedoresService.guardarProveedor(proveedor);
@@ -120,12 +134,11 @@ export class AltaProveedoresComponent implements OnInit {
     this.nombreValido = nombre.length > 3 && !/\d/.test(nombre);
   }
   validarCuit(): void {
-    const cuit = this.proveedor.cuit.toString();
-    // Validar que tenga 11 dígitos
+    const cuit = this.proveedor.cuit!.toString();
     this.cuitValido = /^\d{11}$/.test(cuit);
   }
   validarCp(): void {
-    const cp = this.proveedor.cp.toString();
+    const cp = this.proveedor.cp!.toString();
 
     // Validar que tenga entre 4 y 6 dígitos
     this.cpValido = /^\d{4,6}$/.test(cp);

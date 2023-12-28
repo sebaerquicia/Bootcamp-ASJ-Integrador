@@ -1,10 +1,10 @@
 export interface Producto {
-    id: number;
+    id: number | undefined;
     nombre:string;
     nombreProv: string;
     codigo: string;
     categoria: string;
     descripcion: string;
-    precio: number;
+    precio: number | undefined;
     url:string;
   }

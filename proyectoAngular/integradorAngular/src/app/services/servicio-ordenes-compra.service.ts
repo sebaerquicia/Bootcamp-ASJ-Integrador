@@ -19,6 +19,7 @@ export class ServicioOrdenesCompraService {
     const ordenes = this.getOrdenes();
     ordenes.push(orden);
     localStorage.setItem(this.ordenesKey, JSON.stringify(ordenes));
+   
   }
   eliminarOrden(index: number): void {
     const ordenes = this.getOrdenes();

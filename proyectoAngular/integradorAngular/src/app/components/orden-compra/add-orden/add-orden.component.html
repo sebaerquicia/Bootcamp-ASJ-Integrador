@@ -76,16 +76,6 @@
             </select>
           </div>
           <div class="col">
-            <!-- <label for="producto" class="form-label">Productos: </label>
-            <select
-              class="form-select"
-              name="producto"
-              [(ngModel)]="orden.producto"
-
-              required
-            >
-            <option *ngFor="let producto of productosFiltrados" [value]="producto.nombre">{{producto.nombre}} a {{producto.precio | currency}}</option>
-            </select> -->
             <div class="col">
               <label for="productos" class="form-label">Productos: </label>
               <div *ngFor="let producto of productosFiltrados" class="mb-2">
@@ -95,7 +85,7 @@
                   name="producto{{ producto.nombre }}"
                   type="number"
                   min="0"
-                  value="1"
+                  value="undefined"
                   placeholder="Cantidad"
                   class="form-control form__input mx-2"
                   (input)="cargarProducto(producto, cantidad.value)"

@@ -5,7 +5,8 @@ import { FormularioProveedor } from '../models/proveedor.model';
   providedIn: 'root'
 })
 export class ServicioProveedoresService {
-
+  modoEdicion: boolean = false;
+  proveedorEnEdicion: any;
   proveedores: FormularioProveedor[] =[];
   
   private proveedoresKey = 'proveedores';
@@ -29,10 +30,11 @@ export class ServicioProveedoresService {
   }
 
   actualizarProveedor(index: number, proveedor: FormularioProveedor): void {
+    this.modoEdicion=true;
     const proveedores = this.getProveedores()
     proveedores.splice(index, 1, proveedor);
     localStorage.setItem(this.proveedoresKey, JSON.stringify(proveedores));
-
+   
   }
 
 }

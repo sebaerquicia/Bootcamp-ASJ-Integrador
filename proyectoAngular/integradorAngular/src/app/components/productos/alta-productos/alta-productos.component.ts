@@ -18,13 +18,13 @@ export class AltaProductosComponent implements OnInit {
   proveedores: string[] = [];
 
   public producto: Producto = {
-    id: 0,
+    id: undefined,
     nombreProv: '',
     codigo: '',
     categoria: '',
     nombre: '',
     descripcion: '',
-    precio: 0,
+    precio: undefined,
     url: '',
 
   
@@ -48,7 +48,6 @@ export class AltaProductosComponent implements OnInit {
       }
     }
   }
-
 
   guardarProducto(formulario: NgForm): void {
     if (formulario.valid) {
