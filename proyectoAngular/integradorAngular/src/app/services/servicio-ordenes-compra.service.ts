@@ -5,7 +5,8 @@ import { Orden } from '../models/orden-compra.model';
   providedIn: 'root'
 })
 export class ServicioOrdenesCompraService {
-
+  modoEdicionOrden: boolean = false;
+  ordenEnEdicion: any;
   ordenes: Orden []=[]
 
   private ordenesKey = 'ordenes'
@@ -29,6 +30,7 @@ export class ServicioOrdenesCompraService {
     }
   }
   actualizarOrden(index: number, orden: Orden): void {
+    this.modoEdicionOrden=true;
     const ordenes = this.getOrdenes()
     ordenes.splice(index, 1, orden);
     localStorage.setItem(this.ordenesKey, JSON.stringify(ordenes));

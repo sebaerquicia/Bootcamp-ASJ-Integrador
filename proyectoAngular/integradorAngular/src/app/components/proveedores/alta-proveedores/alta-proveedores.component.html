@@ -14,19 +14,6 @@
       <h2>+ Proveedores</h2>
       <form #formulario="ngForm" (ngSubmit)="guardarProveedor(formulario)">
         <div class="row mb-2">
-          <div class="col-md-1">
-            <label for="id" class="form-label">ID: </label>
-            <input
-              name="id"
-              type="number"
-              placeholder="Id del Proveedor"
-              min="0"
-              class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.id"
-              [disabled]="modoEdicion"
-              required
-            />
-          </div>
           <div class="col-md-3">
             <label for="nombre" class="form-label">Nombre: </label>
             <input
@@ -39,6 +26,7 @@
               required
               minlength="4"
               maxlength="20"
+              [disabled]="modoEdicion"
               (ngModelChange)="validarNombre()"
             />
             <span *ngIf="!nombreValido" class="text-danger">El nombre debe tener al menos 4 letras y no debe contener números.</span>
@@ -211,7 +199,7 @@
           [attr.disabled]="modoEdicion ? true : null"
 
         >
-          Limpiar Formulario
+        {{ modoEdicion ? 'Deshabilitado' : 'Limpiar formulario' }}
         </button>
       </div>
     </form>

@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Orden, ProductoOrden } from '../../../models/orden-compra.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicioOrdenesCompraService } from '../../../services/servicio-ordenes-compra.service';
-import { Producto } from '../../../models/producto.model';
+
 
 @Component({
   selector: 'app-listado-orden',

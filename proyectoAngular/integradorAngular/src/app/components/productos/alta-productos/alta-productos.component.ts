@@ -15,8 +15,10 @@ export class AltaProductosComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) { }
-  proveedores: string[] = [];
 
+
+  proveedores: string[] = [];
+ productos:any[]=[]
   public producto: Producto = {
     id: undefined,
     nombreProv: '',
@@ -26,8 +28,6 @@ export class AltaProductosComponent implements OnInit {
     descripcion: '',
     precio: undefined,
     url: '',
-
-  
   };
 
   ngOnInit(): void {
@@ -49,17 +49,32 @@ export class AltaProductosComponent implements OnInit {
     }
   }
 
+  //modo de edicion
+  get modoEdicion(): boolean {
+    return this.productosService.modoEdicion;
+  }
+  get proveedorEnEdicion(): any {
+    return this.productosService.productoEnEdicion;
+  }
+
+
   guardarProducto(formulario: NgForm): void {
     if (formulario.valid) {
       const producto = formulario.value;
+      producto.codigo = this.producto.codigo
+      producto.nombreProv = this.producto.nombreProv
       const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
       const index = editarIndex ? parseInt(editarIndex, 10) : -1;
       if (index !== -1) {
         // Actualiza el producto si está editando
         this.productosService.actualizarProducto(index, producto);
         alert('Se editó el producto correctamente')
+        this.productosService.modoEdicion = false
       } else {
-        // Agrega el producto si está agregando
+        // agrega el producto si está agregando     
+        if (this.codigoYaAgregado(this.producto.codigo!)) {
+          alert("El codigo ya existe");
+          return;}
         this.productosService.guardarProducto(producto);
         alert('Se agregó el producto correctamente')
         formulario.reset();
@@ -74,4 +89,11 @@ export class AltaProductosComponent implements OnInit {
   resetearFormulario1(formulario: NgForm): void {
     formulario.resetForm();
   }
+
+
+  codigoYaAgregado(codigo: string): boolean {
+    const codigoExistente = this.productos.some(producto => producto.codigo === this.producto.codigo)
+    console.log(codigoExistente)
+    return codigoExistente
+ }
 }

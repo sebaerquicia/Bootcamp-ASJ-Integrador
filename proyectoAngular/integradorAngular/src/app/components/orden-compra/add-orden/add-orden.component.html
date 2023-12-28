@@ -21,6 +21,7 @@
               type="number"
               placeholder="Nro de orden"
               class="form-control form__input mx-2"
+              [disabled]="modoEdicion"
               [(ngModel)]="orden.nro"
               required
             />
@@ -33,6 +34,7 @@
               type="date"
               placeholder="Fecha de emisión"
               class="form-control form__input mx-2"
+              [disabled]="modoEdicion"
               [(ngModel)]="orden.fecha"
               required
             />
@@ -66,6 +68,7 @@
             <select
               class="form-select"
               name="proveedor"
+              [disabled]="modoEdicion"
               [(ngModel)]="orden.proveedor"
               (change)="onProveedorSeleccionado()"
               required
@@ -75,11 +78,11 @@
               </option>
             </select>
           </div>
-          <div class="col">
-            <div class="col">
-              <label for="productos" class="form-label">Productos: </label>
+          <div class="col-md-8">
+            <label for="productos" class="form-label">Productos: </label>
+            <div *ngIf="orden.proveedor !== ''"  class="col-md-6 ">
               <div *ngFor="let producto of productosFiltrados" class="mb-2">
-                <label>{{ producto.nombre }} - {{ producto.precio | currency }}</label>
+                <label>Producto: {{ producto.nombre }} - Precio: {{ producto.precio | currency }}</label>
                 <input
                   #cantidad
                   name="producto{{ producto.nombre }}"
@@ -87,25 +90,13 @@
                   min="0"
                   value="undefined"
                   placeholder="Cantidad"
-                  class="form-control form__input mx-2"
+                  class="form-control-sm form__input mx-2 "
                   (input)="cargarProducto(producto, cantidad.value)"
+                  [disabled]="modoEdicion"
                 />
               </div>
             </div>
           </div>
-         <!--  <div class="col-2">
-            <label for="cantidad" class="form-label">Cantidad: </label>
-            <input
-              name="cantidad"
-              type="number"
-              min="1"
-              value="1"
-          
-              placeholder="Cantidad"
-              class="form-control form__input mx-2"
-              [(ngModel)]="orden.cantidad"
-            />
-          </div> -->
         </div>
         <br />
         <div class="mb-3">
@@ -115,18 +106,19 @@
             id="submitButton"
             class="btn btn-success p-2 m-2"
           >
-            Agregar
+          {{ modoEdicion ? 'Actualizar' : 'Agregar' }}
           </button>
           <button
             type="button"
             class="btn btn-outline-warning p-2 m-2"
             (click)="resetearFormulario1(formulario)"
+            [attr.disable]="modoEdicion ? true : null"
           >
-            Limpiar Formulario
+          {{ modoEdicion ? 'Deshabilitado' : 'Limpiar formulario' }}
           </button>
         </div>
+        <p class="h3 m-3">Total: ({{ orden.total | currency:'AR':'symbol':'1.2-2' }})</p>
       </form>
-      <!-- <p class="h3 m-3">Total: $({{ orden.total | currency:'AR':'symbol':'1.2-2' }})</p> -->
     </div>
   </div>
-</div>
+</div><!--  -->

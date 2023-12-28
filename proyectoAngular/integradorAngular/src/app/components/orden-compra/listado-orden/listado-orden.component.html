@@ -18,7 +18,7 @@
                         <th scope="col">Dirección envío</th>
                         <th scope="col">Proveedor</th>
                         <th scope="col">Productos</th>
-                        <th scope="col">Cantidad</th>
+                        <th scope="col">Unidades y precio</th>
                         <th scope="col">SubTotal</th>
                         <th scope="col">Total</th>
                         <th scope="col">#Opciones</th>
@@ -32,29 +32,10 @@
                         <td>{{orden.direccion | titlecase}}</td>
                         <td>{{orden.proveedor | titlecase}}</td>
                         <td><li *ngFor="let producto of orden.productos">{{ producto.nombre |titlecase }}</li></td>
-                        <td><li *ngFor="let producto of orden.productos">{{ producto.cantidad }}u a {{producto.precio | currency}}</li></td>
+                        <td><li *ngFor="let producto of orden.productos">{{ producto.cantidad }} a {{producto.precio | currency}}</li></td>
                         <td><li *ngFor="let producto of orden.productos">{{ producto.cantidad * producto.precio | currency }}</li></td>
-                        <td>{{orden.total| currency}}</td>
+                        <td><li>{{orden.total}}</li></td>
                         <td><button class="btn btn-warning" (click)="editarOrden(i, orden)">Editar</button><button class="btn btn-danger" (click)="eliminarOrden(i)">Eliminar</button></td>
-                        <!-- <td *ngFor="let producto of orden.productos"> {{ producto.nombre |titlecase }}</td>
-                        
-                        <td *ngFor="let producto of orden.productos"> {{ producto.cantidad }}u a {{producto.precio | currency}}
-                        </td>
-                        <td *ngFor="let producto of orden.productos"> {{ producto.cantidad * producto.precio | currency }}
-                        </td>
-                        <td>{{orden.total| currency}}</td> -->
-                        
-
-                            <!-- <tr *ngFor="let producto of orden.productos">
-                                <td>{{ producto.nombre }}</td>
-                                <td>{{ producto.cantidad }}</td>
-                                <td>{{ producto.precio | currency }}</td>
-                                <td>{{ producto.cantidad * producto.precio | currency }}</td>
-                            </tr>
-                        <td>{{orden.total| currency}}</td>
-                        <td><button   class="btn btn-warning" (click)="editarOrden(i, orden)">Editar</button><button class="btn btn-danger" (click)="eliminarOrden(i)">Eliminar</button></td>
-                    </tr> -->
-
                 </tbody>
                 
         </table>

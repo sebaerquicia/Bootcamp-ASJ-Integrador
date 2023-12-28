@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Orden } from '../../../models/orden-compra.model';
 import { ProductoOrden } from '../../../models/orden-compra.model';
 import { ServicioOrdenesCompraService } from '../../../services/servicio-ordenes-compra.service';
 import { ServicioProductosService } from '../../../services/servicio-productos.service';
-import { ServicioProveedoresService } from '../../../services/servicio-proveedores.service';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Producto } from '../../../models/producto.model';
-import { FormularioProveedor } from '../../../models/proveedor.model';
 
 @Component({
   selector: 'app-add-orden',
@@ -18,9 +16,8 @@ export class AddOrdenComponent implements OnInit {
   constructor(
     private ordenesService: ServicioOrdenesCompraService,
     private productosService: ServicioProductosService,
-    private proveedoresService: ServicioProveedoresService,
+    private cdr: ChangeDetectorRef,
     private router: Router,
-
     private route: ActivatedRoute
   ) {}
 
@@ -40,10 +37,13 @@ export class AddOrdenComponent implements OnInit {
   };
 
   ngOnInit(): void {
+
     const storedOrdenCompra = localStorage.getItem('ordenes');
+
     if (storedOrdenCompra) {
       this.orden = JSON.parse(storedOrdenCompra);
     }
+
     this.proveedores = this.productosService.getNombresProveedores();
 
     // Recuperar proveedores del localStorage
@@ -72,24 +72,50 @@ export class AddOrdenComponent implements OnInit {
     }
   }
 
+  //modos de edicion
+  get modoEdicion(): boolean {
+    return this.ordenesService.modoEdicionOrden;
+  }
+  get ordenEnEdicion(): any {
+    return this.ordenesService.ordenEnEdicion;
+  }
+
   guardarOrden(formulario: NgForm): void {
-   
     if (formulario.valid) {
-      const orden = formulario.value
-      orden.productos = this.orden.productos
+
+      const orden = formulario.value;
+
+      orden.fecha = this.orden.fecha;
+      orden.nro = this.orden.nro;
+      orden.proveedor = this.orden.proveedor;
+      orden.productos = this.orden.productos;
+      //valido la fecha
+      if (this.orden.fecha > this.orden.fechaEntrega) {
+        alert('La fecha de emisión debe ser anterior a la fecha de entrega.');
+        return;}
       const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
       const index = editarIndex ? parseInt(editarIndex, 10) : -1;
       if (index !== -1) {
         // Actualiza la orden si está editando
         this.ordenesService.actualizarOrden(index, orden);
+       /*  this.compararFechas() */
         alert('Se editó la orden correctamente');
+        this.ordenesService.modoEdicionOrden = false;
       } else {
+        //primero valido que el numero de orden no exista
+        const ordenesGuardadas = JSON.parse(localStorage.getItem('ordenes') || '[]');
+        const numeroOrdenExistente = ordenesGuardadas.some((orden: any) => orden.nro === this.orden.nro);
+        if (numeroOrdenExistente) {
+          alert('El número de orden ya existe');
+          return;
+        }
         // Agrega el producto si está agregando
         this.ordenesService.guardarOrden(orden);
-        console.log(orden)
+
         alert('Se agregó la orden correctamente');
-        formulario.reset();
-      }
+        /* formulario.reset(); */
+        this.resetearFormulario1(formulario)
+      }/*  */
 
       this.router.navigate(['orden-compra/listado-orden']);
     } else {
@@ -109,31 +135,50 @@ export class AddOrdenComponent implements OnInit {
   }
 
   cargarProducto(producto: any, cantidad: any) {
-
     const nuevoProducto: ProductoOrden = {
       nombre: producto.nombre,
       cantidad: Number(cantidad),
       precio: Number(producto.precio),
     };
-    if(!this.orden.productos){
-      this.orden.productos = []
+    if (!this.orden.productos) {
+      this.orden.productos = [];
     }
 
-    const productoRepetido = this.orden.productos.find(prod => prod.nombre == nuevoProducto.nombre)
-    if (productoRepetido){
-      productoRepetido.cantidad = nuevoProducto.cantidad
-    }else{
-
-      this.orden.productos.push(structuredClone(nuevoProducto));
+    const productoRepetido = this.orden.productos.find(
+      (prod) => prod.nombre == nuevoProducto.nombre
+    );
+ 
+    if (productoRepetido) {
+    
+      this.orden.total -= +productoRepetido.cantidad * producto.precio;
+  
       
-      this.orden.total += Number(nuevoProducto.cantidad * producto.precio);
-      console.log(this.orden.total)
+      productoRepetido.cantidad = nuevoProducto.cantidad;
+    } else {
+      
+      this.orden.productos.push(structuredClone(nuevoProducto));
     }
-  
-  
+    let total: number = +nuevoProducto.cantidad * producto.precio;
+    this.orden.total += total;
+
+    console.log(this.orden.total)
   }
 
   resetearFormulario1(formulario: NgForm): void {
     formulario.resetForm();
+    this.orden = {
+      nro: undefined,
+      fecha: '',
+      fechaEntrega: '',
+      direccion: '',
+      proveedor: '',
+      productos: [],
+      total: 0,
+    };
+
+    this.cdr.detectChanges();
+
   }
+
+
 }

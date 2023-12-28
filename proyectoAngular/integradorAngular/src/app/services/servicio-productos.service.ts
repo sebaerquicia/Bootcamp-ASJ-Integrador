@@ -6,7 +6,8 @@ import { Producto } from '../models/producto.model';
   providedIn: 'root',
 })
 export class ServicioProductosService {
-
+  modoEdicion: boolean = false;
+  productoEnEdicion: any;
   productos: Producto[]=[];
 
   private productosKey = 'productos';
@@ -31,7 +32,7 @@ export class ServicioProductosService {
     }
   }
   actualizarProducto(index: number, producto: Producto): void {
-
+    this.modoEdicion=true;
     const productos = this.getProductos()
     productos.splice(index, 1, producto);
     localStorage.setItem(this.productosKey, JSON.stringify(productos));

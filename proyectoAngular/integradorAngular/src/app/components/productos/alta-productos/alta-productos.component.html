@@ -11,141 +11,115 @@
   <h2>+ Productos</h2>
   <form #formulario="ngForm" (ngSubmit)="guardarProducto(formulario)">
     <div id="formRegister" class="crud__form">
-    <div class="row">
-      <div class="col-md-1">
-          <label for="id" class="form-label">ID: </label>
+      <div class="row">
+        <div class="col-md-3">
+          <label for="nombre" class="form-label">Producto: </label>
           <input
-            name="id"
-            type="number"
-            placeholder="ID"
-            id="id"
-            class="form-control form__input m-2"
-            [(ngModel)]="producto.id"
-            required
-          />
-          </div>
-          <div class="col-md-3">
-
-            <label for="nombre" class="form-label">Producto: </label>
-            <input
             name="nombre"
             type="text"
             placeholder="Nombre del Producto"
- 
             class="form-control form__input m-2"
             [(ngModel)]="producto.nombre"
             required
-            />
-          </div>
-          <div class="col-md-2">
-
-            <label for="codigo" class="form-label">Código/SKU: </label>
-            <input
+          />
+        </div>
+        <div class="col-md-2">
+          <label for="codigo" class="form-label">Código/SKU: </label>
+          <input
             name="codigo"
             type="text"
             placeholder="Codigo/SKU"
-            
+            [disabled]="modoEdicion"
             class="form-control form__input m-2"
             [(ngModel)]="producto.codigo"
             required
-            />
-          </div>
-  
-          <div class="col-md-3">
-            <label for="nombreProv" class="form-label">Proveedor: </label>
-            <select
-              class="form-select"
-              name="nombreProv"
-              [(ngModel)]="producto.nombreProv"
-              required
-            >
-              <option *ngFor="let proveedor of proveedores" [value]="proveedor">{{ proveedor }}</option>
-            </select>
-          </div>
- 
-          <div class="col-md-1">
-            <label for="categoria" class="form-label">Categoría: </label>
-            <select
-              class="form-select"
-              name="categoria"
-       
-              [(ngModel)]="producto.categoria"
-              required
-            >
-              <option value="Alimentos">Alimentos</option>
-              <option value="Deportes">Deportes</option>
-              <option value="Ropa">Ropa</option>
-              <option value="Salud">Higiene y salud</option>
-              <option value="Electrodomesticos">Electrodomésticos</option>
-            </select>
-          </div>
-          <div class="row">
+          />
+        </div>
 
-         
+        <div class="col-md-3">
+          <label for="nombreProv" class="form-label">Proveedor: </label>
+          <select
+            class="form-select"
+            name="nombreProv"
+            [disabled]="modoEdicion"
+            [(ngModel)]="producto.nombreProv"
+            required
+          >
+            <option *ngFor="let proveedor of proveedores" [value]="proveedor">
+              {{ proveedor }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-1">
+          <label for="categoria" class="form-label">Categoría: </label>
+          <select
+            class="form-select"
+            name="categoria"
+            [(ngModel)]="producto.categoria"
+            required
+          >
+            <option value="Alimentos">Alimentos</option>
+            <option value="Deportes">Deportes</option>
+            <option value="Ropa">Ropa</option>
+            <option value="Salud">Higiene y salud</option>
+            <option value="Electrodomesticos">Electrodomésticos</option>
+          </select>
+        </div>
+        <div class="row">
           <div class="col-md-4">
-
-            <label for="descripcion" class="form-label">Descripción del producto: </label>
+            <label for="descripcion" class="form-label"
+              >Descripción del producto:
+            </label>
             <input
-            name="descripcion"
-            type="text"
-            placeholder="Descripción"
-            class="form-control form__input m-2"
-            [(ngModel)]="producto.descripcion"
-            
+              name="descripcion"
+              type="text"
+              placeholder="Descripción"
+              class="form-control form__input m-2"
+              [(ngModel)]="producto.descripcion"
             />
           </div>
           <div class="col-md-1">
-
             <label for="precio" class="form-label">Precio: $</label>
             <input
-            name="precio"
-            type="number"
-            placeholder="Precio"
- 
-            class="form-control form__input m-2"
-            [(ngModel)]="producto.precio"
-            required
+              name="precio"
+              type="number"
+              placeholder="Precio"
+              class="form-control form__input m-2"
+              [(ngModel)]="producto.precio"
+              required
             />
           </div>
         </div>
-          <div class="row">
-
-            <div class="col-md-3">
-              
-              <label for="url" class="form-label">URL Imágen: </label>
-              <input
+        <div class="row">
+          <div class="col-md-3">
+            <label for="url" class="form-label">URL Imágen: </label>
+            <input
               name="url"
               type="text"
               placeholder="URL imagen"
               class="form-control form__input m-2"
               [(ngModel)]="producto.url"
-              />
-            </div>
-            <div class="row">
-              
-              <div class="col">
-                
-                <button
-                type="submit"
-                id="submitButton"
-                class="btn btn-success"
-                >
-                Agregar
+            />
+          </div>
+          <div class="row">
+            <div class="col">
+              <button type="submit" id="submitButton" class="btn btn-success">
+                {{ modoEdicion ? "Actualizar" : "Agregar" }}
               </button>
-             
-                <button
+
+              <button
                 type="button"
                 class="btn btn-outline-warning p-2 m-2"
                 (click)="resetearFormulario1(formulario)"
-                >
-                Limpiar Formulario
+                [disabled]="modoEdicion"
+              >
+                {{ modoEdicion ? "Deshabilitado" : "Limpiar formulario" }}
               </button>
-           
+            </div>
           </div>
         </div>
       </div>
-      </div>
-     
     </div>
   </form>
 </div>
