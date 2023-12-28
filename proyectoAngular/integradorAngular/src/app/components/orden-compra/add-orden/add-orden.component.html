@@ -1,4 +1,4 @@
-<div class="container-fluid px-4 ">
+<div class="container-fluid px-4">
   <div class="row">
     <div class="col">
       <h1 class="mt-4">Ordenes de compra</h1>
@@ -9,87 +9,134 @@
     </div>
   </div>
 
-<div class="row">
-  <div class="col">
-    <h1>Orden de compra</h1>
-    <div class="row mb-2">
-      <div class="col">
-        <label for="numberInput" class="form-label">Número de Orden: </label>
-        <input
-          type="number"
-          placeholder="Nro de orden"
-          id="numberInput"
-          class="form-control form__input mx-2"
-        />
-      </div>
+  <div class="row">
+    <div class="col">
+      <h2>+ Ordenes de compra</h2>
+      <form #formulario="ngForm" (ngSubmit)="guardarOrden(formulario)">
+        <div class="row mb-2">
+          <div class="col-md-2">
+            <label for="nro" class="form-label">Número de Orden: </label>
+            <input
+              name="nro"
+              type="number"
+              placeholder="Nro de orden"
+              class="form-control form__input mx-2"
+              [(ngModel)]="orden.nro"
+              required
+            />
+          </div>
 
-      <div class="col">
-        <label for="dateInput" class="form-label">Fecha emisión: </label>
-        <input
-          type="date"
-          placeholder="Fecha de emisión"
-          id="dateInput"
-          class="form-control form__input mx-2"
-        />
-      </div>
-      <div class="col">
-        <label for="reciveDateInput" class="form-label">Fecha entrega: </label>
-        <input
-          type="date"
-          placeholder="Fecha de entrega"
-          id="reciveDateInput"
-          class="form-control form__input mx-2"
-        />
-      </div>
-    </div>
-    <div class="mb-3">
-      <label for="directionInput" class="form-label">Dirección: </label>
-      <input
-        type="text"
-        placeholder="Dirección de entrega"
-        id="directionInput"
-        class="form-control form__input mx-2"
-      />
-    </div>
-    <div class="row mb-3">
-      <div class="col">
-        <label for="provInputInput" class="form-label">Proveedor: </label>
-        <input
-          type="text"
-          placeholder="Proveedor"
-          id="provInput"
-          class="form-control form__input mx-2"
-        />
-      </div>
-      <div class="col">
-        <label for="productInput" class="form-label">Productos: </label>
-        <input
-          type="text"
-          placeholder="Productos"
-          id="productInput"
-          class="form-control form__input mx-2"
-        />
-      </div>
-      <div class="col-2">
-        <label for="quantityInput" class="form-label">Cantidad: </label>
-        <input
-          type="number"
-          min="1"
-          value="1"
-          max="10"
-          id="quantityInput"
-          placeholder="Cantidad"
-          class="form-control form__input mx-2"
-        />
-      </div>
-    </div>
-    <br />
-    <div class="mb-3">
-      <p class="h3 m-3">Total: $()</p>
-      <button type="submit" id="submitButton" class="btn btn-success p-2 m-2">
-        Agregar
-      </button>
+          <div class="col-md-2">
+            <label for="fecha" class="form-label">Fecha emisión: </label>
+            <input
+              name="fecha"
+              type="date"
+              placeholder="Fecha de emisión"
+              class="form-control form__input mx-2"
+              [(ngModel)]="orden.fecha"
+              required
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="fechaEntrega" class="form-label">Fecha entrega: </label>
+            <input
+              name="fechaEntrega"
+              type="date"
+              placeholder="Fecha de entrega"
+              class="form-control form__input mx-2"
+              [(ngModel)]="orden.fechaEntrega"
+              required
+            />
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="direction" class="form-label">Dirección: </label>
+            <input
+              name="direccion"
+              type="text"
+              placeholder="Dirección de entrega"
+              class="form-control form__input mx-2"
+              [(ngModel)]="orden.direccion"
+              required
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="proveedor" class="form-label">Proveedor: </label>
+            <select
+              class="form-select"
+              name="proveedor"
+              [(ngModel)]="orden.proveedor"
+              (change)="onProveedorSeleccionado()"
+              required
+            >
+              <option *ngFor="let proveedor of proveedores" [value]="proveedor">
+                {{ proveedor }}
+              </option>
+            </select>
+          </div>
+          <div class="col">
+            <!-- <label for="producto" class="form-label">Productos: </label>
+            <select
+              class="form-select"
+              name="producto"
+              [(ngModel)]="orden.producto"
+
+              required
+            >
+            <option *ngFor="let producto of productosFiltrados" [value]="producto.nombre">{{producto.nombre}} a {{producto.precio | currency}}</option>
+            </select> -->
+            <div class="col">
+              <label for="productos" class="form-label">Productos: </label>
+              <div *ngFor="let producto of productosFiltrados" class="mb-2">
+                <label>{{ producto.nombre }} - {{ producto.precio | currency }}</label>
+                <input
+                  #cantidad
+                  name="producto{{ producto.nombre }}"
+                  type="number"
+                  min="0"
+                  value="1"
+                  placeholder="Cantidad"
+                  class="form-control form__input mx-2"
+                  (input)="cargarProducto(producto, cantidad.value)"
+                />
+              </div>
+            </div>
+          </div>
+         <!--  <div class="col-2">
+            <label for="cantidad" class="form-label">Cantidad: </label>
+            <input
+              name="cantidad"
+              type="number"
+              min="1"
+              value="1"
+          
+              placeholder="Cantidad"
+              class="form-control form__input mx-2"
+              [(ngModel)]="orden.cantidad"
+            />
+          </div> -->
+        </div>
+        <br />
+        <div class="mb-3">
+          
+          <button
+            type="submit"
+            id="submitButton"
+            class="btn btn-success p-2 m-2"
+          >
+            Agregar
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-warning p-2 m-2"
+            (click)="resetearFormulario1(formulario)"
+          >
+            Limpiar Formulario
+          </button>
+        </div>
+      </form>
+      <!-- <p class="h3 m-3">Total: $({{ orden.total | currency:'AR':'symbol':'1.2-2' }})</p> -->
     </div>
   </div>
-</div>
 </div>

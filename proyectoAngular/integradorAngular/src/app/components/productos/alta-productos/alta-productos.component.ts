@@ -11,20 +11,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AltaProductosComponent implements OnInit {
   constructor(
-    private productosService: ServicioProductosService,
+    public productosService: ServicioProductosService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
   proveedores: string[] = [];
 
   public producto: Producto = {
-    id: '',
+    id: 0,
     nombreProv: '',
     codigo: '',
     categoria: '',
     nombre: '',
     descripcion: '',
-    precio: '',
+    precio: 0,
     url: '',
 
   
@@ -53,7 +53,6 @@ export class AltaProductosComponent implements OnInit {
   guardarProducto(formulario: NgForm): void {
     if (formulario.valid) {
       const producto = formulario.value;
-      console.log(formulario.value)
       const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
       const index = editarIndex ? parseInt(editarIndex, 10) : -1;
       if (index !== -1) {

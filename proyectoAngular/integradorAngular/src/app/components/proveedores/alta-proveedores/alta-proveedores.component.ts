@@ -11,29 +11,42 @@ import { NgForm } from '@angular/forms';
   styleUrl: './alta-proveedores.component.css',
 })
 export class AltaProveedoresComponent implements OnInit {
+  proveedores:any[]=[]
   public proveedor: FormularioProveedor = {
-    id: '',
+    id: 0,
     nombre: '',
     razonSocial: '',
     rubro: '',
-    cuit: '',
+    cuit: 0,
     iva: '',
     calle: '',
-    cp: '',
+    cp: 0,
     localidad: '',
     provincia: '',
     pais: '',
     email: '',
-    telefono: '',
+    telefono: 0,
   };
 
+
+  //variables de validacion
+
+  nombreValido=true;
+  cuitValido=true;
+  cpValido=true;
+
   constructor(
-    private proveedoresService: ServicioProveedoresService,
+    public proveedoresService: ServicioProveedoresService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+
+    const proveedoresGuardados = localStorage.getItem('proveedores');
+    this.proveedores = proveedoresGuardados ? JSON.parse(proveedoresGuardados) : [];
+
+
     const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
 
     if (editarIndex !== null) {
@@ -50,17 +63,33 @@ export class AltaProveedoresComponent implements OnInit {
     }
   }
 
+
+  //cuando apreto el boton agregar..
   guardarProveedor(formulario: NgForm): void {
     if (formulario.valid) {
-      // indice de la ruta
+    // Verifica si el nombre ya existe
+    const nombreExistente = this.proveedores.some(proveedor => proveedor.nombre === this.proveedor.nombre);
+    // Verificar si el CUIT ya existe
+    const cuitExistente = this.proveedores.some(proveedor => proveedor.cuit === this.proveedor.cuit);
+
+   /*  if (nombreExistente) {
+     //
+      console.log('El proveedor ' + this.proveedor.nombre + ' ya se encuentra cargado en sistema')
+      return;
+    }
+
+    if (cuitExistente) {
+      // 
+      console.log('El cuit ' + this.proveedor.cuit + ' ya se encuentra cargado en sistema')
+      return;
+    } */
       const proveedor = formulario.value;
-      console.log(proveedor);
       const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
       const index = editarIndex ? parseInt(editarIndex, 10) : -1;
 
       if (index !== -1) {
         // Actualiza el proveedor si está editando
-
+     
         this.proveedoresService.actualizarProveedor(index, proveedor);
         alert('Se edito el proveedor correctamente')
       } else {
@@ -76,8 +105,29 @@ export class AltaProveedoresComponent implements OnInit {
       alert('Debes completar todos los campos del formulario');
     }
   }
-  /*  */
+
+
+//reseteo de formulario
   resetearFormulario1(formulario: NgForm): void {
     formulario.resetForm();
+  }
+
+
+  //validaciones de los inputs con spans
+  validarNombre(): void {
+    const nombre = this.proveedor.nombre;
+    // Validar que tenga más de 4 letras y no contenga números
+    this.nombreValido = nombre.length > 3 && !/\d/.test(nombre);
+  }
+  validarCuit(): void {
+    const cuit = this.proveedor.cuit.toString();
+    // Validar que tenga 11 dígitos
+    this.cuitValido = /^\d{11}$/.test(cuit);
+  }
+  validarCp(): void {
+    const cp = this.proveedor.cp.toString();
+
+    // Validar que tenga entre 4 y 6 dígitos
+    this.cpValido = /^\d{4,6}$/.test(cp);
   }
 }

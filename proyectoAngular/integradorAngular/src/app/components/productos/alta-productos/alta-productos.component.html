@@ -56,7 +56,6 @@
             <select
               class="form-select"
               name="nombreProv"
-      
               [(ngModel)]="producto.nombreProv"
               required
             >
@@ -73,11 +72,11 @@
               [(ngModel)]="producto.categoria"
               required
             >
-              <option value="ALI">Alimentos</option>
-              <option value="DEP">Deportes</option>
-              <option value="ROP">Ropa</option>
-              <option value="SAL">Higiene y salud</option>
-              <option value="ELE">Electrodomésticos</option>
+              <option value="Alimentos">Alimentos</option>
+              <option value="Deportes">Deportes</option>
+              <option value="Ropa">Ropa</option>
+              <option value="Salud">Higiene y salud</option>
+              <option value="Electrodomesticos">Electrodomésticos</option>
             </select>
           </div>
           <div class="row">
@@ -92,7 +91,7 @@
             placeholder="Descripción"
             class="form-control form__input m-2"
             [(ngModel)]="producto.descripcion"
-            required
+            
             />
           </div>
           <div class="col-md-1">
@@ -118,7 +117,6 @@
               name="url"
               type="text"
               placeholder="URL imagen"
-       
               class="form-control form__input m-2"
               [(ngModel)]="producto.url"
               />

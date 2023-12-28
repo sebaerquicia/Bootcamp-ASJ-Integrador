@@ -24,7 +24,7 @@ export class ListadoProductosComponent implements OnInit {
     this.productos = this.productosService.getProductos();
   }
   eliminarProducto(index: number): void {
-    alert('Se eliminará el producto')
+    alert('Se eliminará el producto');
     this.productosService.eliminarProducto(index);
     this.actualizarLista();
     //Elimino el producto con el index desde el servicio

@@ -24,12 +24,12 @@
 
                 <tbody id="tableBody" class="table__body" *ngFor="let proveedor of proveedores, let i = index">
                     <tr>    
-                        <th>{{proveedor.nombre}}</th>
-                        <th>{{proveedor.razonSocial}}</th>
-                        <th>{{proveedor.rubro}}</th>
-                        <th>{{proveedor.cuit}}</th>
-                        <th>{{proveedor.email}}</th>
-                        <th><button (click)="editarProveedor(i, proveedor)"  class="btn btn-warning ">Editar</button><button (click)="eliminarProveedor(i)" class="btn btn-danger ">Eliminar</button></th>
+                        <th>{{proveedor.nombre | titlecase}}</th>
+                        <td>{{proveedor.razonSocial}}</td>
+                        <td>{{proveedor.rubro}}</td>
+                        <td>{{proveedor.cuit}}</td>
+                        <td>{{proveedor.email}}</td>
+                        <td><button (click)="editarProveedor(i, proveedor)"  class="btn btn-warning ">Editar</button><button (click)="eliminarProveedor(i)" class="btn btn-danger ">Eliminar</button></td>
                     </tr>
 
                 </tbody>

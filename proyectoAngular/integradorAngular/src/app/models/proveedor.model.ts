@@ -1,15 +1,15 @@
 export interface FormularioProveedor {
-    id: string;
+    id: number;
     nombre: string;
     razonSocial: string;
     rubro: string;
-    cuit: string;
+    cuit: number;
     iva: string;
     calle:string;
-    cp: string;
+    cp: number;
     localidad: string;
     provincia: string;
     pais: string;
     email: string;
-    telefono: string;
+    telefono: number;
   }

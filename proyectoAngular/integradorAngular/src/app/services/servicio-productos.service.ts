@@ -20,7 +20,6 @@ export class ServicioProductosService {
   guardarProducto(producto: any): void {
     const productos = this.getProductos();
     productos.push(producto);
-    console.log('Esto estoy mandando', producto)
     localStorage.setItem(this.productosKey, JSON.stringify(productos));
   }
 
@@ -32,6 +31,7 @@ export class ServicioProductosService {
     }
   }
   actualizarProducto(index: number, producto: Producto): void {
+
     const productos = this.getProductos()
     productos.splice(index, 1, producto);
     localStorage.setItem(this.productosKey, JSON.stringify(productos));
@@ -46,4 +46,9 @@ export class ServicioProductosService {
 
     return proveedores.map(proveedor => proveedor.nombre || '');
   }
+
+  getProductosPorProveedor(nombre: string): Producto[] {
+    return this.productos.filter((producto) => producto.nombreProv === nombre);
+  }
+  
 }

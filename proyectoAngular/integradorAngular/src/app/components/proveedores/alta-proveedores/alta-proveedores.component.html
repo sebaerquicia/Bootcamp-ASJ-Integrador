@@ -14,13 +14,13 @@
       <h2>+ Proveedores</h2>
       <form #formulario="ngForm" (ngSubmit)="guardarProveedor(formulario)">
         <div class="row mb-2">
-          <div class="col-md-2">
+          <div class="col-md-1">
             <label for="id" class="form-label">ID: </label>
             <input
               name="id"
               type="number"
               placeholder="Id del Proveedor"
-              id="idInput"
+              min="0"
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.id"
               required
@@ -38,7 +38,9 @@
               required
               minlength="4"
               maxlength="20"
+              (ngModelChange)="validarNombre()"
             />
+            <span *ngIf="!nombreValido" class="text-danger">El nombre debe tener al menos 4 letras y no debe contener números.</span>
           </div>
 
           <div class="col-md-2">
@@ -53,7 +55,7 @@
               required
             />
           </div>
-          <div class="col-md-1">
+          <div class="col-md-2">
             <label for="razonSocial" class="form-label">Razón social: </label>
             <select
               class="form-select"
@@ -62,6 +64,7 @@
               [(ngModel)]="proveedor.razonSocial"
               required
             >
+            <option [value]="undefined" disabled selected>Selecciona una opcion</option>
               <option value="SRL">SRL</option>
               <option value="SA">SA</option>
               <option value="SAS">SAS</option>
@@ -76,10 +79,12 @@
               id="cuitInput"
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.cuit"
-              minLength="12"
-              maxLength="12"
+              minlength="11"
+              maxlength="11"
+              (ngModelChange)="validarCuit()"
               required
             />
+            <span *ngIf="!cuitValido" class="text-danger">El CUIT debe tener 11 dígitos.</span>
           </div>
           <div class="col-md-1">
             <label for="iva" class="form-label">IVA: </label>
@@ -98,7 +103,7 @@
           </div>
         </div>
         <div class="row mb-3">
-          <div class="col-md-3">
+          <div class="col-md-2">
             <label for="calle" class="form-label">Calle y nro: </label>
             <input
               name="calle"
@@ -122,7 +127,7 @@
               required
             />
           </div>
-          <div class="col-md-1">
+          <div class="col-md-2">
             <label for="cp" class="form-label">Codigo Postal: </label>
             <input
               name="cp"
@@ -131,8 +136,13 @@
               id="cpInput"
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.cp"
+              minlength="4"
+              maxlength="6"
               required
+              (ngModelChange)="validarCp()"
+              
             />
+            <span *ngIf="!cpValido" class="text-danger">El CP debe tener entre 4 y 6 dígitos.</span>
           </div>
           <div class="col-md-2">
             <label for="provincia" class="form-label">Provincia: </label>

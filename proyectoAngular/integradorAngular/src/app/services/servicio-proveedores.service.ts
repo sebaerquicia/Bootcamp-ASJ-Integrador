@@ -5,7 +5,7 @@ import { FormularioProveedor } from '../models/proveedor.model';
   providedIn: 'root'
 })
 export class ServicioProveedoresService {
-  
+
   proveedores: FormularioProveedor[] =[];
   
   private proveedoresKey = 'proveedores';
@@ -27,6 +27,7 @@ export class ServicioProveedoresService {
       localStorage.setItem(this.proveedoresKey, JSON.stringify(proveedores));
     }
   }
+
   actualizarProveedor(index: number, proveedor: FormularioProveedor): void {
     const proveedores = this.getProveedores()
     proveedores.splice(index, 1, proveedor);

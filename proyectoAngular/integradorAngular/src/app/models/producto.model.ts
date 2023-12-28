@@ -1,10 +1,10 @@
 export interface Producto {
-    id: string;
+    id: number;
     nombre:string;
     nombreProv: string;
     codigo: string;
     categoria: string;
     descripcion: string;
-    precio: string;
+    precio: number;
     url:string;
   }
