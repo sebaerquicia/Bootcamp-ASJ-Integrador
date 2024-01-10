@@ -109,7 +109,7 @@ GROUP BY
     DC.apellido_contacto
 HAVING COUNT(id_orden) = (
     SELECT TOP 1 COUNT(id_orden) AS TotalOrdenes
-    FROM DetallesOrdenes DO
+    FROM DetallesOrdenes DO, Proveedores P
     WHERE DO.id_proveedor = P.id_proveedor
     GROUP BY DO.id_proveedor
     ORDER BY TotalOrdenes DESC
@@ -123,7 +123,7 @@ SELECT
     O.numero_orden AS NumeroOrden,
     P.razon_social AS RazonSocial,
     P.codigo_proveedor AS CodigoProveedor,
-    SUM(DetallesOrdenes.id_producto) AS CantidadProductos
+    SUM(DetallesOrdenes.cantidad_producto) AS CantidadProductos
 FROM DetallesOrdenes
 JOIN Proveedores P ON DetallesOrdenes.id_proveedor = P.id_proveedor
 JOIN OrdenesDeCompra O ON O.id_orden = DetallesOrdenes.id_orden
