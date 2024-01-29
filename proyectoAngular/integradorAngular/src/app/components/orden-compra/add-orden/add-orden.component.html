@@ -50,16 +50,17 @@
               required
             />
           </div>
-          <div class="mb-3 col-md-6">
-            <label for="direction" class="form-label">Dirección: </label>
-            <input
+          <div class="mb-3 col-md-4">
+            <label for="direction" class="form-label">Información adicional: </label>
+            <textarea
               name="direccion"
               type="text"
-              placeholder="Dirección de entrega"
-              class="form-control form__input mx-2"
-              [(ngModel)]="orden.direccion"
-              required
-            />
+              placeholder="Más info..."
+              class="form-control form__input"
+              [(ngModel)]="orden.informacion"
+              required>
+            </textarea>
+          
           </div>
         </div>
         <div class="row mb-3">
@@ -80,8 +81,8 @@
           </div>
           <div class="col-md-8">
             <label for="productos" class="form-label">Productos: </label>
-            <div *ngIf="orden.proveedor !== ''"  class="col-md-6 ">
-              <div *ngFor="let producto of productosFiltrados" class="mb-2">
+            <div *ngFor="let producto of productosFiltrados" class="mb-2">
+              <div *ngIf="orden.proveedor !== ''"  class="col-md-6 ">
                 <label>Producto: {{ producto.nombre }} - Precio: {{ producto.precio | currency }}</label>
                 <input
                   #cantidad

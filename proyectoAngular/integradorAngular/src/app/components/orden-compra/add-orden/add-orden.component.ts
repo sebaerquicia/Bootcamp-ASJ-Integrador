@@ -30,7 +30,7 @@ export class AddOrdenComponent implements OnInit {
     nro: 0,
     fecha: '',
     fechaEntrega: '',
-    direccion: '',
+    informacion: '',
     proveedor: '',
     productos: [],
     total: 0,
@@ -42,6 +42,7 @@ export class AddOrdenComponent implements OnInit {
 
     if (storedOrdenCompra) {
       this.orden = JSON.parse(storedOrdenCompra);
+      this.orden.total =0
     }
 
     this.proveedores = this.productosService.getNombresProveedores();
@@ -106,13 +107,13 @@ export class AddOrdenComponent implements OnInit {
         const ordenesGuardadas = JSON.parse(localStorage.getItem('ordenes') || '[]');
         const numeroOrdenExistente = ordenesGuardadas.some((orden: any) => orden.nro === this.orden.nro);
         if (numeroOrdenExistente) {
-          alert('El número de orden ya existe');
+          alert(orden.nro + ': El número de orden ya existe');
           return;
         }
         // Agrega el producto si está agregando
         this.ordenesService.guardarOrden(orden);
 
-        alert('Se agregó la orden correctamente');
+        alert(orden.nro + ': Se agregó la orden correctamente');
         /* formulario.reset(); */
         this.resetearFormulario1(formulario)
       }/*  */
@@ -170,7 +171,7 @@ export class AddOrdenComponent implements OnInit {
       nro: undefined,
       fecha: '',
       fechaEntrega: '',
-      direccion: '',
+      informacion: '',
       proveedor: '',
       productos: [],
       total: 0,

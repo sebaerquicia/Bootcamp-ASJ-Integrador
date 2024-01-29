@@ -12,13 +12,14 @@
   <form #formulario="ngForm" (ngSubmit)="guardarProducto(formulario)">
     <div id="formRegister" class="crud__form">
       <div class="row">
+        <hr>
         <div class="col-md-3">
           <label for="nombre" class="form-label">Producto: </label>
           <input
             name="nombre"
             type="text"
             placeholder="Nombre del Producto"
-            class="form-control form__input m-2"
+            class="form-control form__input "
             [(ngModel)]="producto.nombre"
             required
           />
@@ -30,7 +31,7 @@
             type="text"
             placeholder="Codigo/SKU"
             [disabled]="modoEdicion"
-            class="form-control form__input m-2"
+            class="form-control form__input"
             [(ngModel)]="producto.codigo"
             required
           />
@@ -71,21 +72,22 @@
             <label for="descripcion" class="form-label"
               >Descripción del producto:
             </label>
-            <input
+            <textarea
               name="descripcion"
               type="text"
               placeholder="Descripción"
-              class="form-control form__input m-2"
+              class="form-control form__input"
               [(ngModel)]="producto.descripcion"
-            />
+            ></textarea>
           </div>
           <div class="col-md-1">
             <label for="precio" class="form-label">Precio: $</label>
             <input
               name="precio"
               type="number"
+              min="0"
               placeholder="Precio"
-              class="form-control form__input m-2"
+              class="form-control form__input"
               [(ngModel)]="producto.precio"
               required
             />
@@ -98,7 +100,7 @@
               name="url"
               type="text"
               placeholder="URL imagen"
-              class="form-control form__input m-2"
+              class="form-control form__input"
               [(ngModel)]="producto.url"
             />
           </div>

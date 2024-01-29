@@ -14,7 +14,7 @@ import { FormularioProveedor } from '../../../models/proveedor.model';
 export class ListadoProveedoresComponent implements OnInit{
 
 
-proveedores: FormularioProveedor[]=[]
+proveedores: any[]=[]
 
 
 constructor (private proveedoresService: ServicioProveedoresService, private router: Router, private route: ActivatedRoute,  private cdr: ChangeDetectorRef){}
@@ -26,7 +26,10 @@ ngOnInit(): void {
 }
 
 private actualizarLista() : void{
-  this.proveedores = this.proveedoresService.getProveedores();
+  this.proveedoresService.getProveedores().subscribe(data => {
+    this.proveedores = data;
+    console.log(this.proveedores)
+  })
   this.cdr.detectChanges();
 }
 

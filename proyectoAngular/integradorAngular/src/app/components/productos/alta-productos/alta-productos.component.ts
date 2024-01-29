@@ -68,15 +68,16 @@ export class AltaProductosComponent implements OnInit {
       if (index !== -1) {
         // Actualiza el producto si está editando
         this.productosService.actualizarProducto(index, producto);
-        alert('Se editó el producto correctamente')
+        alert(producto.nombre +': Se editó el producto correctamente')
         this.productosService.modoEdicion = false
       } else {
         // agrega el producto si está agregando     
-        if (this.codigoYaAgregado(this.producto.codigo!)) {
-          alert("El codigo ya existe");
+        console.log(this.producto.codigo)
+        if (this.codigoYaAgregado(this.producto.codigo)) {
+          alert(producto.codigo +": El codigo ya existe");
           return;}
         this.productosService.guardarProducto(producto);
-        alert('Se agregó el producto correctamente')
+        alert(producto.nombre +': Se agregó el producto correctamente')
         formulario.reset();
       }
 
@@ -92,7 +93,7 @@ export class AltaProductosComponent implements OnInit {
 
 
   codigoYaAgregado(codigo: string): boolean {
-    const codigoExistente = this.productos.some(producto => producto.codigo === this.producto.codigo)
+    const codigoExistente = this.productos.some(producto => codigo === producto.codigo)
     console.log(codigoExistente)
     return codigoExistente
  }

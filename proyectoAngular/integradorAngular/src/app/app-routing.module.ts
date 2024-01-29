@@ -9,7 +9,7 @@ import { ListadoProveedoresComponent } from './components/proveedores/listado-pr
 import { ListadoOrdenComponent } from './components/orden-compra/listado-orden/listado-orden.component';
 
 const routes: Routes = [
-  { path: 'productos/alta-productos', component: AltaProductosComponent },
+  /* { path: 'productos/alta-productos', component: AltaProductosComponent },
   { path: 'proveedores/alta-proveedores', component: AltaProveedoresComponent },
   { path: 'orden-compra/add-orden', component: AddOrdenComponent },
   { path: 'productos/listado-productos', component: ListadoProductosComponent },
@@ -17,7 +17,31 @@ const routes: Routes = [
   { path: 'orden-compra/listado-orden', component: ListadoOrdenComponent },
   
   { path: '', component: MyMainComponent },
+  { path: '**', pathMatch: 'full', redirectTo: '' }, */
+  {
+    path: 'productos',
+    children: [
+      { path: 'alta-productos', component: AltaProductosComponent },
+      { path: 'listado-productos', component: ListadoProductosComponent },
+    ]
+  },
+  {
+    path: 'proveedores',
+    children: [
+      { path: 'alta-proveedores', component: AltaProveedoresComponent },
+      { path: 'listado-proveedores', component: ListadoProveedoresComponent },
+    ]
+  },
+  {
+    path: 'orden-compra',
+    children: [
+      { path: 'add-orden', component: AddOrdenComponent },
+      { path: 'listado-orden', component: ListadoOrdenComponent },
+    ]
+  },
+  { path: '', component: MyMainComponent },
   { path: '**', pathMatch: 'full', redirectTo: '' },
+
 ];
 
 @NgModule({

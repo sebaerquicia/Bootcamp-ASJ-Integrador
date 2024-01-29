@@ -2,7 +2,7 @@ export interface Orden {
     nro: number | undefined;
     fecha:string;
     fechaEntrega: string;
-    direccion: string;
+    informacion: string;
     proveedor: string;
     productos: ProductoOrden[];
     total:number;
@@ -10,5 +10,5 @@ export interface Orden {
 export interface ProductoOrden{
   nombre: string;
   cantidad: number;
-  precio:number;
+  precio: number;
 }

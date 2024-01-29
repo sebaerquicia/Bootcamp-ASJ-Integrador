@@ -45,7 +45,7 @@ export class ServicioProductosService {
       return [];
     }
 
-    return proveedores.map(proveedor => proveedor.nombre || '');
+    return proveedores.map(proveedor => proveedor.razonSocial || '');
   }
 
   getProductosPorProveedor(nombre: string): Producto[] {

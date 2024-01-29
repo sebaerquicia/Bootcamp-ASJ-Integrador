@@ -29,7 +29,7 @@
                         <th>{{orden.nro}}</th>
                         <td>{{orden.fecha | date}}</td>
                         <td>{{orden.fechaEntrega | date}}</td>
-                        <td>{{orden.direccion | titlecase}}</td>
+                        <td>{{orden.informacion | titlecase}}</td>
                         <td>{{orden.proveedor | titlecase}}</td>
                         <td><li *ngFor="let producto of orden.productos">{{ producto.nombre |titlecase }}</li></td>
                         <td><li *ngFor="let producto of orden.productos">{{ producto.cantidad }} a {{producto.precio | currency}}</li></td>

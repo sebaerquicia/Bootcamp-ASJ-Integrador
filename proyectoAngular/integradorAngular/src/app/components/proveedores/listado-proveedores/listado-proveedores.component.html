@@ -12,11 +12,13 @@
             <table *ngIf="proveedores.length > 0" class="table">
                 <thead>
                     <tr>
+                        <th scope="col">Código</th>
                         <th scope="col">Nombre Proveedor</th>
-                        <th scope="col">Razón Social</th>
-                        <th scope="col">Rubro</th>
-                        <th scope="col">CUIT</th>
+                        <th scope="col">Sitio WEB</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Contacto</th>
+                        
                         <th scope="col">Baja/Modificación</th>
                     </tr>
                 </thead>
@@ -24,11 +26,12 @@
 
                 <tbody id="tableBody" class="table__body" *ngFor="let proveedor of proveedores, let i = index">
                     <tr>    
-                        <th>{{proveedor.nombre | titlecase}}</th>
-                        <td>{{proveedor.razonSocial}}</td>
-                        <td>{{proveedor.rubro}}</td>
-                        <td>{{proveedor.cuit}}</td>
-                        <td>{{proveedor.email}}</td>
+                        <td>{{proveedor.codigo_proveedor}}</td>
+                        <th>{{proveedor.razon_social | titlecase}}</th>
+                        <td>{{proveedor.web}}</td>
+                        <td>{{proveedor.contacto.email_contacto}}</td>
+                        <td>{{proveedor.contacto.telefono_contacto}}</td>
+                        <td>{{proveedor.contacto.nombre_contacto}} {{proveedor.contacto.apellido_contacto}}</td>
                         <td><button (click)="editarProveedor(i, proveedor)"  class="btn btn-warning ">Editar</button><button (click)="eliminarProveedor(i)" class="btn btn-danger ">Eliminar</button></td>
                     </tr>
 

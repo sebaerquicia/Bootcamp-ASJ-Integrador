@@ -13,28 +13,46 @@
     <div class="col">
       <h2>+ Proveedores</h2>
       <form #formulario="ngForm" (ngSubmit)="guardarProveedor(formulario)">
+        <div class="col">
+          <hr>
+          <h2>Datos del proveedor</h2>
+        </div>
         <div class="row mb-2">
           <div class="col-md-3">
-            <label for="nombre" class="form-label">Nombre: </label>
+            <label for="codigo" class="form-label">Código único: </label>
             <input
-              name="nombre"
-              type="text"
-              placeholder="Nombre del Proveedor"
-              id="nameInput"
+              name="codigo"
               class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.nombre"
-              required
+              type= "text"
+              placeholder="Código"
+              id="codigoInput"
               minlength="4"
               maxlength="20"
-              [disabled]="modoEdicion"
-              (ngModelChange)="validarNombre()"
-            />
-            <span *ngIf="!nombreValido" class="text-danger">El nombre debe tener al menos 4 letras y no debe contener números.</span>
-          </div>
+              [(ngModel)]="proveedor.codigo_proveedor"
 
+              [disabled]="modoEdicion"              
+              required
+            />           
+           </div>
+        <div class="col-md-3">
+            <label for="razonSocial" class="form-label">Razón social: </label>
+            <input
+              name="razonSocial"
+              class="form-control form__input mx-2"
+              type= "text"
+              placeholder="Nombre del Proveedor"
+              id="razonInput"
+              minlength="4"
+              maxlength="20"
+              [(ngModel)]="proveedor.razonSocial"
+              (ngModelChange)="validarNombre()"
+              [disabled]="modoEdicion"              
+              required
+            />           
+           </div>
           <div class="col-md-2">
             <label for="rubro" class="form-label">Rubro: </label>
-            <input
+            <select
               name="rubro"
               type="text"
               placeholder="Rubro"
@@ -42,40 +60,41 @@
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.rubro"
               required
+            >
+            <option *ngFor="let rubro of rubros" [value]="rubro.id">{{ rubro.nombre_rubro }}</option>
+          </select>
+
+          </div>          
+          <div class="col-md-2">
+            <label for="rubro" class="form-label">WEB: </label>
+            <input
+              name="web"
+              type="text"
+              placeholder="URL"
+              id="webInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.web"
+              required
             />
           </div>
-          <div class="col-md-2">
-            <label for="razonSocial" class="form-label">Razón social: </label>
-            <select
-              class="form-select"
-              name="razonSocial"
-              id="razonInput"
-              [(ngModel)]="proveedor.razonSocial"
-              required
-            >
-            <option [value]="undefined" disabled selected>Selecciona una opcion</option>
-              <option value="SRL">SRL</option>
-              <option value="SA">SA</option>
-              <option value="SAS">SAS</option>
-            </select>
-          </div>
+
           <div class="col-md-2">
             <label for="cuit" class="form-label">CUIT: </label>
             <input
               name="cuit"
-              type="text"
+              type="number"
               placeholder="CUIT"
               id="cuitInput"
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.cuit"
-              minlength="11"
-              maxlength="11"
+              min=1000000000
+              max=99999999999
               (input)="validarCuit()"
               pattern="[0-9]*" 
               [disabled]="modoEdicion"
               required
             />
-            <span *ngIf="!cuitValido" class="text-danger">El CUIT debe tener 11 dígitos.</span>
+            <span *ngIf="!cuitValido" class="text-danger">El CUIT debe tener 11 números.</span>
           </div>
           <div class="col-md-1">
             <label for="iva" class="form-label">IVA: </label>
@@ -86,23 +105,38 @@
               [(ngModel)]="proveedor.iva"
               required
             >
-              <option value="RI">Responsable Inscripto</option>
-              <option value="M">Monotributista</option>
-              <option value="EX">Exento</option>
-              <option value="CF">Consumidor Final</option>
+              <option *ngFor="let iva of condicionesIva" [value]="iva.id">{{ iva.nombre_iva }}</option>
             </select>
           </div>
         </div>
         <div class="row mb-3">
+          <div class="row">
+            <div class="col">
+              <hr>
+              <h2>Dirección</h2>
+            </div>
+          </div>
           <div class="col-md-2">
-            <label for="calle" class="form-label">Calle y nro: </label>
+            <label for="calle" class="form-label">Calle: </label>
             <input
               name="calle"
               type="text"
-              placeholder="Ej: Calle Falsa 123"
+              placeholder="Ej: Calle Falsa"
               id="calleInput"
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.calle"
+              required
+            />
+          </div>
+          <div class="col-md-1">
+            <label for="calle" class="form-label">Nro Calle: </label>
+            <input
+              name="nrocalle"
+              type="number"
+              placeholder="Ej:123"
+              id="nrocalleInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.nrocalle"
               required
             />
           </div>
@@ -137,7 +171,7 @@
           </div>
           <div class="col-md-2">
             <label for="provincia" class="form-label">Provincia: </label>
-            <input
+            <select
               name="provincia"
               type="text"
               placeholder="Provincia"
@@ -145,7 +179,10 @@
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.provincia"
               required
-            />
+            >
+            
+            <option *ngFor="let provincia of provincias" [value]="provincia.id">{{ provincia.nombre_provincia }}</option>
+          </select>
           </div>
           <div class="col-md-1">
             <label for="pais" class="form-label">Pais: </label>
@@ -154,15 +191,65 @@
               name="pais"
               id="paisInput"
               [(ngModel)]="proveedor.pais"
+              (change) = "paisSeleccionado()"
               required
             >
-              <option value="ARG">Argentina</option>
-              <option value="URU">Uruguay</option>
-              <option value="BRA">Brasil</option>
-              <option value="CHI">Chile</option>
+            <option *ngFor="let pais of paises" [value]="pais.id">{{ pais.nombre_pais }}</option>
             </select>
           </div>
-          
+        </div>
+        <div class="row">
+          <div class="row">
+            <div class="col">
+              <hr>
+              <h3>Datos de contacto</h3>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <label for="nombre" class="form-label">Nombre: </label>
+            <input
+              name="nombre"
+              type="text"
+              placeholder="Nombre de contacto"
+              id="nameInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.nombre"
+              required
+              minlength="4"
+              maxlength="20"
+              [disabled]="modoEdicion"
+              
+            />
+            <span *ngIf="!nombreValido" class="text-danger">El nombre debe tener al menos 4 letras y no debe contener números.</span>
+          </div>
+          <div class="col-md-2">
+            <label for="nombre" class="form-label">Apellido: </label>
+            <input
+              name="apellido"
+              type="text"
+              placeholder="Apellido de contacto"
+              id="apellidoInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.apellido"
+              required
+              minlength="4"
+              maxlength="20"
+              [disabled]="modoEdicion"
+             
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="rol" class="form-label">Rol: </label>
+            <input
+              name="rol"
+              type="text"
+              placeholder="Rol del contacto"
+              id="rolInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.rol"
+              required
+            />
+          </div>
           <div class="col-md-3">
             <label for="email" class="form-label">eMail: </label>
             <input
@@ -175,7 +262,7 @@
               required
             />
           </div>
-          <div class="col-md-3 ">
+          <div class="col-md-2">
             <label for="telefono" class="form-label">Tel: </label>
             <input
               name="telefono"
@@ -187,8 +274,10 @@
               required
             />
           </div>
+    
         </div>
         <div class="col-md-3">
+          <hr>
           <button type="submit" id="submitButton" class="btn btn-success p-2 m-2">
             {{ modoEdicion ? 'Actualizar' : 'Agregar' }}
           </button>
