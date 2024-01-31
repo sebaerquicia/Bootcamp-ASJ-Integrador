@@ -28,10 +28,12 @@ public class DatosDeContactoModel {
 	@NotNull 
 	@Column
 	private String apellido_contacto;
-	public String rol;
+	private String rol;
 	@Column
 	private String telefono_contacto;
 	private String email_contacto;
+	
+	
 	private LocalDateTime updated_at;
 	private LocalDateTime created_at;
 	

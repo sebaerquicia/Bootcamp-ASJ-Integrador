@@ -33,6 +33,7 @@ public class ProveedorService {
 
 	// Para agregar un proveedor
 	public List<ProveedorModel> cargarProveedor(ProveedorModel proveedor) {
+		contactoService.cargarContacto(proveedor.getContacto());
 		provRepository.save(proveedor);
 		return provRepository.findAll();
 	}
@@ -43,24 +44,45 @@ public class ProveedorService {
 		try {
 		ProveedorModel p = provRepository.findById(id).get();
 		if(p != null) {
-			
 			p.setWeb(proveedor.getWeb());
 			p.setCalle(proveedor.getCalle());
 			p.setNumero_calle(proveedor.getNumero_calle());
-			p.setLocalidad(proveedor.getLocalidad());			
+			p.setLocalidad(proveedor.getLocalidad());
+			p.setRazon_social(proveedor.getRazon_social());
+			p.setCodigo_proveedor(proveedor.getCodigo_proveedor());
+			p.setImg(proveedor.getImg());
+			p.setCodigo_postal(proveedor.getCodigo_postal());
+			p.setRubro_proveedor(proveedor.getRubro_proveedor());
 			//provinciaService.updateProvincia(proveedor.getProvincia().getId(), proveedor.getProvincia());
-			p.setProvincia(provinciaService.obtenerProvinciaByIdPais(proveedor.getProvincia().getId()).get(id));
-			contactoService.updateContacto(proveedor.getContacto().getId(), proveedor.getContacto());
+			p.setProvincia(proveedor.getProvincia());
+			p.setIva(proveedor.getIva());
+			contactoService.updateContacto(p.getContacto().getId(), proveedor.getContacto());
 			provRepository.save(p);
 			return "Proveedor #" + id +" modificado";
 		}
 		return "No se encontro el proveedor";
 		}
 		catch(Exception err){
-			return "error";
+			return "Error modificando el proveedor";
 		}
-		
-		
+	}
+	
+	
+	//Para eliminar proveedor por id
+	public String eliminarProveedorById(int id){		
+		try {
+		ProveedorModel p = provRepository.findById(id).get();
+		if(p != null) {
+			p.setEliminado(!p.isEliminado());
+			provRepository.save(p);
+			return "Proveedor #" + id +" modificado";
+		}
+		return null;
+		}
+		catch(Exception err){
+			
+			return "Error";
+		}
 	}
 	
 

@@ -20,7 +20,7 @@
             type="text"
             placeholder="Nombre del Producto"
             class="form-control form__input "
-            [(ngModel)]="producto.nombre"
+            [(ngModel)]="producto.nombre_producto"
             required
           />
         </div>
@@ -32,7 +32,7 @@
             placeholder="Codigo/SKU"
             [disabled]="modoEdicion"
             class="form-control form__input"
-            [(ngModel)]="producto.codigo"
+            [(ngModel)]="producto.codigo_sku"
             required
           />
         </div>
@@ -41,13 +41,13 @@
           <label for="nombreProv" class="form-label">Proveedor: </label>
           <select
             class="form-select"
-            name="nombreProv"
+            name="proveed"
             [disabled]="modoEdicion"
-            [(ngModel)]="producto.nombreProv"
+            [(ngModel)]="producto.proveedor.id"
             required
           >
-            <option *ngFor="let proveedor of proveedores" [value]="proveedor">
-              {{ proveedor }}
+            <option *ngFor="let proveedor of proveedores" [value]="proveedor.id">
+              {{ proveedor.razon_social }}
             </option>
           </select>
         </div>
@@ -57,14 +57,12 @@
           <select
             class="form-select"
             name="categoria"
-            [(ngModel)]="producto.categoria"
+            [(ngModel)]="producto.categoria.id"
             required
           >
-            <option value="Alimentos">Alimentos</option>
-            <option value="Deportes">Deportes</option>
-            <option value="Ropa">Ropa</option>
-            <option value="Salud">Higiene y salud</option>
-            <option value="Electrodomesticos">Electrodomésticos</option>
+          <option *ngFor="let categoria of categorias" [value]="categoria.id">
+            {{ categoria.nombre_categoria }}
+          </option>
           </select>
         </div>
         <div class="row">
@@ -88,7 +86,7 @@
               min="0"
               placeholder="Precio"
               class="form-control form__input"
-              [(ngModel)]="producto.precio"
+              [(ngModel)]="producto.precio_producto"
               required
             />
           </div>
@@ -101,22 +99,22 @@
               type="text"
               placeholder="URL imagen"
               class="form-control form__input"
-              [(ngModel)]="producto.url"
+              [(ngModel)]="producto.url_img"
             />
           </div>
           <div class="row">
             <div class="col">
               <button type="submit" id="submitButton" class="btn btn-success">
-                {{ modoEdicion ? "Actualizar" : "Agregar" }}
+                {{ modificacion ? "Actualizar" : "Agregar" }}
               </button>
 
               <button
                 type="button"
                 class="btn btn-outline-warning p-2 m-2"
                 (click)="resetearFormulario1(formulario)"
-                [disabled]="modoEdicion"
+                [disabled]="modificacion"
               >
-                {{ modoEdicion ? "Deshabilitado" : "Limpiar formulario" }}
+                {{ modificacion ? "Deshabilitado" : "Limpiar formulario" }}
               </button>
             </div>
           </div>

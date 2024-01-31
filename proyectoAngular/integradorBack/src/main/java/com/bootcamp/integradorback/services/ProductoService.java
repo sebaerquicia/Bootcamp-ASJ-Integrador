@@ -6,7 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bootcamp.integradorback.models.CategoriaModel;
 import com.bootcamp.integradorback.models.ProductoModel;
+import com.bootcamp.integradorback.models.ProveedorModel;
+import com.bootcamp.integradorback.repositories.CategoriaRepository;
 import com.bootcamp.integradorback.repositories.ProductoRepository;
 
 @Service
@@ -16,6 +19,8 @@ public class ProductoService {
 	ProductoRepository productoRepository;
 	@Autowired
 	CategoriaService categoriaService;
+	@Autowired
+	CategoriaRepository catRepository;
 	
 	// Para obtener todos los productos
 	public List<ProductoModel> obtenerProductos(){
@@ -44,8 +49,7 @@ public class ProductoService {
 			p.setPrecio_producto(producto.getPrecio_producto());;
 			p.setDescripcion(producto.getDescripcion());
 			p.setUrl_img(producto.getUrl_img());
-			categoriaService.updateCategoria(producto.getCategoria().getId(), producto.getCategoria());
-			
+			p.setCategoria(producto.getCategoria());
 			productoRepository.save(p);
 			return "Producto #" + id +" modificado";
 		}
@@ -53,10 +57,29 @@ public class ProductoService {
 	
 	}
 	
-//	// Para eliminar tarea
-//	public List<TareaModel> eliminarProducto(int id) {
-//		tareaRepository.deleteById(id);
-//		return tareaRepository.findAll();
-//	}
-//	
+
+	public List<ProductoModel> obtenerProductoPorCategoria(int id){
+		CategoriaModel categoria = catRepository.findById(id).get();
+		List<ProductoModel> resul = productoRepository.findByCategoria(categoria);
+		return resul;
+		
+	}
+	
+	//Para eliminar producto por id
+	public String eliminarProductoById(int id){		
+		try {
+		ProductoModel p = productoRepository.findById(id).get();
+		if(p != null) {
+			p.setEliminado(!p.isEliminado());
+			productoRepository.save(p);
+			return "Proveedor #" + id +" modificado";
+		}
+		return null;
+		}
+		catch(Exception err){
+			
+			return "Error";
+		}
+	}
+	
 }

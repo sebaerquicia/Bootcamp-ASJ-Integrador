@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Producto } from '../models/producto.model';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ProductoBack } from '../models/productoBack.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,48 +9,67 @@ import { Producto } from '../models/producto.model';
 export class ServicioProductosService {
   modoEdicion: boolean = false;
   productoEnEdicion: any;
-  productos: Producto[]=[];
+  productos: ProductoBack[] = [];
+  private url = 'http://localhost:8080/productos';
+  constructor(private http: HttpClient) {}
 
-  private productosKey = 'productos';
-
-
- getProductos(): any[] {
-    const productosString = localStorage.getItem(this.productosKey);
-    this.productos = productosString ? JSON.parse(productosString) : [];
-    return this.productos
+  getProductos(): Observable<any> {
+    return this.http.get(this.url);
   }
-  guardarProducto(producto: any): void {
-    const productos = this.getProductos();
-    productos.push(producto);
-    localStorage.setItem(this.productosKey, JSON.stringify(productos));
+  guardarProducto(producto: ProductoBack): Observable<any> {
+    return this.http.post(this.url, producto, {
+      observe: 'response',
+      responseType: 'text',
+    });
   }
 
-  eliminarProducto(index: number): void {
-    const productos = this.getProductos();
-    if (this.productos.length > 0){
-      productos.splice(index, 1);
-      localStorage.setItem(this.productosKey, JSON.stringify(productos));
-    }
+  eliminarProducto(id: number): Observable<any> {
+    return this.http.delete(this.url + '/' + id, {
+      observe: 'response',
+      responseType: 'text',
+    });
   }
-  actualizarProducto(index: number, producto: Producto): void {
-    this.modoEdicion=true;
-    const productos = this.getProductos()
-    productos.splice(index, 1, producto);
-    localStorage.setItem(this.productosKey, JSON.stringify(productos));
+  
+  getProveedores(): Observable<any> {
+    return this.http.get('http://localhost:8080/proveedores');
+  }
+
+  getCategorias(): Observable<any> {
+    return this.http.get('http://localhost:8080/categorias');
+  }
+
+  //OBTENGO EL PRODUCTO POR ID PARA MODIFICARLO
+  public getProductoFormulario(id: number): Observable<any> {
+    return this.http.get(this.url + '/' + id);
+  }
+  //PETICION PARA ACTUALIZAR UN PROVEEDOR
+  actualizarProducto(
+    id: number,
+    productoModificado: ProductoBack
+  ): Observable<any> {
+    const url = `${this.url}/${id}`;
+    return this.http.put(url, productoModificado, {
+      observe: 'response',
+      responseType: 'text',
+    });
   }
   getNombresProveedores(): string[] {
     const proveedoresString = localStorage.getItem('proveedores');
     const proveedores = proveedoresString ? JSON.parse(proveedoresString) : [];
-    
+
     if (!Array.isArray(proveedores)) {
       return [];
     }
 
-    return proveedores.map(proveedor => proveedor.razonSocial || '');
+    return proveedores.map((proveedor) => proveedor.razonSocial || '');
   }
 
-  getProductosPorProveedor(nombre: string): Producto[] {
-    return this.productos.filter((producto) => producto.nombreProv === nombre);
+
+  getProductosByIdCategoria(id: any): Observable<any> {
+      if(id==0){
+        return this.http.get(this.url);
   }
-  
+      return this.http.get(`${this.url}/categorias/${id}`);
+  }
+ 
 }

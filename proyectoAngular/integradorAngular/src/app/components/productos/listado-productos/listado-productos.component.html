@@ -1,4 +1,4 @@
-<div class="container-fluid px-4">
+<div class="container-fluid  px-4">
   <div class="row">
     <div class="col">
       <h1 class="mt-4">Listado de Productos</h1>
@@ -10,52 +10,101 @@
   </div>
   <div class="row">
     <div class="col">
-      <h3 class="p-5">Productos en sistema</h3>
+      <h3 class="">Productos en sistema</h3>
+      <div class="col-3 pt-2">
+        <label for="activoeliminado">Filtrar por Activos/Eliminados </label>
+        <select
+          class="form-select"
+          aria-label="activo"
+          [(ngModel)]="filtroActivoEliminado"
+          name="activoeliminado"
+        >
+          <option value="Todos">Todos</option>
+          <option value="Activos">Activos</option>
+          <option value="Eliminados">Eliminados</option>
+        </select>
+      </div>
+      <div class="col-3 pt-2">
+        <label for="">Filtrar por Categoria</label>
+        <select
+        #categoriasFiltro="ngModel"
+        class="form-select"
+        name="categoria"
+        [(ngModel)]="filtroCategorias"
+        (change)="filtrarPorCategoria(categoriasFiltro.value)"
+        required
+      >
+      <option [value]="0">Todas</option>
+      <option *ngFor="let categoria of categorias" [value]="categoria.id">
+        {{ categoria.nombre_categoria }}
+      </option>
+      </select>
+      </div>
       <div class="row">
         <div *ngIf="productos.length === 0" class="alert alert-warning">
           No hay productos cargados en el sistema. Por favor, agrega productos.
         </div>
-        <div
-          class="col p-2 m-2"
-          *ngFor="let producto of productos; let i = index"
-        >
-        
-          <div id="productCards" class="card" style="width: 20rem">
-            <img class="card-img-top" src="{{producto.url}}" alt="FotoProducto" />
-            <div class="card-body">
-              <h2 class="card-title">{{ producto.nombre | titlecase }}</h2>
-              <h3>Proveedor: {{ producto.nombreProv }}</h3>
-              <hr />
-              <h4 class="card-subtitle mb-2 text-muted">
-                Código/SKU: {{ producto.codigo }}
-              </h4>
-              <h4 class="card-subtitle mb-2 text-muted">
-                Categoria: {{ producto.categoria | titlecase }}
-              </h4>
-              <hr />
-              <p class="card-text">Descripción: {{ producto.descripcion | titlecase }}</p>
-              <hr />
-              <h3 class="text-success ">Precio: {{ producto.precio | currency}}</h3>
-              <div class="row">
-                <div class="col">
+
+        <table *ngIf="productos.length > 0" class="table">
+          <thead>
+            <tr>
+              <th scope="col">Nombre del producto</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Proveedor</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Baja/Modificación</th>
+            </tr>
+          </thead>
+
+          <tbody
+            id="tableBody"
+            class="table__body"
+            *ngFor="let producto of productos; let i = index"
+            [ngStyle]="{
+              'background-color': !producto.eliminado ? 'inherit' : '#ccc'
+            }"
+          >
+            <ng-container
+              *ngIf="
+                filtroActivoEliminado === 'Todos' ||
+                (filtroActivoEliminado === 'Activos' &&
+                  producto.eliminado === false) ||
+                (filtroActivoEliminado === 'Eliminados' &&
+                  producto.eliminado === true)
+              "
+            >
+              <tr>
+                <td>{{ producto.nombre_producto | titlecase}}</td>
+                <th>{{ producto.categoria.nombre_categoria| titlecase }}</th>
+                <td>{{ producto.proveedor.razon_social}}</td>
+                <td>{{ producto.precio_producto | currency}}</td>
+                <td>
                   <button
-                    class="btn btn-warning p-3 m3"
-                    (click)="editarProducto(i, producto)"
+                    (click)="editarProducto(producto.id)"
+                    class="btn btn-outline-secondary "
                   >
-                    Editar
+                  Editar
                   </button>
-                  
+                  <!-- Mostrar el botón de eliminar o dar de alta según si la propiedad "eliminado" es true o false -->
                   <button
-                    class="btn btn-danger p-3 m-3"
-                    (click)="eliminarProducto(i)"
+                    *ngIf="producto.eliminado"
+                    class="btn btn-outline-primary "
+                    (click)="eliminarProducto(producto.id)"
                   >
-                    Eliminar
+                    Dar de alta<i class="bi bi-upload"></i>
                   </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                  <button
+                    *ngIf="!producto.eliminado"
+                    class="btn btn-outline-danger"
+                    (click)="eliminarProducto(producto.id)"
+                  >
+                    Eliminar<i class="bi bi-trash3"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

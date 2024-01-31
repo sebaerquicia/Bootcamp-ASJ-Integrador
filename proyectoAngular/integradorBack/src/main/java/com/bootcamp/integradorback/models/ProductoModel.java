@@ -28,7 +28,7 @@ public class ProductoModel {
 	private ProveedorModel proveedor;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="categoria_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@JoinColumn(name="categoria_id", referencedColumnName = "id", nullable = false)
 	private CategoriaModel categoria;
 	
 	@NotNull

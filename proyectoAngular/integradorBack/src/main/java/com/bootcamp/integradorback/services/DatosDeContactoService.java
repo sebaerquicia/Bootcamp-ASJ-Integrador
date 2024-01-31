@@ -27,9 +27,9 @@ public class DatosDeContactoService {
 		return datosContactoRepository.findById(id); 
 	}
 
-	public List<DatosDeContactoModel> cargarContacto(DatosDeContactoModel contacto) {
+	public String cargarContacto(DatosDeContactoModel contacto) {
 		datosContactoRepository.save(contacto);
-		return datosContactoRepository.findAll();
+		return "creado datos de contacto";
 	}
 	
 
@@ -57,12 +57,14 @@ public class DatosDeContactoService {
 	public String updateContacto(Integer id, DatosDeContactoModel contactoEdit) {
 			DatosDeContactoModel dc = datosContactoRepository.findById(id).get();
 			if (dc != null) {
+				dc.setApellido_contacto(contactoEdit.getApellido_contacto());
+				dc.setNombre_contacto(contactoEdit.getNombre_contacto());				
 				dc.setRol(contactoEdit.getRol());
 				dc.setEmail_contacto(contactoEdit.getEmail_contacto());
-				dc.setTelefono_contacto(contactoEdit.getTelefono_contacto());			
+				dc.setTelefono_contacto(contactoEdit.getTelefono_contacto());
 				return "Modificado con exito";
 			}
-			return "Error";
+			return "Error modificando el contacto";
 		
 	}
 	

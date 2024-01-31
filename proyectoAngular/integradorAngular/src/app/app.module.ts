@@ -17,6 +17,7 @@ import { MyMainComponent } from './components/my-main/my-main.component';
 import { AddOrdenComponent } from './components/orden-compra/add-orden/add-orden.component';
 import { ListadoOrdenComponent } from './components/orden-compra/listado-orden/listado-orden.component';
 import { FormsModule } from '@angular/forms';
+import { FilterByPipe } from './pipes/filter-by.pipe';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { FormsModule } from '@angular/forms';
     AltaProductosComponent,
     MyMainComponent,
     AddOrdenComponent,
-    ListadoOrdenComponent
+    ListadoOrdenComponent,
+    FilterByPipe
   ],
   imports: [
     BrowserModule,

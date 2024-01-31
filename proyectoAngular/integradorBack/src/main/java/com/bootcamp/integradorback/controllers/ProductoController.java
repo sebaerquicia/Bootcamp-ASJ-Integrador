@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 //import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,11 @@ public class ProductoController {
 			return ResponseEntity.ok(productoService.obtenerProductoById(id));
 	
 		}
+		@GetMapping("/categorias/{id}")
+		public ResponseEntity<List<ProductoModel>> getCatProductoById(@PathVariable int id){
+			return ResponseEntity.ok(productoService.obtenerProductoPorCategoria(id));
+	
+		}
 		
 		@PostMapping() 
 		public ResponseEntity<List<ProductoModel>> cargarProducto(@RequestBody ProductoModel producto){
@@ -45,8 +51,8 @@ public class ProductoController {
 			return ResponseEntity.ok(productoService.modificarProducto(id, producto));
 
 		}
-//		@DeleteMapping("/{id}")
-//		public ResponseEntity<List<ProductoModel>> deleteProducto(@PathVariable int id){
-//		return ResponseEntity.ok(productoService.eliminarProducto(id));
-//		}
+		@DeleteMapping("/{id}")
+		public ResponseEntity<String> deleteProducto(@PathVariable int id){		
+		return ResponseEntity.ok(productoService.eliminarProductoById(id));
+		}
 }

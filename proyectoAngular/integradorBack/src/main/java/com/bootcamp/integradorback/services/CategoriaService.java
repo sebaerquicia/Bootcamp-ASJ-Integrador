@@ -22,17 +22,16 @@ public class CategoriaService {
 	public Optional<CategoriaModel> obtenerCategoriaById(int id){
 		return categoriaRepository.findById(id);
 	}
-	
-	
 
-	public String updateCategoria(int id, CategoriaModel catEdit) {
-		CategoriaModel c = categoriaRepository.findById(id).get(); 
-		if(c != null) {
-			c.setNombre_categoria(catEdit.getNombre_categoria());
-			return "Categoria modificada";
-		}
-		return "Error";
-	}
+//
+//	public String updateCategoria(int id, CategoriaModel catEdit) {
+//		CategoriaModel c = categoriaRepository.findById(id).get(); 
+//		if(c != null) {
+//			c.setNombre_categoria(catEdit.getNombre_categoria());
+//			return "Categoria modificada";
+//		}
+//		return "Error";
+//	}
 
 	
 	

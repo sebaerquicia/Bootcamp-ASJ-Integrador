@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.integradorback.models.CategoriaModel;
+import com.bootcamp.integradorback.models.ProvinciaModel;
 import com.bootcamp.integradorback.services.CategoriaService;
 
 
@@ -31,4 +32,5 @@ public class CategoriaController {
 	public ResponseEntity<Optional<CategoriaModel>> getCategoriasById(@PathVariable int id){
 		return ResponseEntity.ok(categoriaService.obtenerCategoriaById(id));
 	}
+
 }

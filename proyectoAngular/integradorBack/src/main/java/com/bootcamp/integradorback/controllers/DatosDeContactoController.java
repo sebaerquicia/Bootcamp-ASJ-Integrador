@@ -37,7 +37,7 @@ public class DatosDeContactoController {
 	}
 	
 	@PostMapping() 
-	public ResponseEntity<List<DatosDeContactoModel>> cargarContacto(@RequestBody DatosDeContactoModel contacto){
+	public ResponseEntity<String> cargarContacto(@RequestBody DatosDeContactoModel contacto){
 		return ResponseEntity.ok(contactoService.cargarContacto(contacto));
 		
 	}

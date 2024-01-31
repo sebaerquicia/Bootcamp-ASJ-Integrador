@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 //import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,8 @@ public class ProveedorController {
 
 	}
 	
+	
+	
 	@PostMapping() 
 	public ResponseEntity<List<ProveedorModel>> cargarProveedor(@RequestBody ProveedorModel proveedor){
 		return ResponseEntity.ok(proveedorService.cargarProveedor(proveedor));
@@ -46,10 +49,12 @@ public class ProveedorController {
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateProveedor(@PathVariable int id, @RequestBody ProveedorModel proveedor){
 	return ResponseEntity.ok(proveedorService.modificarProveedor(id, proveedor));
-
 	}
-//	@DeleteMapping("/{id}")
-//	public ResponseEntity<List<ProveedorModel>> deleteProveedor(@PathVariable int id){		
-//	return ResponseEntity.ok(proveedorService.eliminarProveedor(id));
-//	}
+	
+	
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteProveedor(@PathVariable int id){		
+	return ResponseEntity.ok(proveedorService.eliminarProveedorById(id));
+	}
 }

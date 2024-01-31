@@ -18,7 +18,7 @@
           <h2>Datos del proveedor</h2>
         </div>
         <div class="row mb-2">
-          <div class="col-md-3">
+          <div class="col-md-2">
             <label for="codigo" class="form-label">Código único: </label>
             <input
               name="codigo"
@@ -44,7 +44,7 @@
               id="razonInput"
               minlength="4"
               maxlength="20"
-              [(ngModel)]="proveedor.razonSocial"
+              [(ngModel)]="proveedor.razon_social"
               (ngModelChange)="validarNombre()"
               [disabled]="modoEdicion"              
               required
@@ -58,14 +58,13 @@
               placeholder="Rubro"
               id="rubroInput"
               class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.rubro"
+              [(ngModel)]="proveedor.rubro_proveedor.id"
               required
             >
             <option *ngFor="let rubro of rubros" [value]="rubro.id">{{ rubro.nombre_rubro }}</option>
           </select>
-
           </div>          
-          <div class="col-md-2">
+          <div class="col-md-3">
             <label for="rubro" class="form-label">WEB: </label>
             <input
               name="web"
@@ -77,8 +76,14 @@
               required
             />
           </div>
-
-          <div class="col-md-2">
+          <div class="row mb-3">
+            <div class="row">
+              <div class="col">
+                <hr>
+                <h2>Datos fiscales</h2>
+              </div>
+            </div>
+          <div class="col-md-3">
             <label for="cuit" class="form-label">CUIT: </label>
             <input
               name="cuit"
@@ -86,7 +91,7 @@
               placeholder="CUIT"
               id="cuitInput"
               class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.cuit"
+              [(ngModel)]="proveedor.cuit_proveedor"
               min=1000000000
               max=99999999999
               (input)="validarCuit()"
@@ -96,17 +101,18 @@
             />
             <span *ngIf="!cuitValido" class="text-danger">El CUIT debe tener 11 números.</span>
           </div>
-          <div class="col-md-1">
+          <div class="col-md-2">
             <label for="iva" class="form-label">IVA: </label>
             <select
               class="form-select"
               name="iva"
               id="ivaInput"
-              [(ngModel)]="proveedor.iva"
+              [(ngModel)]="proveedor.iva.id"
               required
             >
               <option *ngFor="let iva of condicionesIva" [value]="iva.id">{{ iva.nombre_iva }}</option>
             </select>
+          </div>
           </div>
         </div>
         <div class="row mb-3">
@@ -115,6 +121,63 @@
               <hr>
               <h2>Dirección</h2>
             </div>
+          </div>
+          <div class="col-md-2">
+            <label for="pais" class="form-label">Pais: </label>
+            <select
+              class="form-select"
+              name="pais"
+              id="paisInput"
+              [(ngModel)]="proveedor.provincia.pais.id"
+              (change) = "paisSeleccionado()"
+              required
+            >
+            <option *ngFor="let pais of paises" [value]="pais.id">{{ pais.nombre_pais }}</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label for="provincia" class="form-label">Provincia: </label>
+            <select
+              name="provincia"
+              type="text"
+              placeholder="Provincia"
+              id="provinciaInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.provincia.id"
+              required
+            >
+            <option *ngFor="let provincia of provincias" [value]="provincia.id">{{ provincia.nombre_provincia }}</option>
+          </select>
+        </div>
+          <div class="col-md-2">
+            <label for="localidad" class="form-label">Localidad: </label>
+            <input
+              name="localidad"
+              type="text"
+              placeholder="Localidad"
+              id="localidadInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.localidad"
+              required
+            />
+          </div>
+       
+          <div class="col-md-2">
+            <label for="cp" class="form-label">Codigo Postal: </label>
+            <input
+              name="cp"
+              type="text"
+              placeholder="Código postal"
+              id="cpInput"
+              class="form-control form__input mx-2"
+              [(ngModel)]="proveedor.codigo_postal"
+              minlength="4"
+              maxlength="6"
+              required
+              (ngModelChange)="validarCp()"
+              
+            />
+            <span *ngIf="!cpValido" class="text-danger">El CP debe tener entre 4 y 6 dígitos.</span>
           </div>
           <div class="col-md-2">
             <label for="calle" class="form-label">Calle: </label>
@@ -135,67 +198,11 @@
               type="number"
               placeholder="Ej:123"
               id="nrocalleInput"
+              min="0"
               class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.nrocalle"
+              [(ngModel)]="proveedor.numero_calle"
               required
             />
-          </div>
-          <div class="col-md-2">
-            <label for="localidad" class="form-label">Localidad: </label>
-            <input
-              name="localidad"
-              type="text"
-              placeholder="Localidad"
-              id="localidadInput"
-              class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.localidad"
-              required
-            />
-          </div>
-          <div class="col-md-2">
-            <label for="cp" class="form-label">Codigo Postal: </label>
-            <input
-              name="cp"
-              type="text"
-              placeholder="Código postal"
-              id="cpInput"
-              class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.cp"
-              minlength="4"
-              maxlength="6"
-              required
-              (ngModelChange)="validarCp()"
-              
-            />
-            <span *ngIf="!cpValido" class="text-danger">El CP debe tener entre 4 y 6 dígitos.</span>
-          </div>
-          <div class="col-md-2">
-            <label for="provincia" class="form-label">Provincia: </label>
-            <select
-              name="provincia"
-              type="text"
-              placeholder="Provincia"
-              id="provinciaInput"
-              class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.provincia"
-              required
-            >
-            
-            <option *ngFor="let provincia of provincias" [value]="provincia.id">{{ provincia.nombre_provincia }}</option>
-          </select>
-          </div>
-          <div class="col-md-1">
-            <label for="pais" class="form-label">Pais: </label>
-            <select
-              class="form-select"
-              name="pais"
-              id="paisInput"
-              [(ngModel)]="proveedor.pais"
-              (change) = "paisSeleccionado()"
-              required
-            >
-            <option *ngFor="let pais of paises" [value]="pais.id">{{ pais.nombre_pais }}</option>
-            </select>
           </div>
         </div>
         <div class="row">
@@ -213,7 +220,7 @@
               placeholder="Nombre de contacto"
               id="nameInput"
               class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.nombre"
+              [(ngModel)]="proveedor.contacto.nombre_contacto"
               required
               minlength="4"
               maxlength="20"
@@ -230,7 +237,7 @@
               placeholder="Apellido de contacto"
               id="apellidoInput"
               class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.apellido"
+              [(ngModel)]="proveedor.contacto.apellido_contacto"
               required
               minlength="4"
               maxlength="20"
@@ -246,7 +253,7 @@
               placeholder="Rol del contacto"
               id="rolInput"
               class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.rol"
+              [(ngModel)]="proveedor.contacto.rol"
               required
             />
           </div>
@@ -258,7 +265,7 @@
               placeholder="eMail@email.com"
               id="emailInput"
               class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.email"
+              [(ngModel)]="proveedor.contacto.email_contacto"
               required
             />
           </div>
@@ -270,7 +277,7 @@
               placeholder="Teléfono"
               id="telefonoInput"
               class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.telefono"
+              [(ngModel)]="proveedor.contacto.telefono_contacto"
               required
             />
           </div>
@@ -278,17 +285,17 @@
         </div>
         <div class="col-md-3">
           <hr>
-          <button type="submit" id="submitButton" class="btn btn-success p-2 m-2">
-            {{ modoEdicion ? 'Actualizar' : 'Agregar' }}
+          <button  type="submit" id="submitButton" class="btn btn-success p-2 m-2 ">
+            {{ modificacion ? 'Actualizar' : 'Agregar' }}
           </button>
         <button
           type="button"
           class="btn btn-outline-warning p-2 m-2"
-          (click)="resetearFormulario1(formulario)"
-          [attr.disabled]="modoEdicion ? true : null"
+          (click)="resetearFormulario(formulario)"
+          [attr.disabled]="modificacion ? true : null"
 
         >
-        {{ modoEdicion ? 'Deshabilitado' : 'Limpiar formulario' }}
+        {{ modificacion ? 'Deshabilitado' : 'Limpiar formulario' }}
         </button>
       </div>
     </form>

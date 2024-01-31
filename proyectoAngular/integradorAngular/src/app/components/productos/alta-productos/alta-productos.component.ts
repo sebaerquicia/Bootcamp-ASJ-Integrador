@@ -3,6 +3,8 @@ import { ServicioProductosService } from '../../../services/servicio-productos.s
 import { NgForm } from '@angular/forms';
 import { Producto } from '../../../models/producto.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductoBack } from '../../../models/productoBack.model';
+import { ServicioProveedoresService } from '../../../services/servicio-proveedores.service';
 
 @Component({
   selector: 'app-alta-productos',
@@ -12,26 +14,91 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AltaProductosComponent implements OnInit {
   constructor(
     public productosService: ServicioProductosService,
+    public proveedoresService: ServicioProveedoresService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
 
+  id: any = '';
+  proveedores: any[] = [];
+  productos:any[]=[];
+  categorias:any[]=[];
+  modificacion = false;
 
-  proveedores: string[] = [];
- productos:any[]=[]
-  public producto: Producto = {
+  public producto: ProductoBack = {
     id: undefined,
-    nombreProv: '',
-    codigo: '',
-    categoria: '',
-    nombre: '',
+    proveedor:  {
+      id: undefined,
+      codigo_proveedor: '',
+      rubro_proveedor: {
+          id: null,
+          nombre_rubro: ''
+      },
+      razon_social: '',
+      provincia: {
+          id: null,
+          nombre_provincia: null,
+          pais: {
+              id: null,
+              nombre_pais: null
+          }
+      },
+      localidad: null,
+      codigo_postal: null,
+      calle: null,
+      numero_calle: null,
+      cuit_proveedor: '',
+      contacto: {
+          id: null,
+          nombre_contacto: '',
+          apellido_contacto: '',
+          rol: null,
+          telefono_contacto: '',
+          email_contacto: '',
+      },
+      iva: {
+          id: null,
+          nombre_iva: ''
+      },
+      web: null,
+      img: null,
+      eliminado: false
+  
+  },
+    codigo_sku: '',
+    categoria: {
+      id: undefined,
+      nombre_categoria: undefined
+    },
+    nombre_producto: '',
     descripcion: '',
-    precio: undefined,
-    url: '',
+    precio_producto: undefined,
+    url_img: '',
   };
 
   ngOnInit(): void {
-    this.proveedores = this.productosService.getNombresProveedores();
+    this.productosService.getProductos().subscribe((data) => {
+      this.productos = data;
+    });
+    this.proveedoresService.getProveedores().subscribe((data) => {
+      this.proveedores = data;
+    });
+    this.productosService.getCategorias().subscribe((data)=> {
+      this.categorias = data
+    })
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id')
+    })
+    if (this.id !== null){
+      this.modificacion=true;
+      this.productosService.getProductoFormulario(this.id).subscribe (prodForm =>{
+        this.producto = prodForm;    
+     /*    this.categoriaSeleccionada();  */
+       console.log(this.producto)
+      })
+  }
+  }
+/*     this.proveedores = this.productosService.getNombresProveedores();
 
     const editarIndex = this.route.snapshot.paramMap.get('editarIndex');
 
@@ -48,18 +115,134 @@ export class AltaProductosComponent implements OnInit {
       }
     }
   }
-
+*/
   //modo de edicion
   get modoEdicion(): boolean {
     return this.productosService.modoEdicion;
   }
   get proveedorEnEdicion(): any {
     return this.productosService.productoEnEdicion;
-  }
+  } 
 
 
   guardarProducto(formulario: NgForm): void {
-    if (formulario.valid) {
+    if (formulario.valid){
+      if(this.modificacion = false){
+const productoNuevo : ProductoBack = {
+  nombre_producto : formulario.value.nombre,
+  codigo_sku : formulario.value.codigo,
+  proveedor: {
+    id: formulario.value.proveed,
+    codigo_proveedor: '',
+    rubro_proveedor: {
+        id: null,
+        nombre_rubro: ''
+    },
+    razon_social: '',
+    provincia: {
+        id: null,
+        nombre_provincia: null,
+        pais: {
+            id: null,
+            nombre_pais: null
+        }
+    },
+    localidad: null,
+    codigo_postal: null,
+    calle: null,
+    numero_calle: null,
+    cuit_proveedor: '',
+    contacto: {
+        id: null,
+        nombre_contacto: '',
+        apellido_contacto: '',
+        rol: null,
+        telefono_contacto: '',
+        email_contacto: '',
+    },
+    iva: {
+        id: null,
+        nombre_iva: ''
+    },
+    web: null,
+    img: null,
+    eliminado: false
+},
+  categoria:{
+   id: formulario.value.categoria,
+  },
+  descripcion: formulario.value.descripcion,
+  precio_producto: formulario.value.precio,
+  url_img: formulario.value.url,
+
+
+}
+this.productosService.guardarProducto(productoNuevo).subscribe()
+alert(this.producto.nombre_producto +' se agregó correctamente')
+formulario.resetForm();
+this.router.navigate(['productos/listado-productos']);
+} else{
+
+  const productoModificado : ProductoBack = {
+    nombre_producto : formulario.value.nombre,
+    codigo_sku : formulario.value.codigo,
+    proveedor: {
+      id: formulario.value.proveed,
+      codigo_proveedor: '',
+      rubro_proveedor: {
+          id: null,
+          nombre_rubro: ''
+      },
+      razon_social: '',
+      provincia: {
+          id: null,
+          nombre_provincia: null,
+          pais: {
+              id: null,
+              nombre_pais: null
+          }
+      },
+      localidad: null,
+      codigo_postal: null,
+      calle: null,
+      numero_calle: null,
+      cuit_proveedor: '',
+      contacto: {
+          id: null,
+          nombre_contacto: '',
+          apellido_contacto: '',
+          rol: null,
+          telefono_contacto: '',
+          email_contacto: '',
+      },
+      iva: {
+          id: null,
+          nombre_iva: ''
+      },
+      web: null,
+      img: null,
+      eliminado: false
+  },
+    categoria:{
+     id: formulario.value.categoria,
+    },
+    descripcion: formulario.value.descripcion,
+    precio_producto: formulario.value.precio,
+    url_img: formulario.value.url,
+  }
+  this.productosService.actualizarProducto(this.id, productoModificado).subscribe((msj) => {
+    console.log(msj);
+  });
+  formulario.reset();
+}this.router.navigate(['productos/listado-productos']);
+
+
+
+} else {
+  alert("Debes completar todos los campos del formulario");
+}
+
+/*     if (formulario.valid) {
       const producto = formulario.value;
       producto.codigo = this.producto.codigo
       producto.nombreProv = this.producto.nombreProv
@@ -84,9 +267,10 @@ export class AltaProductosComponent implements OnInit {
       this.router.navigate(['productos/listado-productos']);
     } else {
       alert('Debes completar todos los campos del formulario');
-    }
+    } */
   }
   
+
   resetearFormulario1(formulario: NgForm): void {
     formulario.resetForm();
   }

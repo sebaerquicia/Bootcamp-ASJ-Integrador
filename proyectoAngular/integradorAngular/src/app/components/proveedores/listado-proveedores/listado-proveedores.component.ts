@@ -2,7 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ServicioProveedoresService } from '../../../services/servicio-proveedores.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormularioProveedor } from '../../../models/proveedor.model';
-
+import { ProveedorBack } from '../../../models/proveedorBack.model';
+import { NgZone } from '@angular/core';
 
 
 
@@ -13,39 +14,46 @@ import { FormularioProveedor } from '../../../models/proveedor.model';
 })
 export class ListadoProveedoresComponent implements OnInit{
 
-
+filtroRazonSocial: string = '';
 proveedores: any[]=[]
+filtroActivoEliminado: string = 'Todos';
 
-
-constructor (private proveedoresService: ServicioProveedoresService, private router: Router, private route: ActivatedRoute,  private cdr: ChangeDetectorRef){}
+constructor (private proveedoresService: ServicioProveedoresService, private router: Router, private zone: NgZone,  private cdr: ChangeDetectorRef){}
 
 
 ngOnInit(): void {
-
  this.actualizarLista();
+}
+
+filtrarProveedores() {
+  if (this.filtroActivoEliminado === 'Activos') {
+    return this.proveedores.filter(proveedor => !proveedor.eliminado);
+  } else if (this.filtroActivoEliminado === 'Eliminados') {
+    return this.proveedores.filter(proveedor => proveedor.eliminado);
+  } else {
+    return this.proveedores; // Mostrar todos los proveedores
+  }
 }
 
 private actualizarLista() : void{
   this.proveedoresService.getProveedores().subscribe(data => {
     this.proveedores = data;
-    console.log(this.proveedores)
+
   })
-  this.cdr.detectChanges();
 }
 
-eliminarProveedor(index: number): void {
+eliminarProveedor(id: number): void {
   alert('Se eliminará el proveedor')
-  this.proveedoresService.eliminarProveedor(index);
+  this.zone.run(() => {
+  this.proveedoresService.eliminarProveedor(id).subscribe(msj=> {console.log(msj)
   this.actualizarLista();
-  //Elimino el proveedor con el index desde el servicio
+  });
+  })
+
 }
-editarProveedor(index: number, proveedor: FormularioProveedor): void {
-  this.proveedoresService.modoEdicion = true;
-  this.proveedoresService.proveedorEnEdicion = proveedor;
-  this.proveedoresService.actualizarProveedor(index, proveedor);
-  this.actualizarLista();
-  this.router.navigate(['proveedores/alta-proveedores', { editarIndex: index }]);
- 
+editarProveedor(id:any): void {
+this.router.navigate(['/proveedores/alta-proveedores/',{id}])
 }
+
 
 }
