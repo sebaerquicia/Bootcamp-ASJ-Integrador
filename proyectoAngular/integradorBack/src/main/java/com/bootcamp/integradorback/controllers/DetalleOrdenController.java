@@ -19,7 +19,7 @@ import com.bootcamp.integradorback.models.DetalleOrdenModel;
 import com.bootcamp.integradorback.services.DetalleOrdenService;
 
 @RestController
-@RequestMapping("/datallesordenes")
+@RequestMapping("/detallesordenes")
 public class DetalleOrdenController {
 	@Autowired
 	DetalleOrdenService detalleService;

@@ -2,7 +2,12 @@ package com.bootcamp.integradorback.models;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -23,10 +29,18 @@ public class OrdenDeCompraModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="estado_id", referencedColumnName = "id", nullable = false)
 	private EstadoOrdenModel estadoOrden;
 	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "orden_de_compra", cascade = CascadeType.ALL)
+	private List<DetalleOrdenModel> detalles;
+	
+	@ManyToOne (fetch = FetchType.EAGER)
+	@JoinColumn(name="proveedor_id", referencedColumnName = "id", nullable = false, updatable = false)
+	private ProveedorModel proveedor;
 	@NotNull 
 	@Column(unique = true)
 	private Integer numero_orden;
@@ -40,10 +54,24 @@ public class OrdenDeCompraModel {
 	private Date fecha_entrega_esperada;
 	
 	private String informacion_orden;
+
+	private boolean eliminada = false;
 	private LocalDateTime updated_at;
 	private LocalDateTime created_at;
 
 
+	public ProveedorModel getProveedor() {
+		return proveedor;
+	}
+	public void setProveedor(ProveedorModel proveedor) {
+		this.proveedor = proveedor;
+	}
+	public boolean isEliminada() {
+		return eliminada;
+	}
+	public void setEliminada(boolean eliminada) {
+		this.eliminada = eliminada;
+	}
 	public Integer getId() {
 		return id;
 	}

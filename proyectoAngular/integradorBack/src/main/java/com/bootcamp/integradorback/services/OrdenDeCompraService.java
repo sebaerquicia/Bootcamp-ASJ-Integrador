@@ -15,13 +15,12 @@ public class OrdenDeCompraService {
 	
 	@Autowired
 	OrdenDeCompraRepository ordenRepository;
-	//obtengo todas las ordenes
+	
+	// Obtengo todas las ordenes
 	public List<OrdenDeCompraModel> obtenerOrdenes(){
 		return ordenRepository.findAll();
-
-	
 	}
-	//obtengo una orden
+	// Obtengo una orden por id
 	public Optional<OrdenDeCompraModel> obtenerOrdenById(int id){
 		return ordenRepository.findById(id); 
 	}

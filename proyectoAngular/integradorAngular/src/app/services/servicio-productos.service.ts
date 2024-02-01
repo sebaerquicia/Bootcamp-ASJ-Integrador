@@ -29,7 +29,7 @@ export class ServicioProductosService {
       responseType: 'text',
     });
   }
-  
+
   getProveedores(): Observable<any> {
     return this.http.get('http://localhost:8080/proveedores');
   }
@@ -64,12 +64,17 @@ export class ServicioProductosService {
     return proveedores.map((proveedor) => proveedor.razonSocial || '');
   }
 
-
   getProductosByIdCategoria(id: any): Observable<any> {
-      if(id==0){
-        return this.http.get(this.url);
+    if (id == 0) {
+      return this.http.get(this.url);
+    }
+    return this.http.get(`${this.url}/categorias/${id}`);
   }
-      return this.http.get(`${this.url}/categorias/${id}`);
+  
+  getProductosByProveedorId(id: any): Observable<any> {
+    if (id == 0) {
+      return this.http.get(this.url);
+    }
+    return this.http.get(`${this.url}/proveedor/${id}`);
   }
- 
 }

@@ -15,27 +15,23 @@
                         <th scope="col">Número de Orden</th>
                         <th scope="col">Fecha de emisión</th>
                         <th scope="col">Fecha de entrega</th>
-                        <th scope="col">Dirección envío</th>
+                        <th scope="col">Informacion</th>
                         <th scope="col">Proveedor</th>
-                        <th scope="col">Productos</th>
-                        <th scope="col">Unidades y precio</th>
-                        <th scope="col">SubTotal</th>
-                        <th scope="col">Total</th>
+                        <th scope="col">Unidades Producto y precio</th>
+                        <th scope="col">Total($ARS)</th>
                         <th scope="col">#Opciones</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody" class="table__body" *ngFor="let orden of ordenes, let i = index">
-                    <tr>    
-                        <th>{{orden.nro}}</th>
-                        <td>{{orden.fecha | date}}</td>
-                        <td>{{orden.fechaEntrega | date}}</td>
-                        <td>{{orden.informacion | titlecase}}</td>
-                        <td>{{orden.proveedor | titlecase}}</td>
-                        <td><li *ngFor="let producto of orden.productos">{{ producto.nombre |titlecase }}</li></td>
-                        <td><li *ngFor="let producto of orden.productos">{{ producto.cantidad }} a {{producto.precio | currency}}</li></td>
-                        <td><li *ngFor="let producto of orden.productos">{{ producto.cantidad * producto.precio | currency }}</li></td>
-                        <td><li>{{orden.total}}</li></td>
-                        <td><button class="btn btn-warning" (click)="editarOrden(i, orden)">Editar</button><button class="btn btn-danger" (click)="eliminarOrden(i)">Eliminar</button></td>
+                    <tr>
+                        <th>{{orden.numero_orden}}</th>
+                        <td>{{orden.fecha_emision | date}}</td>
+                        <td>{{orden.fecha_entrega_esperada | date}}</td>
+                        <td>{{orden.informacion_orden | titlecase}}</td>
+                        <td>{{orden.proveedor.razon_social}}</td>
+                        <td><li *ngFor="let detalle of orden.detalles">{{detalle.cantidad_producto}}(u): {{ detalle.producto.nombre_producto}} a {{detalle.precio_hist | currency}}</li></td>
+                        <td> {{sumarTotal(orden) | currency}}</td>
+                        <td><button class="btn btn-outline-warning">Editar</button><button class="btn btn-outline-danger">Eliminar</button></td>
                 </tbody>
                 
         </table>

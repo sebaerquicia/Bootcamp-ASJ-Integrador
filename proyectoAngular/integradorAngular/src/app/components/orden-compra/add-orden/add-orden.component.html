@@ -21,8 +21,8 @@
               type="number"
               placeholder="Nro de orden"
               class="form-control form__input mx-2"
-              [disabled]="modoEdicion"
-              [(ngModel)]="orden.nro"
+              [disabled]="modificacion"
+              [(ngModel)]="orden.numero_orden"
               required
             />
           </div>
@@ -34,8 +34,8 @@
               type="date"
               placeholder="Fecha de emisión"
               class="form-control form__input mx-2"
-              [disabled]="modoEdicion"
-              [(ngModel)]="orden.fecha"
+              [disabled]="modificacion"
+              [(ngModel)]="orden.fecha_emision"
               required
             />
           </div>
@@ -46,7 +46,7 @@
               type="date"
               placeholder="Fecha de entrega"
               class="form-control form__input mx-2"
-              [(ngModel)]="orden.fechaEntrega"
+              [(ngModel)]="orden.fecha_entrega_esperada"
               required
             />
           </div>
@@ -57,7 +57,7 @@
               type="text"
               placeholder="Más info..."
               class="form-control form__input"
-              [(ngModel)]="orden.informacion"
+              [(ngModel)]="orden.informacion_orden"
               required>
             </textarea>
           
@@ -69,36 +69,76 @@
             <select
               class="form-select"
               name="proveedor"
-              [disabled]="modoEdicion"
-              [(ngModel)]="orden.proveedor"
-              (change)="onProveedorSeleccionado()"
+              [disabled]="modificacion"
+              [(ngModel)]="orden.proveedor.id"
+              (change)="onProveedorChange(orden.proveedor.id)"
               required
             >
-              <option *ngFor="let proveedor of proveedores" [value]="proveedor">
-                {{ proveedor }}
+              <option *ngFor="let proveedor of proveedores" [value]="proveedor.id">
+                {{ proveedor.razon_social }}
               </option>
             </select>
           </div>
           <div class="col-md-8">
-            <label for="productos" class="form-label">Productos: </label>
-            <div *ngFor="let producto of productosFiltrados" class="mb-2">
-              <div *ngIf="orden.proveedor !== ''"  class="col-md-6 ">
-                <label>Producto: {{ producto.nombre }} - Precio: {{ producto.precio | currency }}</label>
+            <h3>Productos: </h3>
+
+              <div *ngIf="orden.proveedor.id !== null"  class="col ">
+                <select
+              class="form-select"
+              name="productos"
+              [disabled]="modificacion"
+              [(ngModel)]="detalle.id"
+              (change)="onProveedorChange(orden.proveedor.id)"
+              required
+            >
+              <option *ngFor="let producto of productosFiltrados" [value]="producto.id">
+                {{ producto.nombre_producto }}:  {{producto.precio_producto | currency}}
+              </option>
+            </select>
+
+
+                <label class="form-label ">Cantidad:</label>
                 <input
                   #cantidad
-                  name="producto{{ producto.nombre }}"
+                  name="producto"
                   type="number"
                   min="0"
                   value="undefined"
                   placeholder="Cantidad"
-                  class="form-control-sm form__input mx-2 "
-                  (input)="cargarProducto(producto, cantidad.value)"
-                  [disabled]="modoEdicion"
-                />
+                  class="form-control-sm form-floating mt-3  "
+                  [(ngModel)]="detalle.cantidad_producto"
+
+                /> 
               </div>
             </div>
           </div>
+
+          <div class="row">
+            <div class="col">
+              <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#img</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">SubTotal($ARS)</th>
+                        <th scope="col">Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="table__body" *ngFor="let detalle of orden.detalles, let i = index">
+                    <tr>
+                        <th>{{detalle.producto}}</th>
+                        <td></td>
+                        <td>{{detalle.cantidad_producto}}</td>
+                        <td>{{detalle.total}}</td>
+                        <td><button class="btn btn-outline-warning">Editar</button><button class="btn btn-outline-danger">Eliminar</button></td>
+                </tbody>
+                
+        </table>
+          </div>
         </div>
+
         <br />
         <div class="mb-3">
           
@@ -107,19 +147,19 @@
             id="submitButton"
             class="btn btn-success p-2 m-2"
           >
-          {{ modoEdicion ? 'Actualizar' : 'Agregar' }}
+          {{ modificacion ? 'Actualizar' : 'Agregar' }}
           </button>
           <button
             type="button"
             class="btn btn-outline-warning p-2 m-2"
             (click)="resetearFormulario1(formulario)"
-            [attr.disable]="modoEdicion ? true : null"
+            [attr.disable]="modificacion ? true : null"
           >
-          {{ modoEdicion ? 'Deshabilitado' : 'Limpiar formulario' }}
+          {{ modificacion ? 'Deshabilitado' : 'Limpiar formulario' }}
           </button>
         </div>
-        <p class="h3 m-3">Total: ({{ orden.total | currency:'AR':'symbol':'1.2-2' }})</p>
+        <p class="h3 m-3">Total: ({{ orden}})</p>
       </form>
     </div>
   </div>
-</div><!--  -->
+</div>

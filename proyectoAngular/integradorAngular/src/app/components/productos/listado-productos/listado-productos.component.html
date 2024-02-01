@@ -11,8 +11,10 @@
   <div class="row">
     <div class="col">
       <h3 class="">Productos en sistema</h3>
-      <div class="col-3 pt-2">
-        <label for="activoeliminado">Filtrar por Activos/Eliminados </label>
+      <div class="row">
+
+        <div class="col-3 pt-2">
+          <label for="activoeliminado">Filtrar por Activos/Eliminados </label>
         <select
           class="form-select"
           aria-label="activo"
@@ -38,8 +40,9 @@
       <option *ngFor="let categoria of categorias" [value]="categoria.id">
         {{ categoria.nombre_categoria }}
       </option>
-      </select>
-      </div>
+    </select>
+  </div>
+</div>
       <div class="row">
         <div *ngIf="productos.length === 0" class="alert alert-warning">
           No hay productos cargados en el sistema. Por favor, agrega productos.

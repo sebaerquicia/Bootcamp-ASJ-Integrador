@@ -1,5 +1,7 @@
 package com.bootcamp.integradorback.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,12 +17,12 @@ public class DetalleOrdenModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonBackReference
 	@ManyToOne (fetch = FetchType.EAGER)
-	@JoinColumn(name="orden_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@JoinColumn(name="orden_id", referencedColumnName = "id", nullable = false)
 	private OrdenDeCompraModel orden_de_compra;
-	@ManyToOne (fetch = FetchType.EAGER)
-	@JoinColumn(name="proveedor_id", referencedColumnName = "id", nullable = false, updatable = false)
-	private ProveedorModel proveedor;
+
 	@ManyToOne (fetch = FetchType.EAGER)
 	@JoinColumn(name="producto_id", referencedColumnName = "id", nullable = false, updatable = false)
 	private ProductoModel producto;
@@ -42,12 +44,7 @@ public class DetalleOrdenModel {
 	public void setOrden_de_compra(OrdenDeCompraModel orden_de_compra) {
 		this.orden_de_compra = orden_de_compra;
 	}
-	public ProveedorModel getProveedor() {
-		return proveedor;
-	}
-	public void setProveedor(ProveedorModel proveedor) {
-		this.proveedor = proveedor;
-	}
+
 	public ProductoModel getProducto() {
 		return producto;
 	}

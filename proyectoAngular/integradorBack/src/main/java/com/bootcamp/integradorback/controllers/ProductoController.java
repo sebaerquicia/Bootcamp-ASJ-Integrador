@@ -40,6 +40,11 @@ public class ProductoController {
 			return ResponseEntity.ok(productoService.obtenerProductoPorCategoria(id));
 	
 		}
+		@GetMapping("/proveedor/{id}")
+		public ResponseEntity<List<ProductoModel>> getProductosByProveedorId(@PathVariable int id){
+			return ResponseEntity.ok(productoService.obtenerProductoPorProveedor(id));
+	
+		}
 		
 		@PostMapping() 
 		public ResponseEntity<List<ProductoModel>> cargarProducto(@RequestBody ProductoModel producto){

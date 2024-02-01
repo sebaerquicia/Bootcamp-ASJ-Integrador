@@ -49,7 +49,6 @@ eliminarProveedor(id: number): void {
   this.actualizarLista();
   });
   })
-
 }
 editarProveedor(id:any): void {
 this.router.navigate(['/proveedores/alta-proveedores/',{id}])

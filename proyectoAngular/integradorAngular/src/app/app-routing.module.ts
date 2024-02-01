@@ -24,10 +24,10 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'orden-compra',
+    path: 'ordenes-compra',
     children: [
-      { path: 'add-orden', component: AddOrdenComponent },
-      { path: 'listado-orden', component: ListadoOrdenComponent },
+      { path: 'alta-ordenes', component: AddOrdenComponent },
+      { path: 'listado-ordenes', component: ListadoOrdenComponent },
     ]
   },
   { path: '', component: MyMainComponent },

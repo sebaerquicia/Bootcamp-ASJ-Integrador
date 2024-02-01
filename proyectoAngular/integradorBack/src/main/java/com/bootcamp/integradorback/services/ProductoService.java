@@ -11,6 +11,7 @@ import com.bootcamp.integradorback.models.ProductoModel;
 import com.bootcamp.integradorback.models.ProveedorModel;
 import com.bootcamp.integradorback.repositories.CategoriaRepository;
 import com.bootcamp.integradorback.repositories.ProductoRepository;
+import com.bootcamp.integradorback.repositories.ProveedorRepository;
 
 @Service
 public class ProductoService {
@@ -21,6 +22,8 @@ public class ProductoService {
 	CategoriaService categoriaService;
 	@Autowired
 	CategoriaRepository catRepository;
+	@Autowired
+	ProveedorRepository proveedorRepository;
 	
 	// Para obtener todos los productos
 	public List<ProductoModel> obtenerProductos(){
@@ -64,6 +67,15 @@ public class ProductoService {
 		return resul;
 		
 	}
+	
+	
+	public List<ProductoModel> obtenerProductoPorProveedor(int id){
+		ProveedorModel proveedor = proveedorRepository.findById(id).get();
+		List<ProductoModel> resul = productoRepository.findByProveedor(proveedor);
+		return resul;
+		
+	}
+	
 	
 	//Para eliminar producto por id
 	public String eliminarProductoById(int id){		

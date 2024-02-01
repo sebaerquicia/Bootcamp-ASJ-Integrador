@@ -30,7 +30,7 @@
             name="codigo"
             type="text"
             placeholder="Codigo/SKU"
-            [disabled]="modoEdicion"
+            [disabled]="modificacion"
             class="form-control form__input"
             [(ngModel)]="producto.codigo_sku"
             required
@@ -42,7 +42,7 @@
           <select
             class="form-select"
             name="proveed"
-            [disabled]="modoEdicion"
+            [disabled]="modificacion"
             [(ngModel)]="producto.proveedor.id"
             required
           >
