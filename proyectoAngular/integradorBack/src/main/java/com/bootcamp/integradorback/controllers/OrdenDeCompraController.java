@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 //import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,10 +49,9 @@ public class OrdenDeCompraController {
 			return ResponseEntity.ok(ordenService.modificarOrden(id, orden));
 
 		}
-//		@DeleteMapping("/{id}")
-//		public ResponseEntity<List<OrdenDeCompraModel>> deleteOrden(@PathVariable int id){
-//			
-//			return ResponseEntity.ok(ordenService.eliminarOrden(id));
-//
-//		}
+		@DeleteMapping("/{id}")
+		public ResponseEntity<String> deleteOrden(@PathVariable int id){			
+			return ResponseEntity.ok(ordenService.eliminarOrdenById(id));
+
+		}
 }

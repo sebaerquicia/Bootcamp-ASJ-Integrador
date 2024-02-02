@@ -99,15 +99,7 @@ export class ListadoProductosComponent implements OnInit {
     this.router.navigate(['/productos/alta-productos/', { id }]);
   }
 
-  filtrarProductos() {
-    if (this.filtroActivoEliminado === 'Activos') {
-      return this.productos.filter((producto) => !producto.eliminado);
-    } else if (this.filtroActivoEliminado === 'Eliminados') {
-      return this.productos.filter((producto) => producto.eliminado);
-    } else {
-      return this.productos; // Mostrar todos los proveedores
-    }
-  }
+
   filtrarPorCategoria(id: any){
     if(id==0){
       this.actualizarLista()

@@ -8,6 +8,21 @@
         <div *ngIf="ordenes.length === 0" class="alert alert-warning">
             No hay ordenes de compra cargadas en el sistema. Realiza una compra para visualizarlas.
           </div>
+          <div class="row">
+            <div class="col-3 pt-2">
+              <label for="activaeliminada">Filtrar por Activas/Eliminadas </label>
+            <select
+              class="form-select"
+              aria-label="activa"
+              [(ngModel)]="filtroActivaEliminada"
+              name="activaeliminada"
+            >
+              <option value="Todas">Todas</option>
+              <option value="Activas">Activas</option>
+              <option value="Eliminadas">Eliminadas</option>
+            </select>
+          </div>
+          </div>
         <div class="col">
             <table class="table" *ngIf="ordenes.length > 0">
                 <thead>
@@ -19,10 +34,25 @@
                         <th scope="col">Proveedor</th>
                         <th scope="col">Unidades Producto y precio</th>
                         <th scope="col">Total($ARS)</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">#Opciones</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody" class="table__body" *ngFor="let orden of ordenes, let i = index">
+                <tbody id="tableBody" class="table__body" *ngFor="let orden of ordenes, let i = index"
+                [ngStyle]="{
+                  'background-color': !orden.eliminada ? 'inherit' : '#ccc'
+                }"
+                
+                >
+                <ng-container
+              *ngIf="
+                filtroActivaEliminada === 'Todas' ||
+                (filtroActivaEliminada === 'Activas' &&
+                  orden.eliminada === false) ||
+                (filtroActivaEliminada === 'Eliminadas' &&
+                  orden.eliminada === true)
+              "
+            >
                     <tr>
                         <th>{{orden.numero_orden}}</th>
                         <td>{{orden.fecha_emision | date}}</td>
@@ -31,8 +61,10 @@
                         <td>{{orden.proveedor.razon_social}}</td>
                         <td><li *ngFor="let detalle of orden.detalles">{{detalle.cantidad_producto}}(u): {{ detalle.producto.nombre_producto}} a {{detalle.precio_hist | currency}}</li></td>
                         <td> {{sumarTotal(orden) | currency}}</td>
-                        <td><button class="btn btn-outline-warning">Editar</button><button class="btn btn-outline-danger">Eliminar</button></td>
-                </tbody>
+                        <td>{{orden.estadoOrden.nombre_estado}}</td>
+                        <td><button class="btn btn-outline-warning">Estado</button><button class="btn btn-outline-danger" (click)="eliminarOrden(orden.id)" >Cancelar</button></td>
+                      </ng-container>
+                      </tbody>
                 
         </table>
     </div>

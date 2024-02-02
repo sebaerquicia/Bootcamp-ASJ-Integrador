@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.integradorback.models.OrdenDeCompraModel;
+import com.bootcamp.integradorback.models.ProductoModel;
 import com.bootcamp.integradorback.repositories.OrdenDeCompraRepository;
 
 
@@ -48,8 +49,20 @@ public class OrdenDeCompraService {
 	}
 	
 	// Para eliminar Orden de compra
-//	public List<OrdenDeCompraModel> eliminarOrden(int id) {
-//		ordenRepository.deleteById(id);
-//		return ordenRepository.findAll();
-//	}
+	public String eliminarOrdenById(int id) {
+		try {
+		OrdenDeCompraModel o = ordenRepository.findById(id).get();
+		if(o != null) {
+			o.setEliminada(!o.isEliminada());
+			ordenRepository.save(o);
+			return "Orden #" + id +" modificada";
+		}
+		return null;
+		}
+		catch(Exception err){
+			
+			return "Error";
+		}
+	}
+	
 }
