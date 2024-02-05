@@ -67,7 +67,7 @@ export class AltaProveedoresComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {}
-  id: any = '';
+  id: any = null;
 
 
 
@@ -110,7 +110,7 @@ export class AltaProveedoresComponent implements OnInit {
   // Método para guardar proveedor
  guardarProveedor(formulario: NgForm): void {
     if (formulario.valid) {
-      if(this.modificacion = false){
+      if(!this.modificacion){
       const proveedorNuevo : ProveedorBack = {
       codigo_proveedor : formulario.value.codigo,
       razon_social : formulario.value.razonSocial,
@@ -193,8 +193,8 @@ export class AltaProveedoresComponent implements OnInit {
             email_contacto: formulario.value.email,
             telefono_contacto: formulario.value.telefono
           },
-          /* img : formulario.value.img,
-           */
+           img : formulario.value.img,
+      
     
           }
           this.proveedoresService.actualizarProveedor(this.id, proveedorModificado).subscribe((msj) => {
@@ -211,6 +211,8 @@ this.router.navigate(['proveedores/listado-proveedores']);
       alert('Debes completar todos los campos del formulario'); 
     }
   }
+
+
 
 
   // Método para resetear formulario
@@ -254,5 +256,6 @@ this.router.navigate(['proveedores/listado-proveedores']);
         this.provincias = data;
       });
   }
+
 
 }

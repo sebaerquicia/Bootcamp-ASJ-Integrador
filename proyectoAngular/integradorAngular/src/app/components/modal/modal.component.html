@@ -1,0 +1,52 @@
+<div class="modal-header">
+  <h2 class="modal-title">{{ proveedor.razon_social | titlecase }}</h2>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col">
+      <img src="{{ proveedor.img }}" alt="FotoProveedor" class="imagenes" />
+    </div>
+    <div class="col">
+      <h3>Proveedor: </h3>
+      <h3>Código: {{ proveedor.codigo_proveedor }}</h3>
+      <h4>Rubro: {{ proveedor.nombre_rubro }}</h4>
+      <p>Sitio web: {{ proveedor.web }}</p>
+      <p>
+        Dirección: {{ proveedor.calle }} {{ proveedor.numero_calle }},
+        {{ proveedor.localidad }}, {{ proveedor.provincia.nombre_provincia }},
+        {{ proveedor.pais }}
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <hr>
+      <div class="col">       
+        <h3>Data Fiscal</h3>
+        <p>IVA: {{ proveedor.iva.nombre_iva }}</p>
+        <p>CUIT: {{ proveedor.cuit_proveedor }}</p>
+        
+      </div>
+
+      <div class="col">
+        <h3>Datos de contacto</h3>
+        
+        
+        <p>Email: {{ proveedor.contacto.email_contacto }}</p>
+        <p>Teléfono: {{ proveedor.contacto.telefono_contacto }}</p>
+        <p>
+          Contacto: {{ proveedor.contacto.nombre_contacto }}
+          {{ proveedor.contacto.apellido_contacto }} | Tel:
+          {{ proveedor.contacto.telefono_contacto }} | eMail:
+          {{ proveedor.contacto.email_contacto }}
+        </p>
+        
+      </div>
+      </div>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="modal.close()">
+    Cerrar
+  </button>
+</div>

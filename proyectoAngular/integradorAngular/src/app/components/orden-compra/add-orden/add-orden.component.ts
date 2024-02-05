@@ -24,8 +24,8 @@ export class AddOrdenComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
-
+  ) { this.minDate = new Date();}
+  minDate: Date;
   proveedores: any[] = [];
   productos: any[] = [];
   productosFiltrados: ProductoBack[] = [];
@@ -143,7 +143,7 @@ export class AddOrdenComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.proveedoresService.getProveedores().subscribe((data) => {
+    this.proveedoresService.getProveedoresActivos().subscribe((data) => {
       this.proveedores = data;
     });
     this.route.paramMap.subscribe((params) => {
@@ -536,4 +536,5 @@ export class AddOrdenComponent implements OnInit {
     this.selectProveedorBloqueado = false;
     this.actualizarTotal();
   }
+
 }

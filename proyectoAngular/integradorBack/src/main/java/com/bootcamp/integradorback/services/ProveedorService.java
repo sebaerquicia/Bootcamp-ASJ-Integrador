@@ -84,6 +84,11 @@ public class ProveedorService {
 			return "Error";
 		}
 	}
+
+	public List<ProveedorModel> obtenerProveedoresActivos(){
+		 return provRepository.obtenerProveedoresActivos();
+	
+	}
 	
 
 }

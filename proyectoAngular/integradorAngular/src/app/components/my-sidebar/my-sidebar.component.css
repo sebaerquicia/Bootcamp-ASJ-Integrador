@@ -1,0 +1,56 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+.offcanvas {
+     font-family: 'Poppins', sans-serif;
+     background: #ffffff;
+ }
+ 
+ p {
+     font-family: 'Poppins', sans-serif;
+     font-size: 1.1em;
+     font-weight: 300;
+     line-height: 1.7em;
+
+ }
+ 
+ a,
+ a:hover,
+ a:focus {
+     color: inherit;
+     text-decoration: none;
+     transition: all 0.3s;
+ }
+
+
+ 
+ #sidebar {
+     min-width: 250px;
+     max-width: 250px;
+     color: #7386D5;
+     background: #fff;
+     transition: all 0.3s;
+     height: 100% !important;
+ }
+
+
+ 
+ #sidebar ul p {
+     color: #373737;
+   /*   padding: 10px; */
+ }
+ 
+ #sidebar ul li a {
+     /* padding: 10px; */
+     font-size: 1.1em;
+
+ }
+ 
+ #sidebar ul li a:hover {
+     background: #7386D5;
+     color: #fff;
+ }
+ 
+ #sidebar ul li.active>a,
+ a[aria-expanded="true"] {
+     background: #fff;
+     color: #6d7fcc;
+ }

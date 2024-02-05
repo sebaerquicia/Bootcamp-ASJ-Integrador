@@ -19,6 +19,9 @@ export class ServicioProveedoresService {
   getProveedores(): Observable<any> {
     return this.http.get(this.url);
   }
+  getProveedoresActivos(): Observable<any>{
+    return this.http.get(this.url + "/activos")
+  }
 
   //POST
   guardarProveedor(proveedor: ProveedorBack): Observable<any> {

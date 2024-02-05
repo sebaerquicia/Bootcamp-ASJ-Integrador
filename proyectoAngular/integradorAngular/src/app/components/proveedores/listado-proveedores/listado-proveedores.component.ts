@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormularioProveedor } from '../../../models/proveedor.model';
 import { ProveedorBack } from '../../../models/proveedorBack.model';
 import { NgZone } from '@angular/core';
-
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../../modal/modal.component';
 
 
 @Component({
@@ -18,7 +19,10 @@ filtroRazonSocial: string = '';
 proveedores: any[]=[]
 filtroActivoEliminado: string = 'Todos';
 
-constructor (private proveedoresService: ServicioProveedoresService, private router: Router, private zone: NgZone,  private cdr: ChangeDetectorRef){}
+constructor (private modalService: NgbModal, config: NgbModalConfig, private proveedoresService: ServicioProveedoresService, private router: Router, private zone: NgZone,  private cdr: ChangeDetectorRef){
+  config.backdrop = 'static';
+  config.keyboard = false;
+}
 
 
 ngOnInit(): void {
@@ -31,7 +35,7 @@ filtrarProveedores() {
   } else if (this.filtroActivoEliminado === 'Eliminados') {
     return this.proveedores.filter(proveedor => proveedor.eliminado);
   } else {
-    return this.proveedores; // Mostrar todos los proveedores
+    return this.proveedores; 
   }
 }
 
@@ -54,5 +58,9 @@ editarProveedor(id:any): void {
 this.router.navigate(['/proveedores/alta-proveedores/',{id}])
 }
 
+openModal(proveedor:ProveedorBack): void {
+  const modalRef = this.modalService.open(ModalComponent, { size: 'lg' });
+  modalRef.componentInstance.proveedor = proveedor;
+}
 
 }

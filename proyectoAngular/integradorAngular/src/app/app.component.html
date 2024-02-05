@@ -1,25 +1,22 @@
-<div class="container-fluid ">
-  <div class="row">
+<div class="container-fluid">
+  <!--  <div class="row">
     <div class="col">
-  
       <app-my-navbar></app-my-navbar>
-      
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="col" style="height: 100%">
+      <app-my-sidebar></app-my-sidebar>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
     </div>
   </div>
-    <div class="row">
-      <div class="col">
-
-        <app-my-sidebar></app-my-sidebar>
-        <main>
-          <router-outlet></router-outlet>
-        </main>
-        
-      </div>
-      <div class="row">
-        <div class="col">
-          <footer>
-            <app-my-footer></app-my-footer>
-          </footer>
-        </div>
-      </div>
+  <div class="row">
+    <div class="col">
+      <footer>
+        <app-my-footer></app-my-footer>
+      </footer>
+    </div>
   </div>
+</div>

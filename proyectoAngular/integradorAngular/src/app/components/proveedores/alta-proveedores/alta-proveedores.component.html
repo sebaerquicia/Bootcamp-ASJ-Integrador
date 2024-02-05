@@ -1,4 +1,4 @@
-<div class="container-fluid px-4">
+<div class="container px-4">
   <div class="row">
     <div class="col">
       <h1 class="mt-4">Proveedores</h1>
@@ -15,7 +15,7 @@
       <form #formulario="ngForm" (ngSubmit)="guardarProveedor(formulario)">
         <div class="col">
           <hr>
-          <h2>Datos del proveedor</h2>
+          <h3>Datos del proveedor</h3>
         </div>
         <div class="row mb-2">
           <div class="col-md-2">
@@ -45,9 +45,9 @@
               minlength="4"
               maxlength="20"
               [(ngModel)]="proveedor.razon_social"
-              (ngModelChange)="validarNombre()"
               [disabled]="modoEdicion"              
               required
+              
             />           
            </div>
           <div class="col-md-2">
@@ -76,11 +76,25 @@
               required
             />
           </div>
+          <div class="row">
+            <div class="col-md-3 mt-2 ">
+              <label for="img" class="form-label">URL Imágen: </label>
+              <input
+                name="img"
+                type="text"
+                placeholder="Imagen del proveedor"
+                id="imgInput"
+                class="form-control form__input mx-2"
+                [(ngModel)]="proveedor.img"
+                required
+              />
+            </div>
+          </div>
           <div class="row mb-3">
             <div class="row">
               <div class="col">
                 <hr>
-                <h2>Datos fiscales</h2>
+                <h3>Datos fiscales</h3>
               </div>
             </div>
           <div class="col-md-3">
@@ -99,7 +113,7 @@
               [disabled]="modoEdicion"
               required
             />
-            <span *ngIf="!cuitValido" class="text-danger">El CUIT debe tener 11 números.</span>
+
           </div>
           <div class="col-md-2">
             <label for="iva" class="form-label">IVA: </label>
@@ -119,7 +133,7 @@
           <div class="row">
             <div class="col">
               <hr>
-              <h2>Dirección</h2>
+              <h3>Dirección</h3>
             </div>
           </div>
           <div class="col-md-2">
@@ -281,7 +295,7 @@
               required
             />
           </div>
-    
+
         </div>
         <div class="col-md-3">
           <hr>

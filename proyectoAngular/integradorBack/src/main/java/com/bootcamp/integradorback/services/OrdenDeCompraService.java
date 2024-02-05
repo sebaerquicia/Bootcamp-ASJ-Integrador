@@ -54,6 +54,7 @@ public class OrdenDeCompraService {
 		OrdenDeCompraModel o = ordenRepository.findById(id).get();
 		if(o != null) {
 			o.setEliminada(!o.isEliminada());
+			
 			ordenRepository.save(o);
 			return "Orden #" + id +" modificada";
 		}

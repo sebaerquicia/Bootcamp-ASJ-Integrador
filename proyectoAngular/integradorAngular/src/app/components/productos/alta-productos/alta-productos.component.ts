@@ -78,7 +78,7 @@ export class AltaProductosComponent implements OnInit {
     this.productosService.getProductos().subscribe((data) => {
       this.productos = data;
     });
-    this.proveedoresService.getProveedores().subscribe((data) => {
+    this.proveedoresService.getProveedoresActivos().subscribe((data) => {
       this.proveedores = data;
     });
     this.productosService.getCategorias().subscribe((data) => {
@@ -205,8 +205,12 @@ export class AltaProductosComponent implements OnInit {
           .subscribe((msj) => {
             console.log(msj);
           });
+
+          alert(this.producto.nombre_producto + ' se editó correctamente');
         formulario.reset();
+        this.ngOnInit()
       }
+
       this.router.navigate(['productos/listado-productos']);
     } else {
       alert('Debes completar todos los campos del formulario');

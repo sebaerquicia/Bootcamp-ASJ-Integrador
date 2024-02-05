@@ -1,4 +1,4 @@
-<div class="container-fluid px-4">
+<div class="container px-4  min-vh-100">
     <h1 class="mt-4">Listado de Ordenes</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="">Inicio</a></li>
@@ -35,7 +35,7 @@
                         <th scope="col">Unidades Producto y precio</th>
                         <th scope="col">Total($ARS)</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">#Opciones</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody" class="table__body" *ngFor="let orden of ordenes, let i = index"
@@ -62,7 +62,11 @@
                         <td><li *ngFor="let detalle of orden.detalles">{{detalle.cantidad_producto}}(u): {{ detalle.producto.nombre_producto}} a {{detalle.precio_hist | currency}}</li></td>
                         <td> {{sumarTotal(orden) | currency}}</td>
                         <td>{{orden.estadoOrden.nombre_estado}}</td>
-                        <td><button class="btn btn-outline-warning">Estado</button><button class="btn btn-outline-danger" (click)="eliminarOrden(orden.id)" >Cancelar</button></td>
+                        <td><button class="btn btn-outline-success m-2"><img width="20" height="20" src="https://img.icons8.com/ios/50/ok--v1.png" alt="ok--v1"/></button>
+                          <button *ngIf="!orden.eliminada" class="btn btn-outline-danger m-2 " (click)="eliminarOrden(orden.id)" > <img width="20" height="20" src="https://img.icons8.com/material-rounded/24/filled-trash.png" alt="filled-trash"/></button>
+                          <button *ngIf="orden.eliminada" class="btn btn-outline-primary m-2 " (click)="eliminarOrden(orden.id)" > <img width="20" height="20" src="https://img.icons8.com/windows/32/trash-restore.png" alt="trash-restore"/></button>
+                        
+                        </td>
                       </ng-container>
                       </tbody>
                 

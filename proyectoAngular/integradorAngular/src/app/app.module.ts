@@ -18,6 +18,9 @@ import { AddOrdenComponent } from './components/orden-compra/add-orden/add-orden
 import { ListadoOrdenComponent } from './components/orden-compra/listado-orden/listado-orden.component';
 import { FormsModule } from '@angular/forms';
 import { FilterByPipe } from './pipes/filter-by.pipe';
+import { ModalComponent } from './components/modal/modal.component';
+import { ModalProductoComponent } from './components/productos/modal-producto/modal-producto.component';
+import { ModalOrdenComponent } from './components/orden-compra/modal-orden/modal-orden.component';
 
 
 @NgModule({
@@ -34,7 +37,10 @@ import { FilterByPipe } from './pipes/filter-by.pipe';
     MyMainComponent,
     AddOrdenComponent,
     ListadoOrdenComponent,
-    FilterByPipe
+    FilterByPipe,
+    ModalComponent,
+    ModalProductoComponent,
+    ModalOrdenComponent
   ],
   imports: [
     BrowserModule,

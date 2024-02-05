@@ -38,6 +38,10 @@ public class ProveedorController {
 
 	}
 	
+	@GetMapping("/activos")
+	public ResponseEntity<List<ProveedorModel>> getProveedoresActivos(){
+		return ResponseEntity.ok(proveedorService.obtenerProveedoresActivos());
+	}
 	
 	
 	@PostMapping() 

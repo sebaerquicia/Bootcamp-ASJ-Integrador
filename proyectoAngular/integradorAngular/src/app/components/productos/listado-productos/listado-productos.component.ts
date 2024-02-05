@@ -4,6 +4,9 @@ import { Producto } from '../../../models/producto.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoBack } from '../../../models/productoBack.model';
 
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { ModalProductoComponent } from '../modal-producto/modal-producto.component';
+
 @Component({
   selector: 'app-listado-productos',
   templateUrl: './listado-productos.component.html',
@@ -14,11 +17,18 @@ export class ListadoProductosComponent implements OnInit {
   filtroActivoEliminado: string = 'Todos';
   categorias: any[]=[];
   filtroCategorias: number = 0;
+  criterioOrdenamiento: string | null = null;
+
   constructor(
+    private modalService: NgbModal,
+    config: NgbModalConfig,
     private productosService: ServicioProductosService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+      config.backdrop = 'static';
+      config.keyboard = false;
+}
   ngOnInit(): void {
     this.actualizarLista();
     this.productosService.getCategorias().subscribe((data)=> {
@@ -107,5 +117,26 @@ export class ListadoProductosComponent implements OnInit {
     this.productosService.getProductosByIdCategoria(id).subscribe((data) => {
       this.productos = data;
     });
+  }
+  openModal(producto: ProductoBack): void {
+    const modalRef = this.modalService.open(ModalProductoComponent, { size: 'lg' });
+    modalRef.componentInstance.producto= producto;
+  }
+
+  ordenarPorPrecio(ascendente: boolean): void {
+    this.productos.sort((a, b) => {
+      const precioA = a.precio_producto;
+      const precioB = b.precio_producto;
+
+      if (precioA! < precioB!) {
+        return ascendente ? -1 : 1;
+      } else if (precioA! > precioB!) {
+        return ascendente ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+
+    this.criterioOrdenamiento = ascendente ? 'menorAMayor' : 'mayorAMenor';
   }
 }

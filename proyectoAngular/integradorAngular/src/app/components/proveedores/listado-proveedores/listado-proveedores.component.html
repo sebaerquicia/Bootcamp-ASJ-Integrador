@@ -1,4 +1,4 @@
-<div class="container-fluid px-4">
+<div class="container px-4  min-vh-100">
   <h1 class="mt-4">Listado de Proveedores</h1>
   <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item"><a href="">Inicio</a></li>
@@ -22,6 +22,7 @@
       <label for="">Filtrar por Razon Social: </label>
       <input class="form-control me-2" type="search" placeholder="Ej: 'ProveedorX'" [(ngModel)]="filtroRazonSocial" aria-label="Search">
   </div>
+  
     <div class="row">
       <div class="col">
         <div *ngIf="proveedores.length === 0" class="alert alert-warning">
@@ -31,11 +32,10 @@
         <table *ngIf="proveedores.length > 0" class="table">
           <thead>
             <tr>
+              <th scope="col">Img</th>
               <th scope="col">Código</th>
-              <th scope="col">Nombre Proveedor</th>
-              <th scope="col">Sitio WEB</th>
-              <th scope="col">Email</th>
-              <th scope="col">Teléfono</th>
+              <th scope="col">Razón Social</th>
+              <th scope="col">+Info</th>
               <th scope="col">Contacto</th>
 
               <th scope="col">Baja/Modificación</th>
@@ -60,36 +60,46 @@
               "
             >
               <tr>
+                <td><img src="{{proveedor.img}}" alt="FotoProveedor" class="imagenes"></td>
                 <td>{{ proveedor.codigo_proveedor }}</td>
                 <th>{{ proveedor.razon_social | titlecase }}</th>
-                <td>{{ proveedor.web }}</td>
-                <td>{{ proveedor.contacto.email_contacto }}</td>
-                <td>{{ proveedor.contacto.telefono_contacto }}</td>
+                <td>
+                  <button class="btn " ngbTooltip="{{proveedor.web}} | {{proveedor.contacto.email_contacto}} | {{proveedor.contacto.telefono_contacto}}">
+                    <img width="20" height="20" src="https://img.icons8.com/ios/50/info--v1.png" alt="info--v1"/>
+                  </button>
+
+                </td>
                 <td>
                   {{ proveedor.contacto.nombre_contacto }}
                   {{ proveedor.contacto.apellido_contacto }}
                 </td>
                 <td>
                   <button
-                  (click)="editarProveedor(proveedor.id)"
-                  class="btn btn-outline-secondary "
+                  (click)="openModal(proveedor)"
+                  class="btn btn-outline-info"
                 >
-                Editar
+                <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png" alt="visible--v1"/>
                 </button>
-                <!-- Mostrar el botón de eliminar o dar de alta según si la propiedad "eliminado" es true o false -->
+                  <button
+                  (click)="editarProveedor(proveedor.id)"
+                  class="btn btn-outline-warning mx-2 "
+                >
+                <img width="20" height="20" src="https://img.icons8.com/ios/50/edit--v1.png" alt="edit--v1"/>
+                </button>
+
                 <button
                   *ngIf="proveedor.eliminado"
                   class="btn btn-outline-primary "
                   (click)="eliminarProveedor(proveedor.id)"
                 >
-                  Dar de alta<i class="bi bi-upload"></i>
+                <img width="20" height="20" src="https://img.icons8.com/windows/32/trash-restore.png" alt="trash-restore"/>
                 </button>
                 <button
                   *ngIf="!proveedor.eliminado"
                   class="btn btn-outline-danger"
                   (click)="eliminarProveedor(proveedor.id)"
                 >
-                  Eliminar<i class="bi bi-trash3"></i>
+                <img width="20" height="20" src="https://img.icons8.com/material-rounded/24/filled-trash.png" alt="filled-trash"/>
                 </button>
                 </td>
               </tr>

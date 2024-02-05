@@ -1,4 +1,4 @@
-<div class="container-fluid px-4">
+<div class="container px-4">
   <div class="row">
     <div class="col">
       <h1 class="mt-4">Ordenes de compra</h1>
@@ -11,16 +11,16 @@
 
   <div class="row">
     <div class="col">
-      <h2>+ Ordenes de compra</h2>
+      <h2 class="mb-4">+ Ordenes de compra</h2>
       <form #formulario="ngForm" (ngSubmit)="guardarOrden(formulario)">
         <div class="row mb-2">
           <div class="col-md-2">
-            <label for="nro" class="form-label">Número de Orden: </label>
+            <label for="nro" class="form-label h4">Número de Orden: </label>
             <input
               name="nro"
               type="number"
               placeholder="Nro de orden"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [disabled]="modificacion"
               [(ngModel)]="orden.numero_orden"
               required
@@ -28,32 +28,23 @@
           </div>
 
           <div class="col-md-2">
-            <label for="fecha" class="form-label">Fecha emisión: </label>
-         <!--    <input
-              name="fecha"
-              type="date"
-              placeholder="Fecha de emisión"
-              class="form-control form__input mx-2"
-              [disabled]="modificacion"
-              [(ngModel)]="orden.fecha_emision"
-              required
-              readonly 
-            /> -->
+            <label for="fecha" class="form-label h4">Fecha emisión: </label>
             <p class="mt-2">{{ orden.fecha_emision | date:'dd/MM/yyyy' }}</p>
           </div>
           <div class="col-md-2">
-            <label for="fechaEntrega" class="form-label">Fecha entrega: </label>
+            <label for="fechaEntrega" class="form-label h4">Fecha entrega: </label>
             <input
               name="fechaEntrega"
               type="date"
               placeholder="Fecha de entrega"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="orden.fecha_entrega_esperada"
+              [min]="minDate"
               required
             />
           </div>
           <div class="mb-3 col-md-4">
-            <label for="informacion" class="form-label"
+            <label for="informacion" class="form-label h4"
               >Información adicional:
             </label>
             <textarea
@@ -68,10 +59,9 @@
           </div>
         </div>
         <div class="row mb-3">
-          <div class="col">
-            <label for="proveedor" class="form-label">Proveedor: </label>
-            <select
-     
+          <div class="col-md-3">        
+            <label for="proveedor" class="form-label h4">Proveedor: </label>
+            <select     
               class="form-select"
               name="idProveedor"
               type="number"
@@ -88,10 +78,9 @@
               </option>
             </select>
           </div>
-          <div class="col-md-8">
-            
-            <div *ngIf="orden.proveedor.id !== null" class="col">
-              <h3>Productos:</h3>
+
+            <div *ngIf="orden.proveedor.id !== null" class="col-md-3">
+              <h4>Productos:</h4>
               <select
               #productoSelect
               class="form-select"
@@ -108,8 +97,10 @@
                 {{ producto.precio_producto | currency }}
                 </option>
               </select>
-
-              <label class="form-label mx-3 ">Cantidad:</label>
+            </div>
+              <div class="col-md-2">         
+              <h4 class="form-label">Cantidad: </h4>
+              
               <input
                 #cantidad
                 name="cantidad"
@@ -117,13 +108,16 @@
                 min="0"
                 value="undefined"
                 placeholder="Cantidad"
-                class="form-control-sm mt-3"
+                class="form-control "
                 [(ngModel)]="detalle.cantidad_producto"
               />
-              <a class="btn btn-primary mx-3 " (click)="llenarListado(detalle.producto.id , detalle.cantidad_producto)">Agregar al listado</a>
+            </div>
+            <div class="col-md-3">
+
+              <a class="btn btn-primary m-4 p-3" (click)="llenarListado(detalle.producto.id , detalle.cantidad_producto)">Agregar al listado</a>
             </div>
           </div>
-        </div>
+     
 
         <div class="row">
           <div class="col">
@@ -144,7 +138,7 @@
                 *ngFor="let detalle of detallesProductos let i = index"
               >
                 <tr>
-                  <td><img  src="{{ detalle.producto.url_img }}" alt="ImagenNotFound"></td>
+                  <td><img  src="{{ detalle.producto.url_img }}" alt="ImagenNotFound" class="imagenes"></td>
                   <th>{{ detalle.producto.nombre_producto }}</th>
                   <td>{{ detalle.cantidad_producto }}</td>
                   <td>{{ detalle.precio_hist | currency }}</td>

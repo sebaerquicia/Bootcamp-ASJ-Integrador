@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h2 class="modal-title">{{ producto.nombre_producto | titlecase }}</h2>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col">
+        <img src="{{ producto.url_img }}" alt="FotoProducto" class="imagenes" />
+      </div>
+      <div class="col">
+        <h3>SKU: {{producto.codigo_sku}}</h3>
+        <h4>Razon Social: {{ producto.proveedor.razon_social }}</h4>
+        <h5>Categoria: {{ producto.categoria.nombre_categoria }}</h5>
+      </div>
+    </div>
+    <div class="row">
+      <hr>
+        <div class="col">       
+          <h3>Descripción: </h3>
+          <p>{{ producto.descripcion }}</p>
+
+        </div>
+  
+        <div class="col">
+          <h3>Precio Unitario: {{producto.precio_producto | currency}}</h3>
+
+          
+        </div>
+        </div>
+  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">
+      Cerrar
+    </button>
+  </div>
+  

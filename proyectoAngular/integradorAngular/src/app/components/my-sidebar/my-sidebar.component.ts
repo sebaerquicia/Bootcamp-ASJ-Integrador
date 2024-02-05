@@ -6,9 +6,5 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './my-sidebar.component.css'
 })
 export class MySidebarComponent {
-  isSidenavCollapsed = false;
-
-  toggleSidenav() {
-    this.isSidenavCollapsed = !this.isSidenavCollapsed;
-  }
+ 
 }
