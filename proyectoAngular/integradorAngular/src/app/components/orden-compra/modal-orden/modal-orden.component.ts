@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { OrdenBack } from '../../../models/ordenBack.model';
 @Component({
   selector: 'app-modal-orden',
   templateUrl: './modal-orden.component.html',
@@ -7,4 +9,16 @@ import { Component } from '@angular/core';
 })
 export class ModalOrdenComponent {
 
+  @Input() orden: any;
+
+  constructor(public modal: NgbActiveModal) {
+    
+  }
+
+    sumarTotal(orden: OrdenBack): number {
+      return orden.detalles
+        .map((detalle) => detalle.total)
+        .reduce((a, b) => a! + b!)!;
+    }
+  
 }

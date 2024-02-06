@@ -6,37 +6,51 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bootcamp.integradorback.exceptions.ResourceNotFoundException;
 import com.bootcamp.integradorback.models.PaisModel;
 import com.bootcamp.integradorback.repositories.PaisRepository;
 
 @Service
 public class PaisService {
 
-	@Autowired
-	PaisRepository paisRepository;
-	
-	
-	// Para obtener Paises
-	public List<PaisModel> obtenerPaises(){
-		return paisRepository.findAll();
+    @Autowired
+    PaisRepository paisRepository;
+    
+    public List<PaisModel> obtenerPaises() {
+        try {
+            return paisRepository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener los países", e);
+        }
+    }
+    
+    public Optional<PaisModel> obtenerPaisById(int id) {
+        try {
+            Optional<PaisModel> pais = paisRepository.findById(id);
+            if (pais.isPresent()) {
+                return pais;
+            } else {
+                throw new ResourceNotFoundException("País no encontrado con ID: " + id);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener el país con ID: " + id, e);
+        }
+    }
 
-	}
-	
-	//para obtener 1 pais
-	public Optional<PaisModel> obtenerPaisById(int id){
-		return paisRepository.findById(id); 
-	}
-
-	public String updatePais(Integer id, PaisModel paisEdit) {
-		PaisModel p = paisRepository.findById(id).get();
-		if(p != null) {
-			p.setNombre_pais(paisEdit.getNombre_pais());			
-			paisRepository.save(p);
-			return "Pais modificado con exito";
-		}
-		return"Error";
-		
-	}
-
-
+    public String updatePais(Integer id, PaisModel paisEdit) {
+        try {
+            Optional<PaisModel> existingPais = paisRepository.findById(id);
+            if (existingPais.isPresent()) {
+                PaisModel p = existingPais.get();
+                p.setNombre_pais(paisEdit.getNombre_pais());
+                paisRepository.save(p);
+                return "País modificado con éxito";
+            } else {
+                throw new ResourceNotFoundException("País no encontrado con ID: " + id);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error al modificar el país con ID: " + id, e);
+        }
+    }
 }
+

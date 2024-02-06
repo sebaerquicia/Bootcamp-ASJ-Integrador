@@ -5,7 +5,7 @@ import { FormularioProveedor } from '../../../models/proveedor.model';
 import { ProveedorBack } from '../../../models/proveedorBack.model';
 import { NgZone } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from '../../modal/modal.component';
+import { ModalComponent } from '../modal/modal.component';
 
 
 @Component({

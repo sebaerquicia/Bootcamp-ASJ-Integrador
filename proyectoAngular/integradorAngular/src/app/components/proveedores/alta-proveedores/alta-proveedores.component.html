@@ -20,7 +20,7 @@
         <div class="row mb-2">
           <div class="col-md-2">
             <label for="codigo" class="form-label">Código único: </label>
-            <input
+            <input 
               name="codigo"
               class="form-control form__input mx-2"
               type= "text"
@@ -45,10 +45,13 @@
               minlength="4"
               maxlength="20"
               [(ngModel)]="proveedor.razon_social"
-              [disabled]="modoEdicion"              
+              [disabled]="modoEdicion"
               required
-              
+              (ngModelChange)="validateRazonSocial($event)"
             />           
+            <div *ngIf="proveedor.razon_social && razonSocialInvalid && proveedor.razon_social.length < 4" class="text-danger">
+              La razón social debe tener al menos 4 caracteres.
+            </div>
            </div>
           <div class="col-md-2">
             <label for="rubro" class="form-label">Rubro: </label>
@@ -74,7 +77,11 @@
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.web"
               required
+              (ngModelChange)="validarURL($event)"
             />
+            <div *ngIf="webInvalid" class="text-danger">
+              La URL debe tener un formato válido.
+            </div>
           </div>
           <div class="row">
             <div class="col-md-3 mt-2 ">
@@ -85,9 +92,9 @@
                 placeholder="Imagen del proveedor"
                 id="imgInput"
                 class="form-control form__input mx-2"
-                [(ngModel)]="proveedor.img"
-                required
+                [(ngModel)]="proveedor.img"              
               />
+
             </div>
           </div>
           <div class="row mb-3">
@@ -97,24 +104,25 @@
                 <h3>Datos fiscales</h3>
               </div>
             </div>
-          <div class="col-md-3">
-            <label for="cuit" class="form-label">CUIT: </label>
-            <input
-              name="cuit"
-              type="number"
-              placeholder="CUIT"
-              id="cuitInput"
-              class="form-control form__input mx-2"
-              [(ngModel)]="proveedor.cuit_proveedor"
-              min=1000000000
-              max=99999999999
-              (input)="validarCuit()"
-              pattern="[0-9]*" 
-              [disabled]="modoEdicion"
-              required
-            />
-
-          </div>
+            <div class="col-md-3">
+              <label for="cuit" class="form-label">CUIT: </label>
+              <input
+                name="cuit"
+                type="text"
+                placeholder="CUIT"
+                id="cuitInput"
+                class="form-control form__input mx-2"
+                [(ngModel)]="proveedor.cuit_proveedor"
+                pattern="[0-9]{11}"
+                [disabled]="modoEdicion"
+                required
+                maxlength="11"
+                (ngModelChange)="validarCUIT($event)"
+              />
+              <div *ngIf="cuitInvalid" class="text-danger">
+                El CUIT debe tener exactamente 11 números y no debe contener letras.
+              </div>
+            </div>
           <div class="col-md-2">
             <label for="iva" class="form-label">IVA: </label>
             <select
@@ -188,10 +196,12 @@
               minlength="4"
               maxlength="6"
               required
-              (ngModelChange)="validarCp()"
+              (ngModelChange)="validarCP($event)"
               
             />
-            <span *ngIf="!cpValido" class="text-danger">El CP debe tener entre 4 y 6 dígitos.</span>
+            <div *ngIf="cpInvalid" class="text-danger">
+              El código postal debe tener entre 4 y 6 números.
+            </div>
           </div>
           <div class="col-md-2">
             <label for="calle" class="form-label">Calle: </label>
@@ -239,9 +249,11 @@
               minlength="4"
               maxlength="20"
               [disabled]="modoEdicion"
-              
+              (ngModelChange)="validarNombre($event)"
             />
-            <span *ngIf="!nombreValido" class="text-danger">El nombre debe tener al menos 4 letras y no debe contener números.</span>
+            <div *ngIf="nombreInvalid" class="text-danger">
+              El nombre debe tener al menos 4 caracteres y no debe contener caracteres especiales.
+            </div>
           </div>
           <div class="col-md-2">
             <label for="nombre" class="form-label">Apellido: </label>
@@ -256,8 +268,11 @@
               minlength="4"
               maxlength="20"
               [disabled]="modoEdicion"
-             
+              (ngModelChange)="validarApellido($event)"
             />
+            <div *ngIf="apellidoInvalid" class="text-danger">
+              El apellido debe tener al menos 4 caracteres y no debe contener caracteres especiales.
+            </div>
           </div>
           <div class="col-md-2">
             <label for="rol" class="form-label">Rol: </label>

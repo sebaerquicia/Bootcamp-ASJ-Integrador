@@ -19,6 +19,52 @@ export class AltaProveedoresComponent implements OnInit {
   paises: any[] = [];
   provincias: any[] = [];
   modificacion = false;
+  razonSocialInvalid: boolean = false;
+  cpInvalid: boolean = false;
+  cuitInvalid: boolean = false;
+  webInvalid: boolean = false;
+  emailInvalid: boolean = false;
+  nombreInvalid: boolean = false;
+  apellidoInvalid: boolean = false;
+
+
+    // Métodos de validación y otros...
+
+validateRazonSocial(value: string) {
+  if (value.length < 4) {
+    this.razonSocialInvalid = true;
+  } else {
+    this.razonSocialInvalid = false;
+  }
+  }
+  validarNombre(value: string) {
+    this.nombreInvalid = value.length < 4 || !/^[a-zA-Z\s]*$/.test(value);
+    }
+    validarApellido(value: string) {
+
+      this.apellidoInvalid = value.length < 4 || !/^[a-zA-Z\s]*$/.test(value);
+    }
+  
+    validarCP(value: string) {
+      this.cpInvalid = !value || value.length < 4 || value.length > 6 || !/^\d+$/.test(value);
+    }
+  
+    validarCUIT(value: string | null) {
+      if (value !== null && (value.length !== 11 || !/^\d+$/.test(value))) {
+        this.cuitInvalid = true;
+        console.log(this.cuitInvalid)
+      } else {
+        this.cuitInvalid = false;
+      }
+    }
+
+    validarURL(value: string) {
+
+      this.webInvalid = !value || !/^https?:\/\/(.*)$/.test(value)
+    }
+
+
+
   
    proveedor: ProveedorBack = {
     id: undefined,
@@ -61,6 +107,7 @@ export class AltaProveedoresComponent implements OnInit {
   nombreValido = true;
   cuitValido = true;
   cpValido = true;
+
 
   constructor(
     public proveedoresService: ServicioProveedoresService,
@@ -109,8 +156,10 @@ export class AltaProveedoresComponent implements OnInit {
 
   // Método para guardar proveedor
  guardarProveedor(formulario: NgForm): void {
-    if (formulario.valid) {
+    if (formulario.valid && !this.razonSocialInvalid && !this.cpInvalid && !this.cuitInvalid && !this.webInvalid && !this.emailInvalid && !this.nombreInvalid && !this.apellidoInvalid ) {
       if(!this.modificacion){
+
+
       const proveedorNuevo : ProveedorBack = {
       codigo_proveedor : formulario.value.codigo,
       razon_social : formulario.value.razonSocial,
@@ -140,8 +189,8 @@ export class AltaProveedoresComponent implements OnInit {
         email_contacto: formulario.value.email,
         telefono_contacto: formulario.value.telefono
       },
-      /* img : formulario.value.img,
-       */
+       img : formulario.value.img,
+       
 
       }
 
@@ -154,13 +203,13 @@ export class AltaProveedoresComponent implements OnInit {
         alert(`El cuit ${proveedorNuevo.cuit_proveedor} ya está agregado`);
         return;
      }
-     this.proveedoresService.guardarProveedor(proveedorNuevo).subscribe()
-        alert(this.proveedor.razon_social +' se agregó correctamente')
-        formulario.resetForm();
+     this.proveedoresService.guardarProveedor(proveedorNuevo).subscribe(res =>{
 
-
-      // Después de agregar/editar, regresar al listado de proveedores
-      this.router.navigate(['proveedores/listado-proveedores']);
+       alert(this.proveedor.razon_social +' se agregó correctamente')
+       formulario.resetForm();
+     this.router.navigate(['proveedores/listado-proveedores']);
+     return res;
+     })
 
       } else {
 
@@ -199,11 +248,11 @@ export class AltaProveedoresComponent implements OnInit {
           }
           this.proveedoresService.actualizarProveedor(this.id, proveedorModificado).subscribe((msj) => {
             console.log(msj);
+            this.ngOnInit()
+            formulario.reset();
           });
-          formulario.reset();
       }
 
-// Después de agregar/editar, regresar al listado de proveedores
 this.router.navigate(['proveedores/listado-proveedores']);
 
 
@@ -220,22 +269,7 @@ this.router.navigate(['proveedores/listado-proveedores']);
     formulario.resetForm();
   }
 
-  // Métodos de validación y otros...
 
-  validarNombre(): void {
-  /*   const nombre = this.proveedor.razon_social;
-    // Validar que tenga más de 4 letras y no contenga números
-    this.nombreValido = nombre.length > 3 && !/\d/.test(nombre); */
-  }
-  validarCuit(): void {
-/*     const cuit = this.proveedor.cuit_proveedor!.toString();
-    this.cuitValido = /^\d{11}$/.test(cuit); */
-  }
-  validarCp(): void {
-    /* const cp = this.proveedor.codigo_postal!.toString();
-    // Validar que tenga entre 4 y 6 dígitos
-    this.cpValido = /^\d{4,6}$/.test(cp); */
-  }
   razonAgregada(nombre: string): boolean {
     const nombreExistente = this.proveedores.some(
       (proveedor) => proveedor.nombre === nombre

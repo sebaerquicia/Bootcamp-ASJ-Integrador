@@ -68,7 +68,7 @@
         <table *ngIf="productos.length > 0" class="table">
           <thead>
             <tr>
-              
+              <th scope="col">#img</th>
               <th scope="col">Nombre del producto</th>
               <th scope="col">Categoria</th>
               <th scope="col">Proveedor</th>
@@ -95,6 +95,7 @@
               "
             >
               <tr>
+                <th><img src="{{ producto.url_img }}"  onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';"  alt="FotoProducto" class="imagenes" ></th>
                 <td>{{ producto.nombre_producto | titlecase}}</td>
                 <th>{{ producto.categoria.nombre_categoria| titlecase }}</th>
                 <td>{{ producto.proveedor.razon_social}}</td>

@@ -8,14 +8,13 @@
       <img src="{{ proveedor.img }}" alt="FotoProveedor" class="imagenes" />
     </div>
     <div class="col">
-      <h3>Proveedor: </h3>
       <h3>Código: {{ proveedor.codigo_proveedor }}</h3>
-      <h4>Rubro: {{ proveedor.nombre_rubro }}</h4>
-      <p>Sitio web: {{ proveedor.web }}</p>
+      <h4>Rubro: {{ proveedor.rubro_proveedor.nombre_rubro }}</h4>
+      <p>Sitio web: <a href="http://{{ proveedor.web }}" target="_blank" rel="noopener noreferrer">{{ proveedor.web }}</a></p>
       <p>
         Dirección: {{ proveedor.calle }} {{ proveedor.numero_calle }},
         {{ proveedor.localidad }}, {{ proveedor.provincia.nombre_provincia }},
-        {{ proveedor.pais }}
+        {{ proveedor.provincia.pais.nombre_pais }}
       </p>
     </div>
   </div>

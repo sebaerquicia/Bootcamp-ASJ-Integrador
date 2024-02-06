@@ -15,7 +15,7 @@
       <form #formulario="ngForm" (ngSubmit)="guardarOrden(formulario)">
         <div class="row mb-2">
           <div class="col-md-2">
-            <label for="nro" class="form-label h4">Número de Orden: </label>
+            <label for="nro" class="form-label h4">Número Orden: </label>
             <input
               name="nro"
               type="number"
@@ -43,7 +43,7 @@
               required
             />
           </div>
-          <div class="mb-3 col-md-4">
+          <div class="mb-3 col-md-5">
             <label for="informacion" class="form-label h4"
               >Información adicional:
             </label>
@@ -78,7 +78,11 @@
               </option>
             </select>
           </div>
-
+          <div *ngIf="orden.proveedor.id !== null" class="col-md-3">
+            <h4>Logo del proveedor:</h4>
+            <img *ngIf="orden.proveedor.img" src="{{orden.proveedor.img}}" alt="Logo del proveedor" class="proveedor-logo">
+            <p *ngIf="!orden.proveedor.img">Logo no disponible</p>
+        </div>
             <div *ngIf="orden.proveedor.id !== null" class="col-md-3">
               <h4>Productos:</h4>
               <select
@@ -112,9 +116,11 @@
                 [(ngModel)]="detalle.cantidad_producto"
               />
             </div>
-            <div class="col-md-3">
+            <div class="row">
 
-              <a class="btn btn-primary m-4 p-3" (click)="llenarListado(detalle.producto.id , detalle.cantidad_producto)">Agregar al listado</a>
+              <div class="col">
+                <a class="btn btn-primary m-4 p-3" (click)="llenarListado(detalle.producto.id , detalle.cantidad_producto)">Agregar al listado</a>
+              </div>
             </div>
           </div>
      

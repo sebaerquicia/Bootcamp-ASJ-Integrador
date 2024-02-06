@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FormularioProveedor } from '../models/proveedor.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ProveedorBack } from '../models/proveedorBack.model';
@@ -12,7 +11,6 @@ export class ServicioProveedoresService {
   proveedorEnEdicion: any;
   proveedores: ProveedorBack[] =[];
   private url='http://localhost:8080/proveedores';
-  private proveedoresKey = 'proveedores';
   constructor(private http: HttpClient){}
   
   //GET PROVEEDORES

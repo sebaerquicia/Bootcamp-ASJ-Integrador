@@ -27,12 +27,12 @@
             <table class="table" *ngIf="ordenes.length > 0">
                 <thead>
                     <tr>
-                        <th scope="col">Número de Orden</th>
+                        <th scope="col">#Orden</th>
                         <th scope="col">Fecha de emisión</th>
                         <th scope="col">Fecha de entrega</th>
-                        <th scope="col">Informacion</th>
+
                         <th scope="col">Proveedor</th>
-                        <th scope="col">Unidades Producto y precio</th>
+
                         <th scope="col">Total($ARS)</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Acciones</th>
@@ -57,12 +57,19 @@
                         <th>{{orden.numero_orden}}</th>
                         <td>{{orden.fecha_emision | date}}</td>
                         <td>{{orden.fecha_entrega_esperada | date}}</td>
-                        <td>{{orden.informacion_orden | titlecase}}</td>
+
                         <td>{{orden.proveedor.razon_social}}</td>
-                        <td><li *ngFor="let detalle of orden.detalles">{{detalle.cantidad_producto}}(u): {{ detalle.producto.nombre_producto}} a {{detalle.precio_hist | currency}}</li></td>
+                  
                         <td> {{sumarTotal(orden) | currency}}</td>
                         <td>{{orden.estadoOrden.nombre_estado}}</td>
-                        <td><button class="btn btn-outline-success m-2"><img width="20" height="20" src="https://img.icons8.com/ios/50/ok--v1.png" alt="ok--v1"/></button>
+                        <td>
+                          <button
+                  (click)="openModal(orden)"
+                  class="btn btn-outline-info m-2"
+                >
+                <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png" alt="visible--v1"/>
+                </button>
+                          <button class="btn btn-outline-success m-2"><img width="20" height="20"  src="https://img.icons8.com/ios/50/ok--v1.png" alt="ok--v1"/></button>
                           <button *ngIf="!orden.eliminada" class="btn btn-outline-danger m-2 " (click)="eliminarOrden(orden.id)" > <img width="20" height="20" src="https://img.icons8.com/material-rounded/24/filled-trash.png" alt="filled-trash"/></button>
                           <button *ngIf="orden.eliminada" class="btn btn-outline-primary m-2 " (click)="eliminarOrden(orden.id)" > <img width="20" height="20" src="https://img.icons8.com/windows/32/trash-restore.png" alt="trash-restore"/></button>
                         

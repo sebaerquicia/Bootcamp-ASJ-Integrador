@@ -32,7 +32,7 @@
         <table *ngIf="proveedores.length > 0" class="table">
           <thead>
             <tr>
-              <th scope="col">Img</th>
+              <th scope="col">#img</th>
               <th scope="col">Código</th>
               <th scope="col">Razón Social</th>
               <th scope="col">+Info</th>
@@ -60,7 +60,7 @@
               "
             >
               <tr>
-                <td><img src="{{proveedor.img}}" alt="FotoProveedor" class="imagenes"></td>
+                <td><img src="{{proveedor.img}}" onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';" alt="FotoProveedor" class="imagenes" ></td>
                 <td>{{ proveedor.codigo_proveedor }}</td>
                 <th>{{ proveedor.razon_social | titlecase }}</th>
                 <td>
@@ -105,7 +105,7 @@
               </tr>
             </ng-container>
           </tbody>
-        </table>
+        </table> 
       </div>
     </div>
   </div>
