@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoBack } from '../../../models/productoBack.model';
 import { ServicioProveedoresService } from '../../../services/servicio-proveedores.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-alta-productos',
@@ -100,7 +101,7 @@ export class AltaProductosComponent implements OnInit {
 
   guardarProducto(formulario: NgForm): void {
     if (formulario.valid) {
-      if ((this.modificacion = false)) {
+      if ((!this.modificacion)) {
         const productoNuevo: ProductoBack = {
           nombre_producto: formulario.value.nombre,
           codigo_sku: formulario.value.codigo,
@@ -148,10 +149,11 @@ export class AltaProductosComponent implements OnInit {
           precio_producto: formulario.value.precio,
           url_img: formulario.value.url,
         };
-        this.productosService.guardarProducto(productoNuevo).subscribe();
-        alert(this.producto.nombre_producto + ' se agregó correctamente');
-        formulario.resetForm();
-        this.router.navigate(['productos/listado-productos']);
+        this.productosService.guardarProducto(productoNuevo).subscribe(() => {
+          this.mostrarExitoAgregar();
+          formulario.resetForm();
+          this.router.navigate(['productos/listado-productos']);
+        });
       } else {
         const productoModificado: ProductoBack = {
           nombre_producto: formulario.value.nombre,
@@ -202,22 +204,18 @@ export class AltaProductosComponent implements OnInit {
         };
         this.productosService
           .actualizarProducto(this.id, productoModificado)
-          .subscribe((msj) => {
-            console.log(msj);
+          .subscribe(() => {
+            this.mostrarExitoActualizar();
+            formulario.reset();
+            this.router.navigate(['productos/listado-productos']);
           });
-
-          alert(this.producto.nombre_producto + ' se editó correctamente');
-        formulario.reset();
-        this.ngOnInit()
       }
-
-      this.router.navigate(['productos/listado-productos']);
     } else {
-      alert('Debes completar todos los campos del formulario');
+      this.mostrarErrorDatosIncompletos();
     }
   }
 
-  resetearFormulario1(formulario: NgForm): void {
+  resetearFormulario(formulario: NgForm): void {
     formulario.resetForm();
   }
 
@@ -225,7 +223,30 @@ export class AltaProductosComponent implements OnInit {
     const codigoExistente = this.productos.some(
       (producto) => codigo === producto.codigo
     );
-    console.log(codigoExistente);
     return codigoExistente;
+  }
+
+  mostrarExitoAgregar(): void {
+    Swal.fire(
+      'Agregado!',
+      'El producto fue agregado con éxito.',
+      'success'
+    );
+  }
+
+  mostrarExitoActualizar(): void {
+    Swal.fire(
+      'Actualizado!',
+      'El producto fue actualizado con éxito.',
+      'success'
+    );
+  }
+
+  mostrarErrorDatosIncompletos(): void {
+    Swal.fire(
+      'Error',
+      'Debes completar todos los campos del formulario',
+      'error'
+    );
   }
 }

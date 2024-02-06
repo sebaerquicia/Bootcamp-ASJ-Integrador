@@ -6,6 +6,7 @@ import { ProductoBack } from '../../../models/productoBack.model';
 
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ModalProductoComponent } from '../modal-producto/modal-producto.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-productos',
@@ -97,13 +98,41 @@ export class ListadoProductosComponent implements OnInit {
   }
 
   eliminarProducto(id: any): void {
-    alert('Se eliminará el producto');
-    this.productosService
-      .eliminarProducto(id)
-      .subscribe((msj) => {console.log(msj)
-        this.actualizarLista()
+    Swal.fire({
+      title: 'Deseas eliminar el producto?'+ this.producto.nombre_producto,
+      text: '(Puedes revertir esta acción)',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productosService.eliminarProducto(id).subscribe(() => {
+          this.actualizarLista();
+          Swal.fire(
+            'Eliminado',
+            'El producto ha sido eliminado',
+            'success'
+          );
+        });
       }
-      );
+    });
+  }
+  
+  restaurarProducto(id: any): void {
+    this.productosService.eliminarProducto(id).subscribe(() => {
+      this.actualizarLista();
+      Swal.fire({
+        icon: 'success',
+        title: 'Producto restaurado',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    });
   }
   editarProducto(id: any): void {
     this.router.navigate(['/productos/alta-productos/', { id }]);
