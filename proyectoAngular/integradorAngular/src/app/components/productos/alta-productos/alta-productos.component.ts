@@ -79,10 +79,10 @@ export class AltaProductosComponent implements OnInit {
     this.productosService.getProductos().subscribe((data) => {
       this.productos = data;
     });
-    this.proveedoresService.getProveedoresActivos().subscribe((data) => {
+    this.proveedoresService.getProveedores().subscribe((data) => {
       this.proveedores = data;
     });
-    this.productosService.getCategorias().subscribe((data) => {
+    this.productosService.buscarCategoriasActivas().subscribe((data) => {
       this.categorias = data;
     });
     this.route.paramMap.subscribe((params) => {
@@ -155,6 +155,7 @@ export class AltaProductosComponent implements OnInit {
           this.router.navigate(['productos/listado-productos']);
         });
       } else {
+        console.log(formulario.value)
         const productoModificado: ProductoBack = {
           nombre_producto: formulario.value.nombre,
           codigo_sku: formulario.value.codigo,
@@ -245,7 +246,7 @@ export class AltaProductosComponent implements OnInit {
   mostrarErrorDatosIncompletos(): void {
     Swal.fire(
       'Error',
-      'Debes completar todos los campos del formulario',
+      'Debes completar todos los campos del formulario correctamente',
       'error'
     );
   }

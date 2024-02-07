@@ -60,7 +60,7 @@
               type="text"
               placeholder="Rubro"
               id="rubroInput"
-              class="form-control form__input mx-2"
+              class="form-select form__input mx-2"
               [(ngModel)]="proveedor.rubro_proveedor.id"
               required
             >
@@ -164,7 +164,7 @@
               type="text"
               placeholder="Provincia"
               id="provinciaInput"
-              class="form-control form__input mx-2"
+              class="form-select form__input mx-2"
               [(ngModel)]="proveedor.provincia.id"
               required
             >
@@ -305,6 +305,7 @@
               type="number"
               placeholder="Teléfono"
               id="telefonoInput"
+              min="0"
               class="form-control form__input mx-2"
               [(ngModel)]="proveedor.contacto.telefono_contacto"
               required

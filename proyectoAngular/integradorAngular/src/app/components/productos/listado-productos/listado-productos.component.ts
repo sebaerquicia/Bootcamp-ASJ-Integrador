@@ -17,8 +17,10 @@ export class ListadoProductosComponent implements OnInit {
   productos: ProductoBack[] = [];
   filtroActivoEliminado: string = 'Todos';
   categorias: any[]=[];
+  categoriasActivas: any[]=[];
   filtroCategorias: number = 0;
   criterioOrdenamiento: string | null = null;
+
 
   constructor(
     private modalService: NgbModal,
@@ -34,9 +36,12 @@ export class ListadoProductosComponent implements OnInit {
     this.actualizarLista();
     this.productosService.getCategorias().subscribe((data)=> {
       this.categorias = data
-
-
     })
+    this.productosService.buscarCategoriasActivas().subscribe((data)=>{
+      this.categoriasActivas = data
+    })
+
+    
   }
   public producto: ProductoBack = {
     id: undefined,

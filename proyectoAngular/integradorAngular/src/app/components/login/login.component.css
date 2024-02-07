@@ -1,0 +1,34 @@
+/* Animación de entrada del encabezado */
+.text-center {
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Línea divisoria */
+  .divider {
+    width: 50px;
+    height: 3px;
+    background-color: #7386D5;
+    margin: 20px auto;
+  }
+  
+  .btn{
+    background-color: #7386D5;
+    color: white;
+  }
+  h1{
+    color: #7386D5
+  }
+ .card-header{
+    background-color: #7386D5;
+    color: white;
+  }

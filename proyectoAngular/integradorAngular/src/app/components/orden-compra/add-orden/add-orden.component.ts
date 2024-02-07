@@ -35,6 +35,7 @@ export class AddOrdenComponent implements OnInit {
   modificacion: boolean = false;
   detallesProductos: any[] = [];
   selectProveedorBloqueado: boolean = false;
+  ordenes:OrdenBack[]=[]
 
   public orden: OrdenBack = {
     id: undefined,
@@ -172,6 +173,7 @@ export class AddOrdenComponent implements OnInit {
   }
 
   llenarListado(productoId: any, cantidad: any) {
+    console.log(this.orden.proveedor)
     this.cantidadValida = cantidad && cantidad !== 0;
     if (cantidad && cantidad !== 0) {
 
@@ -335,199 +337,16 @@ export class AddOrdenComponent implements OnInit {
       }
     }
   }
-  /*          nombre_producto: formulario.value.nombre,
-          codigo_sku: formulario.value.codigo,
-          proveedor: {
-            id: formulario.value.proveed,
-            codigo_proveedor: '',
-            rubro_proveedor: {
-              id: null,
-              nombre_rubro: '',
-            },
-            razon_social: '',
-            provincia: {
-              id: null,
-              nombre_provincia: null,
-              pais: {
-                id: null,
-                nombre_pais: null,
-              },
-            },
-            localidad: null,
-            codigo_postal: null,
-            calle: null,
-            numero_calle: null,
-            cuit_proveedor: '',
-            contacto: {
-              id: null,
-              nombre_contacto: '',
-              apellido_contacto: '',
-              rol: null,
-              telefono_contacto: '',
-              email_contacto: '',
-            },
-            iva: {
-              id: null,
-              nombre_iva: '',
-            },
-            web: null,
-            img: null,
-            eliminado: false,
-          },
-          categoria: {
-            id: formulario.value.categoria,
-          },
-          descripcion: formulario.value.descripcion,
-          precio_producto: formulario.value.precio,
-          url_img: formulario.value.url, */
-  /*  };
-        this.ordenesService.guardarOrden(ordenNueva).subscribe();
-        alert(this.orden.numero_orden + ' se agregó correctamente');
-        formulario.resetForm();
-        this.router.navigate(['ordenes-compra/listado-ordenes']);
-      } else {
-        const ordenModificada: OrdenBack = { */
-  /*   nombre_producto: formulario.value.nombre,
-          codigo_sku: formulario.value.codigo,
-          proveedor: {
-            id: formulario.value.proveed,
-            codigo_proveedor: '',
-            rubro_proveedor: {
-              id: null,
-              nombre_rubro: '',
-            },
-            razon_social: '',
-            provincia: {
-              id: null,
-              nombre_provincia: null,
-              pais: {
-                id: null,
-                nombre_pais: null,
-              },
-            },
-            localidad: null,
-            codigo_postal: null,
-            calle: null,
-            numero_calle: null,
-            cuit_proveedor: '',
-            contacto: {
-              id: null,
-              nombre_contacto: '',
-              apellido_contacto: '',
-              rol: null,
-              telefono_contacto: '',
-              email_contacto: '',
-            },
-            iva: {
-              id: null,
-              nombre_iva: '',
-            },
-            web: null,
-            img: null,
-            eliminado: false,
-          },
-          categoria: {
-            id: formulario.value.categoria,
-          },
-          descripcion: formulario.value.descripcion,
-          precio_producto: formulario.value.precio,
-          url_img: formulario.value.url,*/
-  /*         }; 
-        this.ordenesService
-          .actualizarOrden(this.id, ordenModificada)
-          .subscribe((msj) => {
-            console.log(msj);
-          });
-        formulario.reset();
+  actualizarOrdenesConImagen(): void {
+    this.ordenes.forEach(orden => {
+      const proveedor = this.proveedores.find(p => p.id === orden.proveedor.id);
+      if (proveedor) {
+        this.ordenesService.getImagenProveedor(proveedor.id).subscribe(imageUrl => {
+          proveedor.img = imageUrl;
+        });
       }
-      this.router.navigate(['ordenes-compra/listado-ordenes']);
-    } else {
-      alert('Debes completar todos los campos del formulario');
-    }
-  } */
-  //validacion de fecha
-  /*   if (this.orden.fecha_emision! > this.orden.fecha_entrega_esperada!) {
-    alert('La fecha de emisión debe ser anterior a la fecha de entrega.');
-    return;} */
-  /*guardarOrden(formulario: NgForm): void {
-    if (formulario.valid) {
-
-      const orden = formulario.value;
-
-      //valido la fecha
-      if (this.orden.fecha_emision! > this.orden.fecha_entrega_esperada!) {
-        alert('La fecha de emisión debe ser anterior a la fecha de entrega.');
-        return;}
-      }}
-      if (index !== -1) {
-        // Actualiza la orden si está editando
-        this.ordenesService.actualizarOrden(index, orden);
-        this.compararFechas()
-        alert('Se editó la orden correctamente');
-        this.ordenesService.modoEdicionOrden = false;
-      } else {
-        //primero valido que el numero de orden no exista
-        const ordenesGuardadas = JSON.parse(localStorage.getItem('ordenes') || '[]');
-        const numeroOrdenExistente = ordenesGuardadas.some((orden: any) => orden.nro === this.orden.nro);
-        if (numeroOrdenExistente) {
-          alert(orden.nro + ': El número de orden ya existe');
-          return;
-        }
-        // Agrega el producto si está agregando
-        this.ordenesService.guardarOrden(orden);
-
-        alert(orden.nro + ': Se agregó la orden correctamente');
-        formulario.reset();
-        this.resetearFormulario1(formulario)
-      }
-      this.router.navigate(['orden-compra/listado-orden']);
-    } else {
-      alert('Debes completar todos los campos del formulario');
-    }
+    });
   }
-
-  // Filtrar la lista de productos según el proveedor seleccionado
-  onProveedorSeleccionado(): void {
-    const proveedorSeleccionado = this.orden.proveedor;
-
-    if (proveedorSeleccionado) {
-      this.productosFiltrados = this.productos.filter(
-        (producto) => producto.nombreProv === proveedorSeleccionado
-      );
-    }
-  }
-
-  cargarProducto(producto: any, cantidad: any) {
-    const nuevoProducto: ProductoOrden = {
-      nombre: producto.nombre,
-      cantidad: Number(cantidad),
-      precio: Number(producto.precio),
-    };
-    if (!this.orden.productos) {
-      this.orden.productos = [];
-    }
-
-    const productoRepetido = this.orden.productos.find(
-      (prod) => prod.nombre == nuevoProducto.nombre
-    );
- 
-    if (productoRepetido) {
-    
-      this.orden.total -= +productoRepetido.cantidad * producto.precio;
-  
-      
-      productoRepetido.cantidad = nuevoProducto.cantidad;
-    } else {
-      
-      this.orden.productos.push(structuredClone(nuevoProducto));
-    }
-    let total: number = +nuevoProducto.cantidad * producto.precio;
-    this.orden.total += total;
-
-    console.log(this.orden.total)
-  }
-
-*/
 
   resetearFormulario1(formulario: NgForm): void {
     formulario.resetForm();

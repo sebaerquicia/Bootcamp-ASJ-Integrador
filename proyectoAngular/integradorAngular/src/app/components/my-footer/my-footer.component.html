@@ -1,17 +1,15 @@
 
 <footer class="bg-light text-center text-lg-start ">
-    <!-- Grid container -->
-    <div class="container p-4">
-      <!--Grid row-->
+
+    <div *ngIf="isAuthenticated()" class="container p-4">
+
       <div class="row">
-        <!--Grid column-->
+
         <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
           <h5 class="text-uppercase">ASJ SERVICIOS </h5>
           <p >Programa de gestion autorizado por Sebastián Erquicia</p>
         </div>
-        <!--Grid column-->
-  
-        <!--Grid column-->
+
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <h5 class="text-uppercase">Contacto</h5>
 
@@ -29,21 +27,19 @@
           </li>
         </ul>
         </div>
-        <!--Grid column-->
-  
-        <!--Grid column-->
+
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <h5 class="text-uppercase mb-0">Enlaces Rápidos</h5>
   
           <ul class="list-unstyled">
             <li>
-              <a href="#!" class="text-primary">Listado Proveedores</a>
+              <a href="#!" routerLink="/proveedores/listado-proveedores" class="text-primary">Listado - Proveedores</a>
             </li>
             <li>
-              <a href="#!" class="text-primary">Listado Productos</a>
+              <a href="#!" routerLink="/productos/listado-productos" class="text-primary">Listado - Productos</a>
             </li>
             <li>
-              <a href="#!" class="text-primary">Listado Ordenes de compras</a>
+              <a href="#!" routerLink="/ordenes-compra/listado-ordenes" class="text-primary">Listado - Ordenes de compras</a>
             </li>
           </ul>
         </div>
@@ -55,7 +51,7 @@
   
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      © 2023 Copyright
+      © 2023 Copyright By Sebastián Erquicia
     </div>
     <!-- Copyright -->
   </footer>

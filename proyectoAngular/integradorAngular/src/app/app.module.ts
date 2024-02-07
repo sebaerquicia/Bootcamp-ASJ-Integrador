@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MyHeaderComponent } from './components/my-header/my-header.component';
 import { MyFooterComponent } from './components/my-footer/my-footer.component';
 import { MySidebarComponent } from './components/my-sidebar/my-sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,12 +20,13 @@ import { FilterByPipe } from './pipes/filter-by.pipe';
 import { ModalComponent } from './components/proveedores/modal/modal.component';
 import { ModalProductoComponent } from './components/productos/modal-producto/modal-producto.component';
 import { ModalOrdenComponent } from './components/orden-compra/modal-orden/modal-orden.component';
+import { AltaCategoriaComponent } from './components/productos/alta-categoria/alta-categoria.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MyHeaderComponent,
     MyFooterComponent,
     MySidebarComponent,
     MyNavbarComponent,
@@ -40,7 +40,9 @@ import { ModalOrdenComponent } from './components/orden-compra/modal-orden/modal
     FilterByPipe,
     ModalComponent,
     ModalProductoComponent,
-    ModalOrdenComponent
+    ModalOrdenComponent,
+    AltaCategoriaComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

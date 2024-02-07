@@ -1,14 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Orden, ProductoOrden } from '../../../models/orden-compra.model';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicioOrdenesCompraService } from '../../../services/servicio-ordenes-compra.service';
 import { DetalleOrdenBack, OrdenBack } from '../../../models/ordenBack.model';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOrdenComponent } from '../modal-orden/modal-orden.component';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-listado-orden',
   templateUrl: './listado-orden.component.html',
-  styleUrl: './listado-orden.component.css',
+  styleUrls: ['./listado-orden.component.css'],
 })
 export class ListadoOrdenComponent {
   sumarTotal(orden: OrdenBack): number {
@@ -40,16 +41,47 @@ export class ListadoOrdenComponent {
   }
 
   eliminarOrden(id: any): void {
-    alert('Se eliminará la orden');
-    this.ordenesService.eliminarOrden(id).subscribe((msj) => {
-      console.log(msj);
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Se eliminará la orden",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ordenesService.eliminarOrden(id).subscribe((msj) => {
+          console.log(msj);
+          this.actualizarLista();
+        });
+        Swal.fire(
+          "¡Eliminado!",
+          "La orden ha sido eliminada correctamente.",
+          "success"
+        );
+      }
+    });
+  }
+  restaurarOrden(id: any): void {
+    this.ordenesService.eliminarOrden(id).subscribe(() => {
       this.actualizarLista();
+      Swal.fire({
+        icon: 'success',
+        title: 'Orden restaurada',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
     });
   }
 
   editarOrden(id: any): void {
     this.router.navigate(['/ordenes-compra/alta-ordenes/', { id }]);
   }
+  
   filtrarOrdenes() {
     if (this.filtroActivaEliminada === 'Activas') {
       return this.ordenes.filter((orden) => !orden.eliminada);
@@ -59,10 +91,19 @@ export class ListadoOrdenComponent {
       return this.ordenes; 
     }
   }
+  
   openModal(orden: OrdenBack): void {
     const modalRef = this.modalService.open(ModalOrdenComponent, {
       size: 'lg',
     });
     modalRef.componentInstance.orden = orden;
+  }
+
+  mostrarMensajeEliminado(): void {
+    Swal.fire({
+      title: "Orden Eliminada",
+      text: "(Puedes revertir esta acción)",
+      icon: "success"
+    });
   }
 }

@@ -38,6 +38,10 @@ export class ServicioOrdenesCompraService {
     return this.http.get('http://localhost:8080/proveedores');
   }
 
+  getImagenProveedor(proveedorId: number): Observable<string> {
+    return this.http.get<string>(`${this.url}/${proveedorId}/imagen`);
+  }
+
   /*  getOrdenes(): any[] {
     const ordenesString = localStorage.getItem(this.ordenesKey);
     this.ordenes = ordenesString ? JSON.parse(ordenesString) : [];

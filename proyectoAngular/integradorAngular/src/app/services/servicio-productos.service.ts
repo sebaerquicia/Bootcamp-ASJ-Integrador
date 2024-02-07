@@ -77,4 +77,40 @@ export class ServicioProductosService {
     }
     return this.http.get(`${this.url}/proveedor/${id}`);
   }
+
+
+
+  //CRUD de Categorias de productos
+  url_categorias =  "http://localhost:8080/categorias"
+
+    //GET ACTIVAS 
+
+ public buscarCategoriasActivas(): Observable<any> {
+    return this.http.get(this.url_categorias + "/activas");
+  }
+
+  //GET by ID
+  public buscarCategoriaPorId(id: number): Observable<any> {
+    return this.http.get(this.url_categorias + "/" + id)
+  }
+
+  // POST 
+  public crearCategoria(categoria: any): Observable<any> {
+    return this.http.post(this.url_categorias, categoria, { observe: 'response', responseType: 'text' })
+  }
+
+  //DELETE
+  public eliminarCategoria(id: number): Observable<any> {
+    return this.http.delete(this.url_categorias + "/" + id, { observe: 'response', responseType: 'text' })
+  }
+
+  //PUT
+  public modificarCategoria(id: number, categoria: any): Observable<any> {
+    return this.http.put(this.url_categorias + "/" + id, categoria, { observe: 'response', responseType: 'text' })
+  }
+
+  //ALTA
+  public altaCategoria(id: number): Observable<any> {
+    return this.http.put(this.url_categorias + "/alta/" + id, null,{ observe: 'response', responseType: 'text' })
+  }
 }

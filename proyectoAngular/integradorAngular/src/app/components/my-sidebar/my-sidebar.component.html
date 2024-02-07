@@ -1,125 +1,4 @@
-<!-- 
-<nav id="sidebar" >
-  <div class="sidebar-header">
-      <h3>Empresa X</h3>
-  </div>
-<div id="layoutSidenav"  class="vh-100">
-  <div id="layoutSidenav_nav" class="col">
-    <nav class="sb-sidenav accordion " id="sidenavAccordion">
-      <div class="sb-sidenav-menu">
-        <div class="nav">
-          <div class="sb-sidenav-menu-heading">Principal</div>
-          <a class="nav-link" routerLink="">
-            <div class="sb-nav-link-icon">
-              <i class="fas fa-tachometer-alt"></i>
-            </div>
-            <p>Inicio</p>
-          </a>
-          <div class="sb-sidenav-menu-heading">Interfaz</div>
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseLayouts"
-            aria-expanded="false"
-            aria-controls="collapseLayouts"
-          >
-            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-            <p>Proveedores</p>
-            <div class="sb-sidenav-collapse-arrow">
-              <i class="fas fa-angle-down"></i>
-            </div>
-          </a>
-          <div
-            class="collapse"
-            id="collapseLayouts"
-            aria-labelledby="headingOne"
-            data-bs-parent="#sidenavAccordion"
-          >
-            <nav class="sb-sidenav-menu-nested nav">
-              <a class="nav-link" routerLink="proveedores/listado-proveedores"
-                ><p>Listado proveedores</p></a
-              >
-              <a class="nav-link" routerLink="proveedores/alta-proveedores"
-                ><p>Agregar Proveedor</p></a
-              >
-            </nav>
-          </div>
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapsePages"
-            aria-expanded="false"
-            aria-controls="collapsePages"
-          >
-            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-            <p>Productos</p>
-            <div class="sb-sidenav-collapse-arrow">
-              <i class="fas fa-angle-down"></i>
-            </div>
-          </a>
-          <div
-            class="collapse"
-            id="collapsePages"
-            aria-labelledby="headingTwo"
-            data-bs-parent="#sidenavAccordion"
-          >
-            <nav
-              class="sb-sidenav-menu-nested nav accordion"
-              id="sidenavAccordionPages"
-            >
-              <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" routerLink="productos/listado-productos"
-                  ><p>Listado productos</p></a
-                >
-                <a class="nav-link" routerLink="productos/alta-productos"
-                  ><p>Agregar Producto</p></a
-                >
-              </nav>
-            </nav>
-          </div>
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapsePages1"
-            aria-expanded="false"
-            aria-controls="collapsePages"
-          >
-            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-            <p>Ordenes de compras</p>
-            <div class="sb-sidenav-collapse-arrow">
-              <i class="fas fa-angle-down"></i>
-            </div>
-          </a>
-          <div
-            class="collapse"
-            id="collapsePages1"
-            aria-labelledby="headingThree"
-            data-bs-parent="#sidenavAccordion"
-          >
-            <nav
-              class="sb-sidenav-menu-nested nav accordion"
-              id="sidenavAccordionPages"
-            >
-              <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" routerLink="ordenes-compra/listado-ordenes"
-                  ><p>Listado ordenes de compra</p></a
-                >
-                <a class="nav-link" routerLink="ordenes-compra/alta-ordenes"
-                  ><p>Agregar Orden de compra</p></a
-                >
-              </nav>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </div>
-</div>
-</nav> -->
-<nav class="sticky-lg-top  navbar navbar-expand-lg navbar-light bg-light py-4">
+<nav *ngIf="isAuthenticated()" class="sticky-lg-top  navbar navbar-expand-lg navbar-light bg-light py-4">
   <div class="container-fluid">
     <div class="d-flex">
       <!-- Button trigger modal -->
@@ -132,8 +11,18 @@
       <img width="20" height="20" src="https://img.icons8.com/ios-filled/50/menu--v6.png" alt="menu--v6"/>
       </button>
     </div>
-    <div class="navbar-brand mx-auto">ASJ SERVICIOS</div>
-  </div>
+    <div class="navbar-brand mx-auto">
+    <a href=""  routerLink="" >ASJ SERVICIOS
+  </a></div>
+        <span *ngIf="isAuthenticated()" class="navbar-text me-3">
+          ¡Hola, {{ getUsername() }}!
+        </span>
+    
+        <!-- Botón para salir -->
+        <button *ngIf="isAuthenticated()" class="btn btn-outline-danger" (click)="logout()">Salir</button>
+      </div>
+    
+  
 
 </nav>
 
@@ -146,7 +35,7 @@
   <div class="offcanvas-body" id="sidebar">
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <h4><a href="#" class="nav-link link-dark" data-bs-toggle="collapse" data-bs-target="#submenu-dashboard" aria-expanded="false">
+        <h4><a href="" routerLink="" class="nav-link link-dark" data-bs-toggle="collapse" data-bs-dismiss="offcanvas" data-bs-target="#submenu-dashboard" aria-expanded="false">
           Dashboard
         </a></h4>
       </li>

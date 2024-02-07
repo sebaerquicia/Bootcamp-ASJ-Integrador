@@ -37,7 +37,7 @@
         required
       >
       <option [value]="0">Todas</option>
-      <option *ngFor="let categoria of categorias" [value]="categoria.id">
+      <option *ngFor="let categoria of categoriasActivas" [value]="categoria.id">
         {{ categoria.nombre_categoria }}
       </option>
     </select>
@@ -46,7 +46,7 @@
  
 
     <div class="col">
-      <a href="" class="btn"><img width="40" height="40" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"/></a>
+      <a routerLink="../categorias" class="btn"><img width="40" height="40" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"/></a>
     </div>
 </div>
 <div class="row">

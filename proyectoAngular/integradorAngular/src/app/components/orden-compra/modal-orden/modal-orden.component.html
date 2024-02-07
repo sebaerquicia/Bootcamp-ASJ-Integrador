@@ -1,6 +1,7 @@
 <div class="modal-header">
     <h2 class="modal-title">#{{ orden.numero_orden }}</h2>
-    <h3 *ngIf="orden.eliminada" class="text-danger px-4 ">Orden eliminada</h3>
+    <h3 *ngIf="orden.eliminada" class="text-danger px-4 ">Orden Eliminada</h3>
+    <h3 *ngIf="orden.estadoOrden.nombre_estado == 'Entregada'" class="text-success px-4 ">Orden Entregada</h3>
     <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body">

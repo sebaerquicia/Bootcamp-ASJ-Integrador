@@ -7,32 +7,38 @@ import { AddOrdenComponent } from './components/orden-compra/add-orden/add-orden
 import { ListadoProductosComponent } from './components/productos/listado-productos/listado-productos.component';
 import { ListadoProveedoresComponent } from './components/proveedores/listado-proveedores/listado-proveedores.component';
 import { ListadoOrdenComponent } from './components/orden-compra/listado-orden/listado-orden.component';
+import { AltaCategoriaComponent } from './components/productos/alta-categoria/alta-categoria.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
+  {
+    path: 'login', component: LoginComponent
+  },
   {
     path: 'productos',
     children: [
       { path: 'alta-productos', component: AltaProductosComponent },
       { path: 'listado-productos', component: ListadoProductosComponent },
-    ]
+      { path: 'categorias', component: AltaCategoriaComponent },
+    ],
   },
   {
     path: 'proveedores',
     children: [
       { path: 'alta-proveedores', component: AltaProveedoresComponent },
       { path: 'listado-proveedores', component: ListadoProveedoresComponent },
-    ]
+     
+    ],
   },
   {
     path: 'ordenes-compra',
     children: [
       { path: 'alta-ordenes', component: AddOrdenComponent },
       { path: 'listado-ordenes', component: ListadoOrdenComponent },
-    ]
+    ],
   },
   { path: '', component: MyMainComponent },
   { path: '**', pathMatch: 'full', redirectTo: '' },
-
 ];
 
 @NgModule({

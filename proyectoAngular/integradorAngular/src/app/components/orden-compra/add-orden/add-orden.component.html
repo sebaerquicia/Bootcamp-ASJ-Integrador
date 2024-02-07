@@ -78,12 +78,13 @@
               </option>
             </select>
           </div>
-          <div *ngIf="orden.proveedor.id !== null" class="col-md-3">
+          <div  class="col-md-3"
+          >
             <h4>Logo del proveedor:</h4>
-            <img *ngIf="orden.proveedor.img" src="{{orden.proveedor.img}}" alt="Logo del proveedor" class="proveedor-logo">
-            <p *ngIf="!orden.proveedor.img">Logo no disponible</p>
+            <img src="{{orden.proveedor.img}}" onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';" alt="FotoProveedor" class="logo" >
+            
         </div>
-            <div *ngIf="orden.proveedor.id !== null" class="col-md-3">
+            <div  class="col-md-3">
               <h4>Productos:</h4>
               <select
               #productoSelect
@@ -144,7 +145,7 @@
                 *ngFor="let detalle of detallesProductos let i = index"
               >
                 <tr>
-                  <td><img  src="{{ detalle.producto.url_img }}" alt="ImagenNotFound" class="imagenes"></td>
+                  <td><img  src="{{ detalle.producto.url_img }}" alt="ImagenNotFound"onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';"class="imagenes" ></td>
                   <th>{{ detalle.producto.nombre_producto }}</th>
                   <td>{{ detalle.cantidad_producto }}</td>
                   <td>{{ detalle.precio_hist | currency }}</td>

@@ -1,83 +1,121 @@
-<div class="container px-4  min-vh-100">
-    <h1 class="mt-4">Listado de Ordenes</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="">Inicio</a></li>
-        <li class="breadcrumb-item active">Listado de Ordenes de Compra</li>
-      </ol>
-      <div class="row">
-        <div *ngIf="ordenes.length === 0" class="alert alert-warning">
-            No hay ordenes de compra cargadas en el sistema. Realiza una compra para visualizarlas.
-          </div>
-          <div class="row">
-            <div class="col-3 pt-2">
-              <label for="activaeliminada">Filtrar por Activas/Eliminadas </label>
-            <select
-              class="form-select"
-              aria-label="activa"
-              [(ngModel)]="filtroActivaEliminada"
-              name="activaeliminada"
-            >
-              <option value="Todas">Todas</option>
-              <option value="Activas">Activas</option>
-              <option value="Eliminadas">Eliminadas</option>
-            </select>
-          </div>
-          </div>
-        <div class="col">
-            <table class="table" *ngIf="ordenes.length > 0">
-                <thead>
-                    <tr>
-                        <th scope="col">#Orden</th>
-                        <th scope="col">Fecha de emisión</th>
-                        <th scope="col">Fecha de entrega</th>
+<div class="container px-4 min-vh-100">
+  <h1 class="mt-4">Listado de Ordenes</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="">Inicio</a></li>
+    <li class="breadcrumb-item active">Listado de Ordenes de Compra</li>
+  </ol>
+  <div class="row">
+    <div *ngIf="ordenes.length === 0" class="alert alert-warning">
+      No hay ordenes de compra cargadas en el sistema. Realiza una compra para
+      visualizarlas.
+    </div>
+    <div class="row">
+      <div class="col-3 pt-2">
+        <label for="activaeliminada">Filtrar por Activas/Eliminadas </label>
+        <select
+          class="form-select"
+          aria-label="activa"
+          [(ngModel)]="filtroActivaEliminada"
+          name="activaeliminada"
+        >
+          <option value="Todas">Todas</option>
+          <option value="Activas">Activas</option>
+          <option value="Eliminadas">Eliminadas</option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <table class="table" *ngIf="ordenes.length > 0">
+        <thead>
+          <tr>
+            <th scope="col">#Orden</th>
+            <th scope="col">Fecha de emisión</th>
+            <th scope="col">Fecha de entrega</th>
+            <th scope="col">Proveedor</th>
+            <th scope="col">Total($ARS)</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody
+          id="tableBody"
+          class="table__body"
+          *ngFor="let orden of ordenes; let i = index"
+          [ngStyle]="{
+            'background-color': !orden.eliminada ? (orden.estadoOrden.nombre_estado === 'Entregada' ? '#65dcb9' : 'inherit') : '#ccc'
+          }"
+        >
+          <ng-container
+            *ngIf="
+              filtroActivaEliminada === 'Todas' ||
+              (filtroActivaEliminada === 'Activas' &&
+                orden.eliminada === false) ||
+              (filtroActivaEliminada === 'Eliminadas' &&
+                orden.eliminada === true)
+            "
+          >
+            <tr>
+              <th>{{ orden.numero_orden }}</th>
+              <td>{{ orden.fecha_emision | date }}</td>
+              <td>{{ orden.fecha_entrega_esperada | date }}</td>
 
-                        <th scope="col">Proveedor</th>
+              <td>{{ orden.proveedor.razon_social }}</td>
 
-                        <th scope="col">Total($ARS)</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody" class="table__body" *ngFor="let orden of ordenes, let i = index"
-                [ngStyle]="{
-                  'background-color': !orden.eliminada ? 'inherit' : '#ccc'
-                }"
-                
-                >
-                <ng-container
-              *ngIf="
-                filtroActivaEliminada === 'Todas' ||
-                (filtroActivaEliminada === 'Activas' &&
-                  orden.eliminada === false) ||
-                (filtroActivaEliminada === 'Eliminadas' &&
-                  orden.eliminada === true)
-              "
-            >
-                    <tr>
-                        <th>{{orden.numero_orden}}</th>
-                        <td>{{orden.fecha_emision | date}}</td>
-                        <td>{{orden.fecha_entrega_esperada | date}}</td>
-
-                        <td>{{orden.proveedor.razon_social}}</td>
-                  
-                        <td> {{sumarTotal(orden) | currency}}</td>
-                        <td>{{orden.estadoOrden.nombre_estado}}</td>
-                        <td>
-                          <button
+              <td>{{ sumarTotal(orden) | currency }}</td>
+              <td>{{ orden.estadoOrden.nombre_estado }}</td>
+              <td>
+                <button
                   (click)="openModal(orden)"
                   class="btn btn-outline-info m-2"
                 >
-                <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png" alt="visible--v1"/>
+                  <img
+                    width="20"
+                    height="20"
+                    src="https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png"
+                    alt="visible--v1"
+                    
+                  />
                 </button>
-                          <button class="btn btn-outline-success m-2"><img width="20" height="20"  src="https://img.icons8.com/ios/50/ok--v1.png" alt="ok--v1"/></button>
-                          <button *ngIf="!orden.eliminada" class="btn btn-outline-danger m-2 " (click)="eliminarOrden(orden.id)" > <img width="20" height="20" src="https://img.icons8.com/material-rounded/24/filled-trash.png" alt="filled-trash"/></button>
-                          <button *ngIf="orden.eliminada" class="btn btn-outline-primary m-2 " (click)="eliminarOrden(orden.id)" > <img width="20" height="20" src="https://img.icons8.com/windows/32/trash-restore.png" alt="trash-restore"/></button>
-                        
-                        </td>
-                      </ng-container>
-                      </tbody>
-                
-        </table>
+                <button *ngIf="orden.estadoOrden.nombre_estado !== 'Entregada'" class="btn btn-outline-success m-2"
+                [disabled]="orden.estadoOrden.nombre_estado == 'Entregada'"
+                >
+                  <img
+                    width="20"
+                    height="20"
+                    src="https://img.icons8.com/ios/50/ok--v1.png"
+                    alt="ok--v1"
+                  />
+                </button>
+                <button
+                  *ngIf="!orden.eliminada && orden.estadoOrden.nombre_estado !== 'Entregada'"
+                  class="btn btn-outline-danger m-2"
+                  (click)="eliminarOrden(orden.id)"
+                  [disabled]="orden.estadoOrden.nombre_estado == 'Entregada'"
+                >
+                  <img
+                    width="20"
+                    height="20"
+                    src="https://img.icons8.com/material-rounded/24/filled-trash.png"
+                    alt="filled-trash"
+                  />
+                </button>
+                <button
+                  *ngIf="orden.eliminada && orden.estadoOrden.nombre_estado !== 'Entregada'"
+                  class="btn btn-outline-primary m-2"
+                  (click)="restaurarOrden(orden.id)"
+                  [disabled]="orden.estadoOrden.nombre_estado == 'Entregada'"
+                >
+                  <img
+                    width="20"
+                    height="20"
+                    src="https://img.icons8.com/windows/32/trash-restore.png"
+                    alt="trash-restore"
+                  />
+                </button>
+              </td></tr
+          ></ng-container>
+        </tbody>
+      </table>
     </div>
   </div>
-    </div>
+</div>
