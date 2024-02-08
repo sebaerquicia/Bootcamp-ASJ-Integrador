@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { ProductoBack } from '../models/productoBack.model';
 
 @Injectable({
@@ -17,10 +18,12 @@ export class ServicioProductosService {
     return this.http.get(this.url);
   }
   guardarProducto(producto: ProductoBack): Observable<any> {
-    return this.http.post(this.url, producto, {
-      observe: 'response',
-      responseType: 'text',
-    });
+    return this.http
+      .post(this.url, producto, {
+        observe: 'response',
+        responseType: 'text',
+      })
+      .pipe(catchError(this.handleError));
   }
 
   eliminarProducto(id: number): Observable<any> {
@@ -38,20 +41,21 @@ export class ServicioProductosService {
     return this.http.get('http://localhost:8080/categorias');
   }
 
-  //OBTENGO EL PRODUCTO POR ID PARA MODIFICARLO
   public getProductoFormulario(id: number): Observable<any> {
     return this.http.get(this.url + '/' + id);
   }
-  //PETICION PARA ACTUALIZAR UN PROVEEDOR
+
   actualizarProducto(
     id: number,
     productoModificado: ProductoBack
   ): Observable<any> {
     const url = `${this.url}/${id}`;
-    return this.http.put(url, productoModificado, {
-      observe: 'response',
-      responseType: 'text',
-    });
+    return this.http
+      .put(url, productoModificado, {
+        observe: 'response',
+        responseType: 'text',
+      })
+      .pipe(catchError(this.handleError));
   }
   getNombresProveedores(): string[] {
     const proveedoresString = localStorage.getItem('proveedores');
@@ -70,7 +74,7 @@ export class ServicioProductosService {
     }
     return this.http.get(`${this.url}/categorias/${id}`);
   }
-  
+
   getProductosByProveedorId(id: any): Observable<any> {
     if (id == 0) {
       return this.http.get(this.url);
@@ -78,39 +82,45 @@ export class ServicioProductosService {
     return this.http.get(`${this.url}/proveedor/${id}`);
   }
 
+  url_categorias = 'http://localhost:8080/categorias';
 
-
-  //CRUD de Categorias de productos
-  url_categorias =  "http://localhost:8080/categorias"
-
-    //GET ACTIVAS 
-
- public buscarCategoriasActivas(): Observable<any> {
-    return this.http.get(this.url_categorias + "/activas");
+  public buscarCategoriasActivas(): Observable<any> {
+    return this.http.get(this.url_categorias + '/activas');
   }
 
-  //GET by ID
   public buscarCategoriaPorId(id: number): Observable<any> {
-    return this.http.get(this.url_categorias + "/" + id)
+    return this.http.get(this.url_categorias + '/' + id);
   }
 
-  // POST 
   public crearCategoria(categoria: any): Observable<any> {
-    return this.http.post(this.url_categorias, categoria, { observe: 'response', responseType: 'text' })
+    return this.http.post(this.url_categorias, categoria, {
+      observe: 'response',
+      responseType: 'text',
+    });
   }
 
-  //DELETE
   public eliminarCategoria(id: number): Observable<any> {
-    return this.http.delete(this.url_categorias + "/" + id, { observe: 'response', responseType: 'text' })
+    return this.http.delete(this.url_categorias + '/' + id, {
+      observe: 'response',
+      responseType: 'text',
+    });
   }
 
-  //PUT
   public modificarCategoria(id: number, categoria: any): Observable<any> {
-    return this.http.put(this.url_categorias + "/" + id, categoria, { observe: 'response', responseType: 'text' })
+    return this.http.put(this.url_categorias + '/' + id, categoria, {
+      observe: 'response',
+      responseType: 'text',
+    });
   }
 
-  //ALTA
-  public altaCategoria(id: number): Observable<any> {
-    return this.http.put(this.url_categorias + "/alta/" + id, null,{ observe: 'response', responseType: 'text' })
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Ocurrió un error en la aplicación';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Código de error: ${error.status}, mensaje: ${error.error}`;
+    }
+    return throwError(errorMessage);
   }
 }

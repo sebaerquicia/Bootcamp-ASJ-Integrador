@@ -1,9 +1,20 @@
 <div class="container px-4 min-vh-100">
+  <div class="row">
+<div class="col">
   <h1 class="mt-4">Listado de Ordenes</h1>
   <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item"><a href="">Inicio</a></li>
     <li class="breadcrumb-item active">Listado de Ordenes de Compra</li>
   </ol>
+</div>
+  </div>
+  <div class="row"><div class="col"><button
+    type="button"
+    class="btn btn-success"
+    routerLink="/ordenes-compra/alta-ordenes"
+  >
+ + Agregar
+  </button></div></div>
   <div class="row">
     <div *ngIf="ordenes.length === 0" class="alert alert-warning">
       No hay ordenes de compra cargadas en el sistema. Realiza una compra para
@@ -77,7 +88,8 @@
                   />
                 </button>
                 <button *ngIf="orden.estadoOrden.nombre_estado !== 'Entregada'" class="btn btn-outline-success m-2"
-                [disabled]="orden.estadoOrden.nombre_estado == 'Entregada'"
+                [disabled]="orden.eliminada"
+                (click)="ordenEntregada(orden.id)"
                 >
                   <img
                     width="20"

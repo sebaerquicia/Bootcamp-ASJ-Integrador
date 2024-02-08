@@ -21,6 +21,8 @@ public class CategoriaModel {
 	@NotNull 
 	@Column(unique = true)
 	private String nombre_categoria;
+	@Column
+	private boolean eliminada;
 	
 	
 
@@ -58,6 +60,12 @@ public class CategoriaModel {
 	public CategoriaModel() {
 	}
 	
+	public boolean isEliminada() {
+		return eliminada;
+	}
+	public void setEliminada(boolean eliminada) {
+		this.eliminada = eliminada;
+	}
 	@PrePersist
     protected void onCreate() {
         created_at = LocalDateTime.now();

@@ -7,6 +7,13 @@
         <li class="breadcrumb-item active">Agregar Proveedor</li>
       </ol>
     </div>
+      
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary mb-3" (click)="volver()">Volver</button>
+
+    </div>
   </div>
 
   <div class="row">
@@ -14,32 +21,31 @@
       <h2>+ Proveedores</h2>
       <form #formulario="ngForm" (ngSubmit)="guardarProveedor(formulario)">
         <div class="col">
-          <hr>
+          <hr />
           <h3>Datos del proveedor</h3>
         </div>
         <div class="row mb-2">
           <div class="col-md-2">
             <label for="codigo" class="form-label">Código único: </label>
-            <input 
+            <input
               name="codigo"
-              class="form-control form__input mx-2"
-              type= "text"
+              class="form-control form__input"
+              type="text"
               placeholder="Código"
               id="codigoInput"
               minlength="4"
               maxlength="20"
               [(ngModel)]="proveedor.codigo_proveedor"
-
-              [disabled]="modoEdicion"              
+              [disabled]="modoEdicion"
               required
-            />           
-           </div>
-        <div class="col-md-3">
+            />
+          </div>
+          <div class="col-md-3">
             <label for="razonSocial" class="form-label">Razón social: </label>
             <input
               name="razonSocial"
-              class="form-control form__input mx-2"
-              type= "text"
+              class="form-control form__input"
+              type="text"
               placeholder="Nombre del Proveedor"
               id="razonInput"
               minlength="4"
@@ -48,11 +54,18 @@
               [disabled]="modoEdicion"
               required
               (ngModelChange)="validateRazonSocial($event)"
-            />           
-            <div *ngIf="proveedor.razon_social && razonSocialInvalid && proveedor.razon_social.length < 4" class="text-danger">
+            />
+            <div
+              *ngIf="
+                proveedor.razon_social &&
+                razonSocialInvalid &&
+                proveedor.razon_social.length < 4
+              "
+              class="text-danger"
+            >
               La razón social debe tener al menos 4 caracteres.
             </div>
-           </div>
+          </div>
           <div class="col-md-2">
             <label for="rubro" class="form-label">Rubro: </label>
             <select
@@ -60,13 +73,15 @@
               type="text"
               placeholder="Rubro"
               id="rubroInput"
-              class="form-select form__input mx-2"
+              class="form-select form__input"
               [(ngModel)]="proveedor.rubro_proveedor.id"
               required
             >
-            <option *ngFor="let rubro of rubros" [value]="rubro.id">{{ rubro.nombre_rubro }}</option>
-          </select>
-          </div>          
+              <option *ngFor="let rubro of rubros" [value]="rubro.id">
+                {{ rubro.nombre_rubro }}
+              </option>
+            </select>
+          </div>
           <div class="col-md-3">
             <label for="rubro" class="form-label">WEB: </label>
             <input
@@ -74,7 +89,7 @@
               type="text"
               placeholder="URL"
               id="webInput"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="proveedor.web"
               required
               (ngModelChange)="validarURL($event)"
@@ -84,23 +99,22 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-3 mt-2 ">
+            <div class="col-md-3 mt-2">
               <label for="img" class="form-label">URL Imágen: </label>
               <input
                 name="img"
                 type="text"
                 placeholder="Imagen del proveedor"
                 id="imgInput"
-                class="form-control form__input mx-2"
-                [(ngModel)]="proveedor.img"              
+                class="form-control form__input"
+                [(ngModel)]="proveedor.img"
               />
-
             </div>
           </div>
           <div class="row mb-3">
             <div class="row">
               <div class="col">
-                <hr>
+                <hr />
                 <h3>Datos fiscales</h3>
               </div>
             </div>
@@ -111,7 +125,7 @@
                 type="text"
                 placeholder="CUIT"
                 id="cuitInput"
-                class="form-control form__input mx-2"
+                class="form-control form__input"
                 [(ngModel)]="proveedor.cuit_proveedor"
                 pattern="[0-9]{11}"
                 [disabled]="modoEdicion"
@@ -120,27 +134,30 @@
                 (ngModelChange)="validarCUIT($event)"
               />
               <div *ngIf="cuitInvalid" class="text-danger">
-                El CUIT debe tener exactamente 11 números y no debe contener letras.
+                El CUIT debe tener exactamente 11 números y no debe contener
+                letras.
               </div>
             </div>
-          <div class="col-md-2">
-            <label for="iva" class="form-label">IVA: </label>
-            <select
-              class="form-select"
-              name="iva"
-              id="ivaInput"
-              [(ngModel)]="proveedor.iva.id"
-              required
-            >
-              <option *ngFor="let iva of condicionesIva" [value]="iva.id">{{ iva.nombre_iva }}</option>
-            </select>
-          </div>
+            <div class="col-md-2">
+              <label for="iva" class="form-label">IVA: </label>
+              <select
+                class="form-select"
+                name="iva"
+                id="ivaInput"
+                [(ngModel)]="proveedor.iva.id"
+                required
+              >
+                <option *ngFor="let iva of condicionesIva" [value]="iva.id">
+                  {{ iva.nombre_iva }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="row mb-3">
           <div class="row">
             <div class="col">
-              <hr>
+              <hr />
               <h3>Dirección</h3>
             </div>
           </div>
@@ -151,10 +168,12 @@
               name="pais"
               id="paisInput"
               [(ngModel)]="proveedor.provincia.pais.id"
-              (change) = "paisSeleccionado()"
+              (change)="paisSeleccionado()"
               required
             >
-            <option *ngFor="let pais of paises" [value]="pais.id">{{ pais.nombre_pais }}</option>
+              <option *ngFor="let pais of paises" [value]="pais.id">
+                {{ pais.nombre_pais }}
+              </option>
             </select>
           </div>
           <div class="col-md-2">
@@ -164,13 +183,18 @@
               type="text"
               placeholder="Provincia"
               id="provinciaInput"
-              class="form-select form__input mx-2"
+              class="form-select form__input"
               [(ngModel)]="proveedor.provincia.id"
               required
             >
-            <option *ngFor="let provincia of provincias" [value]="provincia.id">{{ provincia.nombre_provincia }}</option>
-          </select>
-        </div>
+              <option
+                *ngFor="let provincia of provincias"
+                [value]="provincia.id"
+              >
+                {{ provincia.nombre_provincia }}
+              </option>
+            </select>
+          </div>
           <div class="col-md-2">
             <label for="localidad" class="form-label">Localidad: </label>
             <input
@@ -178,12 +202,12 @@
               type="text"
               placeholder="Localidad"
               id="localidadInput"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="proveedor.localidad"
               required
             />
           </div>
-       
+
           <div class="col-md-2">
             <label for="cp" class="form-label">Codigo Postal: </label>
             <input
@@ -191,13 +215,12 @@
               type="text"
               placeholder="Código postal"
               id="cpInput"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="proveedor.codigo_postal"
               minlength="4"
               maxlength="6"
               required
               (ngModelChange)="validarCP($event)"
-              
             />
             <div *ngIf="cpInvalid" class="text-danger">
               El código postal debe tener entre 4 y 6 números.
@@ -210,7 +233,7 @@
               type="text"
               placeholder="Ej: Calle Falsa"
               id="calleInput"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="proveedor.calle"
               required
             />
@@ -223,7 +246,7 @@
               placeholder="Ej:123"
               id="nrocalleInput"
               min="0"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="proveedor.numero_calle"
               required
             />
@@ -232,7 +255,7 @@
         <div class="row">
           <div class="row">
             <div class="col">
-              <hr>
+              <hr />
               <h3>Datos de contacto</h3>
             </div>
           </div>
@@ -243,7 +266,7 @@
               type="text"
               placeholder="Nombre de contacto"
               id="nameInput"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="proveedor.contacto.nombre_contacto"
               required
               minlength="4"
@@ -252,7 +275,8 @@
               (ngModelChange)="validarNombre($event)"
             />
             <div *ngIf="nombreInvalid" class="text-danger">
-              El nombre debe tener al menos 4 caracteres y no debe contener caracteres especiales.
+              El nombre debe tener al menos 4 caracteres y no debe contener
+              caracteres especiales.
             </div>
           </div>
           <div class="col-md-2">
@@ -262,7 +286,7 @@
               type="text"
               placeholder="Apellido de contacto"
               id="apellidoInput"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="proveedor.contacto.apellido_contacto"
               required
               minlength="4"
@@ -271,7 +295,8 @@
               (ngModelChange)="validarApellido($event)"
             />
             <div *ngIf="apellidoInvalid" class="text-danger">
-              El apellido debe tener al menos 4 caracteres y no debe contener caracteres especiales.
+              El apellido debe tener al menos 4 caracteres y no debe contener
+              caracteres especiales.
             </div>
           </div>
           <div class="col-md-2">
@@ -281,7 +306,7 @@
               type="text"
               placeholder="Rol del contacto"
               id="rolInput"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="proveedor.contacto.rol"
               required
             />
@@ -293,7 +318,7 @@
               type="email"
               placeholder="eMail@email.com"
               id="emailInput"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="proveedor.contacto.email_contacto"
               required
             />
@@ -306,29 +331,31 @@
               placeholder="Teléfono"
               id="telefonoInput"
               min="0"
-              class="form-control form__input mx-2"
+              class="form-control form__input"
               [(ngModel)]="proveedor.contacto.telefono_contacto"
               required
             />
           </div>
-
         </div>
         <div class="col-md-3">
-          <hr>
-          <button  type="submit" id="submitButton" class="btn btn-success p-2 m-2 ">
-            {{ modificacion ? 'Actualizar' : 'Agregar' }}
+          <hr />
+          <button
+            type="submit"
+            id="submitButton"
+            class="btn btn-success p-2 m-2"
+          >
+            {{ modificacion ? "Actualizar" : "Agregar" }}
           </button>
-        <button
-          type="button"
-          class="btn btn-outline-warning p-2 m-2"
-          (click)="resetearFormulario(formulario)"
-          [attr.disabled]="modificacion ? true : null"
-
-        >
-        {{ modificacion ? 'Deshabilitado' : 'Limpiar formulario' }}
-        </button>
-      </div>
-    </form>
+          <button
+            type="button"
+            class="btn btn-outline-warning p-2 m-2"
+            (click)="resetearFormulario(formulario)"
+            [attr.disabled]="modificacion ? true : null"
+          >
+            {{ modificacion ? "Deshabilitado" : "Limpiar formulario" }}
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

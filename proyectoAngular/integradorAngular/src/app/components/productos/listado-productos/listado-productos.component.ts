@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicioProductosService } from '../../../services/servicio-productos.service';
-import { Producto } from '../../../models/producto.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoBack } from '../../../models/productoBack.model';
 
@@ -16,11 +15,10 @@ import Swal from 'sweetalert2';
 export class ListadoProductosComponent implements OnInit {
   productos: ProductoBack[] = [];
   filtroActivoEliminado: string = 'Todos';
-  categorias: any[]=[];
-  categoriasActivas: any[]=[];
+  categorias: any[] = [];
+  categoriasActivas: any[] = [];
   filtroCategorias: number = 0;
   criterioOrdenamiento: string | null = null;
-
 
   constructor(
     private modalService: NgbModal,
@@ -29,37 +27,39 @@ export class ListadoProductosComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-      config.backdrop = 'static';
-      config.keyboard = false;
-}
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
   ngOnInit(): void {
     this.actualizarLista();
-    this.productosService.getCategorias().subscribe((data)=> {
-      this.categorias = data
-    })
-    this.productosService.buscarCategoriasActivas().subscribe((data)=>{
-      this.categoriasActivas = data
-    })
+    this.productosService.getCategorias().subscribe((data) => {
+      this.categorias = data;
+    });
+    this.productosService.buscarCategoriasActivas().subscribe((data) => {
+      this.categoriasActivas = data;
+    });
+  }
 
-    
+  agregar(){
+    this.router.navigate(['/productos/alta-productos/'])
   }
   public producto: ProductoBack = {
     id: undefined,
-    proveedor:  {
+    proveedor: {
       id: undefined,
       codigo_proveedor: '',
       rubro_proveedor: {
-          id: null,
-          nombre_rubro: ''
+        id: null,
+        nombre_rubro: '',
       },
       razon_social: '',
       provincia: {
+        id: null,
+        nombre_provincia: null,
+        pais: {
           id: null,
-          nombre_provincia: null,
-          pais: {
-              id: null,
-              nombre_pais: null
-          }
+          nombre_pais: null,
+        },
       },
       localidad: null,
       codigo_postal: null,
@@ -67,26 +67,25 @@ export class ListadoProductosComponent implements OnInit {
       numero_calle: null,
       cuit_proveedor: '',
       contacto: {
-          id: null,
-          nombre_contacto: '',
-          apellido_contacto: '',
-          rol: null,
-          telefono_contacto: '',
-          email_contacto: '',
+        id: null,
+        nombre_contacto: '',
+        apellido_contacto: '',
+        rol: null,
+        telefono_contacto: '',
+        email_contacto: '',
       },
       iva: {
-          id: null,
-          nombre_iva: ''
+        id: null,
+        nombre_iva: '',
       },
       web: null,
       img: null,
-      eliminado: false
-  
-  },
+      eliminado: false,
+    },
     codigo_sku: '',
     categoria: {
       id: undefined,
-      nombre_categoria: undefined
+      nombre_categoria: undefined,
     },
     nombre_producto: '',
     descripcion: '',
@@ -94,38 +93,32 @@ export class ListadoProductosComponent implements OnInit {
     url_img: '',
   };
 
-
   private actualizarLista(): void {
     this.productosService.getProductos().subscribe((data) => {
       this.productos = data;
-
     });
   }
 
   eliminarProducto(id: any): void {
     Swal.fire({
-      title: 'Deseas eliminar el producto?'+ this.producto.nombre_producto,
+      title: 'Deseas eliminar el producto?' + this.producto.nombre_producto,
       text: '(Puedes revertir esta acción)',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Eliminar',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.productosService.eliminarProducto(id).subscribe(() => {
           this.actualizarLista();
-          Swal.fire(
-            'Eliminado',
-            'El producto ha sido eliminado',
-            'success'
-          );
+          Swal.fire('Eliminado', 'El producto ha sido eliminado', 'success');
         });
       }
     });
   }
-  
+
   restaurarProducto(id: any): void {
     this.productosService.eliminarProducto(id).subscribe(() => {
       this.actualizarLista();
@@ -135,7 +128,7 @@ export class ListadoProductosComponent implements OnInit {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000
+        timer: 3000,
       });
     });
   }
@@ -143,18 +136,19 @@ export class ListadoProductosComponent implements OnInit {
     this.router.navigate(['/productos/alta-productos/', { id }]);
   }
 
-
-  filtrarPorCategoria(id: any){
-    if(id==0){
-      this.actualizarLista()
+  filtrarPorCategoria(id: any) {
+    if (id == 0) {
+      this.actualizarLista();
     }
     this.productosService.getProductosByIdCategoria(id).subscribe((data) => {
       this.productos = data;
     });
   }
   openModal(producto: ProductoBack): void {
-    const modalRef = this.modalService.open(ModalProductoComponent, { size: 'lg' });
-    modalRef.componentInstance.producto= producto;
+    const modalRef = this.modalService.open(ModalProductoComponent, {
+      size: 'lg',
+    });
+    modalRef.componentInstance.producto = producto;
   }
 
   ordenarPorPrecio(ascendente: boolean): void {

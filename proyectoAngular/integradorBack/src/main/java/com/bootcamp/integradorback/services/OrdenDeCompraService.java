@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.integradorback.exceptions.ResourceNotFoundException;
+import com.bootcamp.integradorback.models.EstadoOrdenModel;
 import com.bootcamp.integradorback.models.OrdenDeCompraModel;
+import com.bootcamp.integradorback.repositories.EstadoOrdenRepository;
 import com.bootcamp.integradorback.repositories.OrdenDeCompraRepository;
 
 @Service
@@ -15,6 +17,8 @@ public class OrdenDeCompraService {
     
     @Autowired
     OrdenDeCompraRepository ordenRepository;
+    @Autowired
+    EstadoOrdenRepository estadoOrdenRepository;
     
     public List<OrdenDeCompraModel> obtenerOrdenes() {
         try {
@@ -46,14 +50,13 @@ public class OrdenDeCompraService {
         }
     }
 
-    public String modificarOrden(int id, OrdenDeCompraModel orden) {
+    public String entregarOrden(int id, OrdenDeCompraModel orden) {
         try {
             Optional<OrdenDeCompraModel> existingOrden = ordenRepository.findById(id);
+            Optional<EstadoOrdenModel> estadoEntregado = estadoOrdenRepository.findById(4);
             if (existingOrden.isPresent()) {
                 OrdenDeCompraModel o = existingOrden.get();
-                o.setFecha_entrega_esperada(orden.getFecha_entrega_esperada());
-                o.setEstadoOrden(orden.getEstadoOrden());
-                o.setInformacion_orden(orden.getInformacion_orden());
+                o.setEstadoOrden(estadoEntregado.get());
                 ordenRepository.save(o);
                 return "Orden #" + id + " modificada";
             } else {
@@ -79,5 +82,7 @@ public class OrdenDeCompraService {
             throw new RuntimeException("Error al eliminar la orden de compra con ID: " + id, e);
         }
     }
+    
+
 }
 

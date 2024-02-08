@@ -42,14 +42,14 @@ export class ListadoOrdenComponent {
 
   eliminarOrden(id: any): void {
     Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Se eliminará la orden",
-      icon: "warning",
+      title: '¿Estás seguro?',
+      text: 'Se eliminará la orden',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar"
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.ordenesService.eliminarOrden(id).subscribe((msj) => {
@@ -57,9 +57,9 @@ export class ListadoOrdenComponent {
           this.actualizarLista();
         });
         Swal.fire(
-          "¡Eliminado!",
-          "La orden ha sido eliminada correctamente.",
-          "success"
+          '¡Eliminado!',
+          'La orden ha sido eliminada correctamente.',
+          'success'
         );
       }
     });
@@ -73,7 +73,7 @@ export class ListadoOrdenComponent {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000
+        timer: 3000,
       });
     });
   }
@@ -81,17 +81,42 @@ export class ListadoOrdenComponent {
   editarOrden(id: any): void {
     this.router.navigate(['/ordenes-compra/alta-ordenes/', { id }]);
   }
-  
+
+  ordenEntregada(id: any) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'La orden quedará entregada y no se podrá modificar',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, entregar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ordenesService.entregarOrden(id).subscribe((msj) => {
+          console.log(msj);
+          this.ngOnInit();
+        });
+        Swal.fire(
+          '¡Entregada!',
+          'La orden ha sido entregada correctamente.',
+          'success'
+        );
+      }
+    });
+  }
+
   filtrarOrdenes() {
     if (this.filtroActivaEliminada === 'Activas') {
       return this.ordenes.filter((orden) => !orden.eliminada);
     } else if (this.filtroActivaEliminada === 'Eliminadas') {
       return this.ordenes.filter((orden) => orden.eliminada);
     } else {
-      return this.ordenes; 
+      return this.ordenes;
     }
   }
-  
+
   openModal(orden: OrdenBack): void {
     const modalRef = this.modalService.open(ModalOrdenComponent, {
       size: 'lg',
@@ -101,9 +126,9 @@ export class ListadoOrdenComponent {
 
   mostrarMensajeEliminado(): void {
     Swal.fire({
-      title: "Orden Eliminada",
-      text: "(Puedes revertir esta acción)",
-      icon: "success"
+      title: 'Orden Eliminada',
+      text: '(Puedes revertir esta acción)',
+      icon: 'success',
     });
   }
 }

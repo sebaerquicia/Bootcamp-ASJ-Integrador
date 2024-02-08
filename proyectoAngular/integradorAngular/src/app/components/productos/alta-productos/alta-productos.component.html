@@ -8,18 +8,24 @@
       </ol>
     </div>
   </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary mb-3" (click)="volver()">Volver</button>
+
+    </div>
+  </div>
   <h2>+ Productos</h2>
   <form #formulario="ngForm" (ngSubmit)="guardarProducto(formulario)">
     <div id="formRegister" class="crud__form">
       <div class="row">
-        <hr>
+        <hr />
         <div class="col-md-3">
           <label for="nombre" class="form-label">Producto: </label>
           <input
             name="nombre"
             type="text"
             placeholder="Nombre del Producto"
-            class="form-control form__input "
+            class="form-control form__input"
             [(ngModel)]="producto.nombre_producto"
             required
           />
@@ -30,7 +36,6 @@
             name="codigo"
             type="text"
             placeholder="Codigo/SKU"
-            [disabled]="modificacion"
             class="form-control form__input"
             [(ngModel)]="producto.codigo_sku"
             required
@@ -42,11 +47,13 @@
           <select
             class="form-select"
             name="proveed"
-            [disabled]="modificacion"
             [(ngModel)]="producto.proveedor.id"
             required
           >
-            <option *ngFor="let proveedor of proveedores" [value]="proveedor.id">
+            <option
+              *ngFor="let proveedor of proveedores"
+              [value]="proveedor.id"
+            >
               {{ proveedor.razon_social }}
             </option>
           </select>
@@ -60,9 +67,9 @@
             [(ngModel)]="producto.categoria.id"
             required
           >
-          <option *ngFor="let categoria of categorias" [value]="categoria.id">
-            {{ categoria.nombre_categoria }}
-          </option>
+            <option *ngFor="let categoria of categorias" [value]="categoria.id">
+              {{ categoria.nombre_categoria }}
+            </option>
           </select>
         </div>
         <div class="row">

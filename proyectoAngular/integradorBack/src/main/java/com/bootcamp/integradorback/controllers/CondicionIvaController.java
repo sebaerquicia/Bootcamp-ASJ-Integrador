@@ -31,8 +31,8 @@ public class CondicionIvaController {
     
     @GetMapping("/{id}")
     public ResponseEntity<CondicionIvaModel> getCondicionIvaById(@PathVariable int id) {
-        CondicionIvaModel condicionIva = condicionIvaService.obtenerCondicionIvaById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Condición IVA no encontrada con id: " + id));
+        CondicionIvaModel condicionIva = condicionIvaService.obtenerCondicionIvaById(id);
+            
         return ResponseEntity.ok(condicionIva);
     }
     

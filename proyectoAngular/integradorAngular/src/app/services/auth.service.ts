@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private isAuthenticatedValue: boolean = false;
@@ -21,7 +21,10 @@ export class AuthService {
     if (username === 'admin' && password === 'admin') {
       this.isAuthenticatedValue = true;
       this.username = username;
-      localStorage.setItem('session', JSON.stringify({ isAuthenticated: true, username: username }));
+      localStorage.setItem(
+        'session',
+        JSON.stringify({ isAuthenticated: true, username: username })
+      );
       return true;
     }
     return false;
@@ -50,7 +53,6 @@ export class AuthService {
     this.username = value;
   }
 
-  // Método para acceder a la propiedad isAuthenticatedValue desde fuera del servicio
   getIsAuthenticatedValue(): boolean {
     return this.isAuthenticatedValue;
   }

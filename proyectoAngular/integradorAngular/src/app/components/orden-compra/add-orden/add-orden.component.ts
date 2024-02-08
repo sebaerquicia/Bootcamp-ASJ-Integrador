@@ -1,30 +1,23 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Orden } from '../../../models/orden-compra.model';
-import { ProductoOrden } from '../../../models/orden-compra.model';
 import { ServicioOrdenesCompraService } from '../../../services/servicio-ordenes-compra.service';
 import { ServicioProductosService } from '../../../services/servicio-productos.service';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Producto } from '../../../models/producto.model';
 import { DetalleOrdenBack, OrdenBack } from '../../../models/ordenBack.model';
 import { ServicioProveedoresService } from '../../../services/servicio-proveedores.service';
 import { ProductoBack } from '../../../models/productoBack.model';
 import { ViewChild, ElementRef } from '@angular/core';
+import Swal from 'sweetalert2';
+import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/signals';
+
 @Component({
   selector: 'app-add-orden',
   templateUrl: './add-orden.component.html',
-  styleUrl: './add-orden.component.css',
+  styleUrls: ['./add-orden.component.css'],
 })
 export class AddOrdenComponent implements OnInit {
   @ViewChild('productoSelect') productoSelect!: ElementRef;
-  constructor(
-    private ordenesService: ServicioOrdenesCompraService,
-    private productosService: ServicioProductosService,
-    private proveedoresService: ServicioProveedoresService,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    private route: ActivatedRoute
-  ) { this.minDate = new Date();}
+
   minDate: Date;
   proveedores: any[] = [];
   productos: any[] = [];
@@ -35,7 +28,7 @@ export class AddOrdenComponent implements OnInit {
   modificacion: boolean = false;
   detallesProductos: any[] = [];
   selectProveedorBloqueado: boolean = false;
-  ordenes:OrdenBack[]=[]
+  ordenes: OrdenBack[] = [];
 
   public orden: OrdenBack = {
     id: undefined,
@@ -87,6 +80,7 @@ export class AddOrdenComponent implements OnInit {
     eliminada: false,
     detalles: [],
   };
+  
   public detalle: DetalleOrdenBack = {
     id: undefined,
     producto: {
@@ -143,6 +137,17 @@ export class AddOrdenComponent implements OnInit {
     total: undefined,
   };
 
+  constructor(
+    private ordenesService: ServicioOrdenesCompraService,
+    private productosService: ServicioProductosService,
+    private proveedoresService: ServicioProveedoresService,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.minDate = new Date();
+  }
+
   ngOnInit(): void {
     this.proveedoresService.getProveedoresActivos().subscribe((data) => {
       this.proveedores = data;
@@ -166,17 +171,19 @@ export class AddOrdenComponent implements OnInit {
     this.productosService.getProductosByProveedorId(id).subscribe((data) => {
       this.productosFiltrados = data;
     });
+    this.proveedoresService.getProveedorFormulario(id).subscribe((data) =>{
+      this.orden.proveedor.img = data.img;
+    })
   }
+
 
   onProductoChange(productoId: any, cantidad: any) {
     this.llenarListado(productoId, cantidad);
   }
 
   llenarListado(productoId: any, cantidad: any) {
-    console.log(this.orden.proveedor)
     this.cantidadValida = cantidad && cantidad !== 0;
     if (cantidad && cantidad !== 0) {
-
       const productoSeleccionado = this.productosFiltrados.find(
         (producto) => producto.id == productoId
       );
@@ -185,61 +192,60 @@ export class AddOrdenComponent implements OnInit {
         (detalle) => detalle.producto.id == productoId
       );
       if (detalleExistente) {
-        // Si el producto ya existe, actualiza la cantidad
         detalleExistente.cantidad_producto += cantidad;
         detalleExistente.total =
           detalleExistente.cantidad_producto *
           productoSeleccionado!.precio_producto!;
       } else {
-        const detalle : DetalleOrdenBack  = {
+        const detalle: DetalleOrdenBack = {
           producto: {
             id: productoId,
-          nombre_producto: productoSeleccionado!.nombre_producto,
-          codigo_sku: '',
-          proveedor: {
-            id: this.orden.proveedor.id,
-            codigo_proveedor: '',
-            rubro_proveedor: {
-              id: null,
-              nombre_rubro: '',
-            },
-            razon_social: '',
-            provincia: {
-              id: null,
-              nombre_provincia: null,
-              pais: {
+            nombre_producto: productoSeleccionado!.nombre_producto,
+            codigo_sku: '',
+            proveedor: {
+              id: this.orden.proveedor.id,
+              codigo_proveedor: '',
+              rubro_proveedor: {
                 id: null,
-                nombre_pais: null,
+                nombre_rubro: '',
               },
+              razon_social: '',
+              provincia: {
+                id: null,
+                nombre_provincia: null,
+                pais: {
+                  id: null,
+                  nombre_pais: null,
+                },
+              },
+              localidad: null,
+              codigo_postal: null,
+              calle: null,
+              numero_calle: null,
+              cuit_proveedor: '',
+              contacto: {
+                id: null,
+                nombre_contacto: '',
+                apellido_contacto: '',
+                rol: null,
+                telefono_contacto: '',
+                email_contacto: '',
+              },
+              iva: {
+                id: null,
+                nombre_iva: '',
+              },
+              web: null,
+              img: null,
+              eliminado: false,
             },
-            localidad: null,
-            codigo_postal: null,
-            calle: null,
-            numero_calle: null,
-            cuit_proveedor: '',
-            contacto: {
-              id: null,
-              nombre_contacto: '',
-              apellido_contacto: '',
-              rol: null,
-              telefono_contacto: '',
-              email_contacto: '',
+            categoria: {
+              id: undefined,
             },
-            iva: {
-              id: null,
-              nombre_iva: '',
-            },
-            web: null,
-            img: null,
-            eliminado: false,
+            descripcion: '',
+            precio_producto: undefined,
+            url_img: productoSeleccionado!.url_img,
           },
-          categoria: {
-            id: undefined,
-          },
-          descripcion: '',
-          precio_producto: undefined,
-          url_img: productoSeleccionado!.url_img,
-        },
           cantidad_producto: cantidad,
           precio_hist: productoSeleccionado!.precio_producto,
           total: cantidad * productoSeleccionado!.precio_producto!,
@@ -250,7 +256,6 @@ export class AddOrdenComponent implements OnInit {
     }
     if (this.cantidadValida) {
       this.detalle.id = undefined;
-
       this.detalle.cantidad_producto = undefined;
       this.selectProveedorBloqueado = true;
       this.actualizarTotal();
@@ -263,6 +268,7 @@ export class AddOrdenComponent implements OnInit {
       0
     );
   }
+
   eliminarProducto(productoId: any) {
     const indice = this.detallesProductos.findIndex(
       (detalle) => detalle.producto.id == productoId
@@ -274,11 +280,14 @@ export class AddOrdenComponent implements OnInit {
   }
 
   guardarOrden(formulario: NgForm): void {
-
-    if (formulario.valid) {
-
+    if (formulario.valid && this.detallesProductos.length > 0) {
       if (!this.modificacion) {
-
+        const fechaEntrega = new Date(formulario.value.fechaEntrega);
+        console.log(fechaEntrega)
+        if (!fechaEntrega || this.fechaEntregaMayor(fechaEntrega)) {
+          this.mostrarErrorFechaEntrega();
+          return;
+        }
 
         const ordenNueva: OrdenBack = {
           numero_orden: formulario.value.nro,
@@ -325,35 +334,43 @@ export class AddOrdenComponent implements OnInit {
             eliminado: false,
           },
           fecha_emision: new Date(),
-          fecha_entrega_esperada: formulario.value.fechaEntrega,
-          detalles: this.detallesProductos
-          
+          fecha_entrega_esperada: fechaEntrega,
+          detalles: this.detallesProductos,
         };
-        console.log(ordenNueva)
-        this.ordenesService.guardarOrden(ordenNueva).subscribe();
-        alert(this.orden.numero_orden + ' se agregó correctamente');
-        this.resetearFormulario1(formulario);
-        this.router.navigate(['ordenes-compra/listado-ordenes']);
+
+        this.ordenesService.guardarOrden(ordenNueva).subscribe(
+          () => {
+            Swal.fire('¡Éxito!', 'La orden se ha agregado correctamente.', 'success');
+            this.resetearFormulario1(formulario);
+            this.router.navigate(['ordenes-compra/listado-ordenes']);
+          },
+          (error) => {
+            console.error(error);
+            Swal.fire('Error', 'El número de Orden ya existe', 'error');
+          }
+        );
       }
+    } else {
+      this.mostrarErrorFormularioInvalido();
     }
   }
-  actualizarOrdenesConImagen(): void {
-    this.ordenes.forEach(orden => {
-      const proveedor = this.proveedores.find(p => p.id === orden.proveedor.id);
-      if (proveedor) {
-        this.ordenesService.getImagenProveedor(proveedor.id).subscribe(imageUrl => {
-          proveedor.img = imageUrl;
-        });
-      }
-    });
+
+  fechaEntregaMayor(fechaEntrega: Date): boolean {
+    return fechaEntrega < this.orden.fecha_emision!;
+  }
+
+  mostrarErrorFechaEntrega(): void {
+    Swal.fire('Error', 'La fecha de entrega debe ser posterior a la fecha de emisión', 'error');
+  }
+
+  mostrarErrorFormularioInvalido(): void {
+    Swal.fire('Error', 'El formulario no es válido. Por favor, revise los campos', 'error');
   }
 
   resetearFormulario1(formulario: NgForm): void {
     formulario.resetForm();
     this.detallesProductos = [];
-    /* this.productoSelect.nativeElement.selectedIndex = 0; */
     this.selectProveedorBloqueado = false;
     this.actualizarTotal();
   }
-
 }

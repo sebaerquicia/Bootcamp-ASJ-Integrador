@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-alta-proveedores',
   templateUrl: './alta-proveedores.component.html',
-  styleUrl: './alta-proveedores.component.css',
+  styleUrls: ['./alta-proveedores.component.css'],
 })
 export class AltaProveedoresComponent implements OnInit {
   proveedores: any[] = [];
@@ -103,6 +103,9 @@ export class AltaProveedoresComponent implements OnInit {
     }
   }
 
+  volver(){
+    this.router.navigate(['proveedores/listado-proveedores']);
+  }
   get modoEdicion(): boolean {
     return this.proveedoresService.modoEdicion;
   }
@@ -169,15 +172,17 @@ export class AltaProveedoresComponent implements OnInit {
             alert(`El cuit ${proveedorNuevo.cuit_proveedor} ya está agregado`);
             return;
           }
-          this.proveedoresService
-            .guardarProveedor(proveedorNuevo)
-            .subscribe((res) => {
+          this.proveedoresService.guardarProveedor(proveedorNuevo).subscribe(
+            (res) => {
               formulario.resetForm();
               this.router.navigate(['proveedores/listado-proveedores']);
-              return res;
-            });
+              this.mostrarExitoAgregar();
+            },
+            (error) => {
+              this.mostrarError(error);
+            }
+          );
         });
-        this.mostrarExitoAgregar();
       } else {
         const proveedorModificado: ProveedorBack = {
           codigo_proveedor: formulario.value.codigo,
@@ -212,14 +217,17 @@ export class AltaProveedoresComponent implements OnInit {
         };
         this.proveedoresService
           .actualizarProveedor(this.id, proveedorModificado)
-          .subscribe((msj) => {
-            formulario.reset();
-            this.router.navigate(['proveedores/listado-proveedores']);
-            return msj;
-          });
+          .subscribe(
+            (msj) => {
+              formulario.reset();
+              this.router.navigate(['proveedores/listado-proveedores']);
+              this.mostrarExitoActualizar();
+            },
+            (error) => {
+              this.mostrarError(error);
+            }
+          );
       }
-
-      this.mostrarExitoActualizar();
     } else {
       this.mostrarErrorDatosIncompletos();
     }
@@ -289,7 +297,6 @@ export class AltaProveedoresComponent implements OnInit {
   //Mensajes de sweetalert
   mostrarConfirmacion(callback: () => void): void {
     const swalWithBootstrapButtons = Swal.mixin({
- 
       buttonsStyling: true,
     });
 
@@ -335,5 +342,14 @@ export class AltaProveedoresComponent implements OnInit {
       'Debes completar correctamente los campos del formulario',
       'error'
     );
+  }
+
+  // Método para mostrar el mensaje de error
+  mostrarError(error: any): void {
+    let errorMessage = 'El código y la razón social deben ser únicos';
+    if (error && error.error && error.error.message) {
+      errorMessage = error.error.message;
+    }
+    Swal.fire('Error', errorMessage, 'error');
   }
 }

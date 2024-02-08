@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bootcamp.integradorback.exceptions.ResourceNotFoundException;
@@ -25,7 +26,7 @@ public class ProveedorService {
     // Para obtener Proveedores
     public List<ProveedorModel> obtenerProveedores() {
         try {
-            return provRepository.findAll();
+        	 return provRepository.findAllOrderedByRazonSocialAsc();
         } catch (Exception e) {
             throw new RuntimeException("Error al obtener los proveedores", e);
         }

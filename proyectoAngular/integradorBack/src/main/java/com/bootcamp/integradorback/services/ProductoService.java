@@ -66,6 +66,8 @@ public class ProductoService {
             Optional<ProductoModel> existingProducto = productoRepository.findById(id);
             if (existingProducto.isPresent()) {
                 ProductoModel p = existingProducto.get();
+                p.setCodigo_sku(producto.getCodigo_sku());
+                p.setProveedor(producto.getProveedor());
                 p.setNombre_producto(producto.getNombre_producto());
                 p.setPrecio_producto(producto.getPrecio_producto());
                 p.setDescripcion(producto.getDescripcion());

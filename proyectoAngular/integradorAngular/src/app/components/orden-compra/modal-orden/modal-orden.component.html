@@ -1,53 +1,60 @@
 <div class="modal-header">
-    <h2 class="modal-title">#{{ orden.numero_orden }}</h2>
-    <h3 *ngIf="orden.eliminada" class="text-danger px-4 ">Orden Eliminada</h3>
-    <h3 *ngIf="orden.estadoOrden.nombre_estado == 'Entregada'" class="text-success px-4 ">Orden Entregada</h3>
-    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  <h2 class="modal-title">#{{ orden.numero_orden }}</h2>
+  <h3 *ngIf="orden.eliminada" class="text-danger px-4">Orden Eliminada</h3>
+  <h3
+    *ngIf="orden.estadoOrden.nombre_estado == 'Entregada'"
+    class="text-success px-4"
+  >
+    Orden Entregada
+  </h3>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col">
+      <h3>Proveedor: {{ orden.proveedor.razon_social }}</h3>
+      <img
+        src="{{ orden.proveedor.img }}"
+        alt="FotoProducto"
+        class="imagenes"
+      />
+    </div>
+    <div class="col">
+      <h5>Fecha Emisión: {{ orden.fecha_emision }}</h5>
+      <h5>Fecha Entrega: {{ orden.fecha_entrega_esperada }}</h5>
+    </div>
   </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="col">
-          <h3>Proveedor: {{ orden.proveedor.razon_social }}</h3>
-       <img src="{{ orden.proveedor.img }}" alt="FotoProducto" class="imagenes" /> 
-      </div>
-      <div class="col">
+  <div class="row">
+    <hr />
+    <div class="col">
+      <h3>Estado:</h3>
+      <p class="h4 text-info">{{ orden.estadoOrden.nombre_estado }}</p>
+      <h4>Información adicional:</h4>
+      <p>{{ orden.informacion_orden }}</p>
+    </div>
 
-        <h5>Fecha Emisión: {{ orden.fecha_emision }}</h5>
-        <h5>Fecha Entrega: {{orden.fecha_entrega_esperada}}</h5>
+    <div class="col">
+      <h3>Detalle:</h3>
+      <div *ngFor="let detalle of orden.detalles">
+        <ul>
+          <li>
+            {{ detalle.cantidad_producto }}(u):
+            {{ detalle.producto.nombre_producto }} a
+            {{ detalle.precio_hist | currency }}
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="row">
-      <hr>
-        <div class="col">       
-          <h3>Estado: </h3>
-          <p class="h4 text-info ">{{ orden.estadoOrden.nombre_estado}}</p>
-          <h4>Información adicional: </h4>
-          <p>{{orden.informacion_orden}}</p>
-
-        </div>
-  
-        <div class="col">
-          <h3>Detalle:</h3>
-            <div *ngFor="let detalle of orden.detalles">
-                <ul>
-                    <li>{{detalle.cantidad_producto}}(u): {{ detalle.producto.nombre_producto}} a {{detalle.precio_hist | currency}}</li>
-                </ul>
-            </div>
-          
-        </div>
-        </div>
-        <div class="row">
-            <hr>
-            <div class="col">
-                <h2 class="text-success">Total: {{sumarTotal(orden) | currency}}</h2>
-            </div>
-        </div>
-        
-  
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close()">
-      Cerrar
-    </button>
+  <div class="row">
+    <hr />
+    <div class="col">
+      <h2 class="text-success">Total: {{ sumarTotal(orden) | currency }}</h2>
+    </div>
   </div>
-  
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="modal.close()">
+    Cerrar
+  </button>
+</div>

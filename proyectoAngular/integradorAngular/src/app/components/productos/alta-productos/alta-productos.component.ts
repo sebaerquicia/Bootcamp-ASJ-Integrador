@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-alta-productos',
   templateUrl: './alta-productos.component.html',
-  styleUrl: './alta-productos.component.css',
+  styleUrls: ['./alta-productos.component.css'],
 })
 export class AltaProductosComponent implements OnInit {
   constructor(
@@ -99,63 +99,73 @@ export class AltaProductosComponent implements OnInit {
     }
   }
 
+
+  volver(){
+    this.router.navigate(['productos/listado-productos']);
+  }
   guardarProducto(formulario: NgForm): void {
     if (formulario.valid) {
-      if ((!this.modificacion)) {
-        const productoNuevo: ProductoBack = {
-          nombre_producto: formulario.value.nombre,
-          codigo_sku: formulario.value.codigo,
-          proveedor: {
-            id: formulario.value.proveed,
-            codigo_proveedor: '',
-            rubro_proveedor: {
-              id: null,
-              nombre_rubro: '',
-            },
-            razon_social: '',
-            provincia: {
-              id: null,
-              nombre_provincia: null,
-              pais: {
+      if (!this.modificacion) {
+        this.mostrarConfirmacion(() => {
+          const productoNuevo: ProductoBack = {
+            nombre_producto: formulario.value.nombre,
+            codigo_sku: formulario.value.codigo,
+            proveedor: {
+              id: formulario.value.proveed,
+              codigo_proveedor: '',
+              rubro_proveedor: {
                 id: null,
-                nombre_pais: null,
+                nombre_rubro: '',
               },
+              razon_social: '',
+              provincia: {
+                id: null,
+                nombre_provincia: null,
+                pais: {
+                  id: null,
+                  nombre_pais: null,
+                },
+              },
+              localidad: null,
+              codigo_postal: null,
+              calle: null,
+              numero_calle: null,
+              cuit_proveedor: '',
+              contacto: {
+                id: null,
+                nombre_contacto: '',
+                apellido_contacto: '',
+                rol: null,
+                telefono_contacto: '',
+                email_contacto: '',
+              },
+              iva: {
+                id: null,
+                nombre_iva: '',
+              },
+              web: null,
+              img: null,
+              eliminado: false,
             },
-            localidad: null,
-            codigo_postal: null,
-            calle: null,
-            numero_calle: null,
-            cuit_proveedor: '',
-            contacto: {
-              id: null,
-              nombre_contacto: '',
-              apellido_contacto: '',
-              rol: null,
-              telefono_contacto: '',
-              email_contacto: '',
+            categoria: {
+              id: formulario.value.categoria,
             },
-            iva: {
-              id: null,
-              nombre_iva: '',
+            descripcion: formulario.value.descripcion,
+            precio_producto: formulario.value.precio,
+            url_img: formulario.value.url,
+          };
+          this.productosService.guardarProducto(productoNuevo).subscribe(
+            () => {
+              this.mostrarExitoAgregar();
+              formulario.resetForm();
+              this.router.navigate(['productos/listado-productos']);
             },
-            web: null,
-            img: null,
-            eliminado: false,
-          },
-          categoria: {
-            id: formulario.value.categoria,
-          },
-          descripcion: formulario.value.descripcion,
-          precio_producto: formulario.value.precio,
-          url_img: formulario.value.url,
-        };
-        this.productosService.guardarProducto(productoNuevo).subscribe(() => {
-          this.mostrarExitoAgregar();
-          formulario.resetForm();
-          this.router.navigate(['productos/listado-productos']);
+            (error) => {
+              this.mostrarError(error);
+            }
+          );
         });
       } else {
-        console.log(formulario.value)
         const productoModificado: ProductoBack = {
           nombre_producto: formulario.value.nombre,
           codigo_sku: formulario.value.codigo,
@@ -205,11 +215,17 @@ export class AltaProductosComponent implements OnInit {
         };
         this.productosService
           .actualizarProducto(this.id, productoModificado)
-          .subscribe(() => {
-            this.mostrarExitoActualizar();
-            formulario.reset();
-            this.router.navigate(['productos/listado-productos']);
-          });
+          .subscribe(
+            () => {
+              this.mostrarExitoActualizar();
+              formulario.reset();
+              this.router.navigate(['productos/listado-productos']);
+            },
+            (error) => {
+              // Mostrar alerta de error
+              this.mostrarError(error);
+            }
+          );
       }
     } else {
       this.mostrarErrorDatosIncompletos();
@@ -220,19 +236,38 @@ export class AltaProductosComponent implements OnInit {
     formulario.resetForm();
   }
 
-  codigoYaAgregado(codigo: string): boolean {
-    const codigoExistente = this.productos.some(
-      (producto) => codigo === producto.codigo
-    );
-    return codigoExistente;
+  //Mensajes de sweetalert
+  mostrarConfirmacion(callback: () => void): void {
+    const swalWithBootstrapButtons = Swal.mixin({
+      buttonsStyling: true,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title:
+          '¿Desea agregar el producto ' + this.producto.nombre_producto + '?',
+        text: 'Esta acción no se puede deshacer',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, agregar',
+        cancelButtonText: 'No, cancelar',
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          callback();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire(
+            'Cancelado',
+            'No se agregó el producto',
+            'error'
+          );
+        }
+      });
   }
 
   mostrarExitoAgregar(): void {
-    Swal.fire(
-      'Agregado!',
-      'El producto fue agregado con éxito.',
-      'success'
-    );
+    Swal.fire('Agregado!', 'El producto fue agregado con éxito.', 'success');
   }
 
   mostrarExitoActualizar(): void {
@@ -249,5 +284,12 @@ export class AltaProductosComponent implements OnInit {
       'Debes completar todos los campos del formulario correctamente',
       'error'
     );
+  }
+  private mostrarError(error: any): void {
+    let errorMessage = 'SKU extistente';
+    if (error && error.error && error.error.message) {
+      errorMessage = error.error.message;
+    }
+    Swal.fire('Error', errorMessage, 'error');
   }
 }

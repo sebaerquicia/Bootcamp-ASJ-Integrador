@@ -1,4 +1,4 @@
-<div class="container px-4 min-vh-100 ">
+<div class="container px-4 min-vh-100">
   <div class="row">
     <div class="col">
       <h1 class="mt-4">Listado de Productos</h1>
@@ -8,58 +8,76 @@
       </ol>
     </div>
   </div>
+  <div class="col mb-3">
+    <button class="btn btn-success"
+    (click)="agregar()">+ Agregar</button>
+  </div>
   <div class="row">
     <div class="col">
       <h3>Productos en sistema</h3>
       <div class="row">
-
         <div class="col-3 pt-2">
           <label for="activoeliminado">Filtrar por Activos/Eliminados </label>
-        <select
-          class="form-select"
-          aria-label="activo"
-          [(ngModel)]="filtroActivoEliminado"
-          name="activoeliminado"
-        >
-          <option value="Todos">Todos</option>
-          <option value="Activos">Activos</option>
-          <option value="Eliminados">Eliminados</option>
-        </select>
+          <select
+            class="form-select"
+            aria-label="activo"
+            [(ngModel)]="filtroActivoEliminado"
+            name="activoeliminado"
+          >
+            <option value="Todos">Todos</option>
+            <option value="Activos">Activos</option>
+            <option value="Eliminados">Eliminados</option>
+          </select>
+        </div>
+        <div class="col-3 pt-2">
+          <label for="">Filtrar por Categoria</label>
+          <select
+            #categoriasFiltro="ngModel"
+            class="form-select"
+            name="categoria"
+            [(ngModel)]="filtroCategorias"
+            (change)="filtrarPorCategoria(categoriasFiltro.value)"
+            required
+          >
+            <option [value]="0">Todas</option>
+            <option
+              *ngFor="let categoria of categoriasActivas"
+              [value]="categoria.id"
+            >
+              {{ categoria.nombre_categoria }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col">
+          <a routerLink="../categorias" class="btn"
+            ><img
+              width="40"
+              height="40"
+              src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
+              alt="add--v1"
+          /></a>
+        </div>
       </div>
-      <div class="col-3 pt-2">
-        <label for="">Filtrar por Categoria</label>
-        <select
-        #categoriasFiltro="ngModel"
-        class="form-select"
-        name="categoria"
-        [(ngModel)]="filtroCategorias"
-        (change)="filtrarPorCategoria(categoriasFiltro.value)"
-        required
-      >
-      <option [value]="0">Todas</option>
-      <option *ngFor="let categoria of categoriasActivas" [value]="categoria.id">
-        {{ categoria.nombre_categoria }}
-      </option>
-    </select>
-  </div>
-
- 
-
-    <div class="col">
-      <a routerLink="../categorias" class="btn"><img width="40" height="40" src="https://img.icons8.com/ios-glyphs/30/add--v1.png" alt="add--v1"/></a>
-    </div>
-</div>
-<div class="row">
-<div class="col my-3 ">
-  <p>Filtrar por Precio:</p>
-  <button (click)="ordenarPorPrecio(true)" class="btn btn-outline-secondary"   [class.active]="criterioOrdenamiento === 'menorAMayor'">
-    Precio (Menor a Mayor)
-  </button>
-  <button (click)="ordenarPorPrecio(false)" class="btn btn-outline-secondary mx-2 "  [class.active]="criterioOrdenamiento === 'mayorAMenor'">
-    Precio (Mayor a Menor)
-  </button>
-</div>
-</div>
+      <div class="row">
+        <div class="col my-3">
+          <p>Filtrar por Precio:</p>
+          <button
+            (click)="ordenarPorPrecio(true)"
+            class="btn btn-outline-secondary"
+            [class.active]="criterioOrdenamiento === 'menorAMayor'"
+          >
+            Precio (Menor a Mayor)
+          </button>
+          <button
+            (click)="ordenarPorPrecio(false)"
+            class="btn btn-outline-secondary mx-2"
+            [class.active]="criterioOrdenamiento === 'mayorAMenor'"
+          >
+            Precio (Mayor a Menor)
+          </button>
+        </div>
+      </div>
       <div class="row">
         <div *ngIf="productos.length === 0" class="alert alert-warning">
           No hay productos cargados en el sistema. Por favor, agrega productos.
@@ -95,38 +113,65 @@
               "
             >
               <tr>
-                <th><img src="{{ producto.url_img }}"  onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';"  alt="FotoProducto" class="imagenes" ></th>
-                <td>{{ producto.nombre_producto | titlecase}}</td>
-                <th>{{ producto.categoria.nombre_categoria| titlecase }}</th>
-                <td>{{ producto.proveedor.razon_social}}</td>
-                <td>{{ producto.precio_producto | currency}}</td>
+                <th>
+                  <img
+                    src="{{ producto.url_img }}"
+                    onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';"
+                    alt="FotoProducto"
+                    class="imagenes"
+                  />
+                </th>
+                <td>{{ producto.nombre_producto | titlecase }}</td>
+                <th>{{ producto.categoria.nombre_categoria | titlecase }}</th>
+                <td>{{ producto.proveedor.razon_social }}</td>
+                <td>{{ producto.precio_producto | currency }}</td>
                 <td>
                   <button
-                  (click)="openModal(producto)"
-                  class="btn btn-outline-info"
-                >
-                <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png" alt="visible--v1"/>
-                </button>
+                    (click)="openModal(producto)"
+                    class="btn btn-outline-info"
+                  >
+                    <img
+                      width="20"
+                      height="20"
+                      src="https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png"
+                      alt="visible--v1"
+                    />
+                  </button>
                   <button
                     (click)="editarProducto(producto.id)"
-                    class="btn btn-outline-warning mx-2 "
+                    class="btn btn-outline-warning mx-2"
                   >
-                  <img width="20" height="20" src="https://img.icons8.com/ios/50/edit--v1.png" alt="edit--v1"/>
+                    <img
+                      width="20"
+                      height="20"
+                      src="https://img.icons8.com/ios/50/edit--v1.png"
+                      alt="edit--v1"
+                    />
                   </button>
 
                   <button
                     *ngIf="producto.eliminado"
-                    class="btn btn-outline-primary "
+                    class="btn btn-outline-primary"
                     (click)="restaurarProducto(producto.id)"
                   >
-                  <img width="20" height="20" src="https://img.icons8.com/windows/32/trash-restore.png" alt="trash-restore"/>
+                    <img
+                      width="20"
+                      height="20"
+                      src="https://img.icons8.com/windows/32/trash-restore.png"
+                      alt="trash-restore"
+                    />
                   </button>
                   <button
                     *ngIf="!producto.eliminado"
                     class="btn btn-outline-danger"
                     (click)="eliminarProducto(producto.id)"
                   >
-                  <img width="20" height="20" src="https://img.icons8.com/material-rounded/24/filled-trash.png" alt="filled-trash"/>
+                    <img
+                      width="20"
+                      height="20"
+                      src="https://img.icons8.com/material-rounded/24/filled-trash.png"
+                      alt="filled-trash"
+                    />
                   </button>
                 </td>
               </tr>

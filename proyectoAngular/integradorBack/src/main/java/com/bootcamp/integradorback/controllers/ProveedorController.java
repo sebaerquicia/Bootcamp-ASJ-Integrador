@@ -60,6 +60,7 @@ public class ProveedorController {
         return ResponseEntity.ok(mensaje);
     }
     
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProveedor(@PathVariable int id) {
         String mensaje = proveedorService.eliminarProveedorById(id);

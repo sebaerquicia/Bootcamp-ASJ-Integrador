@@ -8,6 +8,13 @@
       </ol>
     </div>
   </div>
+  <div class="row"><div class="col"><button
+    type="button"
+    class="btn btn-primary"
+    routerLink="/ordenes-compra/listado-ordenes"
+  >
+ Volver
+  </button></div></div>
 
   <div class="row">
     <div class="col">
@@ -29,10 +36,12 @@
 
           <div class="col-md-2">
             <label for="fecha" class="form-label h4">Fecha emisión: </label>
-            <p class="mt-2">{{ orden.fecha_emision | date:'dd/MM/yyyy' }}</p>
+            <p class="mt-2">{{ orden.fecha_emision | date : "dd/MM/yyyy" }}</p>
           </div>
           <div class="col-md-2">
-            <label for="fechaEntrega" class="form-label h4">Fecha entrega: </label>
+            <label for="fechaEntrega" class="form-label h4"
+              >Fecha entrega:
+            </label>
             <input
               name="fechaEntrega"
               type="date"
@@ -53,15 +62,15 @@
               placeholder="Más info..."
               class="form-control form__input"
               [(ngModel)]="orden.informacion_orden"
-              required
+   
             >
             </textarea>
           </div>
         </div>
         <div class="row mb-3">
-          <div class="col-md-3">        
+          <div class="col-md-3">
             <label for="proveedor" class="form-label h4">Proveedor: </label>
-            <select     
+            <select
               class="form-select"
               name="idProveedor"
               type="number"
@@ -78,53 +87,60 @@
               </option>
             </select>
           </div>
-          <div  class="col-md-3"
-          >
+          <div class="col-md-3">
             <h4>Logo del proveedor:</h4>
-            <img src="{{orden.proveedor.img}}" onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';" alt="FotoProveedor" class="logo" >
-            
-        </div>
-            <div  class="col-md-3">
-              <h4>Productos:</h4>
-              <select
+            <img
+              src="{{ orden.proveedor.img }}"
+              onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';"
+              alt="FotoProveedor"
+              class="logo"
+            />
+          </div>
+          <div class="col-md-3">
+            <h4>Productos:</h4>
+            <select
               #productoSelect
               class="form-select"
               name="producto"
               [disabled]="modificacion"
-                [(ngModel)]="detalle.producto.id"
-                required
-                >
-                <option
+              [(ngModel)]="detalle.producto.id"
+              required
+            >
+              <option
                 *ngFor="let producto of productosFiltrados"
                 [value]="producto.id"
-                >
+              >
                 {{ producto.nombre_producto }}:
                 {{ producto.precio_producto | currency }}
-                </option>
-              </select>
-            </div>
-              <div class="col-md-2">         
-              <h4 class="form-label">Cantidad: </h4>
-              
-              <input
-                #cantidad
-                name="cantidad"
-                type="number"
-                min="0"
-                value="undefined"
-                placeholder="Cantidad"
-                class="form-control "
-                [(ngModel)]="detalle.cantidad_producto"
-              />
-            </div>
-            <div class="row">
+              </option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <h4 class="form-label">Cantidad:</h4>
 
-              <div class="col">
-                <a class="btn btn-primary m-4 p-3" (click)="llenarListado(detalle.producto.id , detalle.cantidad_producto)">Agregar al listado</a>
-              </div>
+            <input
+              #cantidad
+              name="cantidad"
+              type="number"
+              min="0"
+              value="undefined"
+              placeholder="Cantidad"
+              class="form-control"
+              [(ngModel)]="detalle.cantidad_producto"
+            />
+          </div>
+          <div class="row">
+            <div class="col">
+              <a
+                class="btn btn-primary m-4 p-3"
+                (click)="
+                  llenarListado(detalle.producto.id, detalle.cantidad_producto)
+                "
+                >Agregar al listado</a
+              >
             </div>
           </div>
-     
+        </div>
 
         <div class="row">
           <div class="col">
@@ -142,17 +158,28 @@
               <tbody
                 id="tableBody"
                 class="table__body"
-                *ngFor="let detalle of detallesProductos let i = index"
+                *ngFor="let detalle of detallesProductos; let i = index"
               >
                 <tr>
-                  <td><img  src="{{ detalle.producto.url_img }}" alt="ImagenNotFound"onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';"class="imagenes" ></td>
+                  <td>
+                    <img
+                      src="{{ detalle.producto.url_img }}"
+                      alt="ImagenNotFound"
+                      onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';"
+                      class="imagenes"
+                    />
+                  </td>
                   <th>{{ detalle.producto.nombre_producto }}</th>
                   <td>{{ detalle.cantidad_producto }}</td>
                   <td>{{ detalle.precio_hist | currency }}</td>
                   <td>{{ detalle.total | currency }}</td>
                   <td>
-                
-                    <button class="btn btn-outline-danger" (click)="eliminarProducto(detalle.producto.id)">Eliminar</button>
+                    <button
+                      class="btn btn-outline-danger"
+                      (click)="eliminarProducto(detalle.producto.id)"
+                    >
+                      Eliminar
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -160,7 +187,7 @@
           </div>
         </div>
 
-        <p class="h3 m-3">Total: ({{ detalle.total | currency}})</p>
+        <p class="h3 m-3">Total: {{ detalle.total | currency }}</p>
         <br />
         <div class="mb-3">
           <button
