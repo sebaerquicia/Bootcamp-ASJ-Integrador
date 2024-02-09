@@ -95,8 +95,8 @@ export class ListadoOrdenComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.ordenesService.entregarOrden(id).subscribe((msj) => {
+          this.actualizarLista();
           console.log(msj);
-          this.ngOnInit();
         });
         Swal.fire(
           '¡Entregada!',

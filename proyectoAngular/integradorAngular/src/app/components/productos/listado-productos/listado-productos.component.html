@@ -85,8 +85,11 @@
         </div>
       </div>
       <div class="row">
-        <div *ngIf="productos.length === 0" class="alert alert-warning">
-          No hay productos cargados en el sistema. Por favor, agrega productos.
+        <div class="col">
+
+          <div *ngIf="productos.length === 0" class="alert alert-warning">
+            No hay productos cargados en el sistema. Por favor, agrega productos.
+          </div>
         </div>
 
         <table *ngIf="productos.length > 0" class="table">

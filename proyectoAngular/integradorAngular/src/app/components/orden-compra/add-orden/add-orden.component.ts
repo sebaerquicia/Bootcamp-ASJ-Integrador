@@ -356,7 +356,7 @@ export class AddOrdenComponent implements OnInit {
   }
 
   fechaEntregaMayor(fechaEntrega: Date): boolean {
-    return fechaEntrega < this.orden.fecha_emision!;
+    return fechaEntrega <= this.orden.fecha_emision!;
   }
 
   mostrarErrorFechaEntrega(): void {

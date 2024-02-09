@@ -1,40 +1,50 @@
 <div class="container px-4 min-vh-100">
   <div class="row">
-<div class="col">
-  <h1 class="mt-4">Listado de Ordenes</h1>
-  <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="">Inicio</a></li>
-    <li class="breadcrumb-item active">Listado de Ordenes de Compra</li>
-  </ol>
-</div>
-  </div>
-  <div class="row"><div class="col"><button
-    type="button"
-    class="btn btn-success"
-    routerLink="/ordenes-compra/alta-ordenes"
-  >
- + Agregar
-  </button></div></div>
-  <div class="row">
-    <div *ngIf="ordenes.length === 0" class="alert alert-warning">
-      No hay ordenes de compra cargadas en el sistema. Realiza una compra para
-      visualizarlas.
+    <div class="col">
+      <h1 class="mt-4">Listado de Ordenes</h1>
+      <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="">Inicio</a></li>
+        <li class="breadcrumb-item active">Listado de Ordenes de Compra</li>
+      </ol>
     </div>
-    <div class="row">
-      <div class="col-3 pt-2">
-        <label for="activaeliminada">Filtrar por Activas/Eliminadas </label>
-        <select
-          class="form-select"
-          aria-label="activa"
-          [(ngModel)]="filtroActivaEliminada"
-          name="activaeliminada"
-        >
-          <option value="Todas">Todas</option>
-          <option value="Activas">Activas</option>
-          <option value="Eliminadas">Eliminadas</option>
-        </select>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button
+        type="button"
+        class="btn btn-success"
+        routerLink="/ordenes-compra/alta-ordenes"
+      >
+        + Agregar
+      </button>
+    </div>
+  </div>
+
+  <div class="row mb-2 ">
+    <div class="col-3 pt-2">
+      <label for="activaeliminada">Filtrar por Activas/Eliminadas </label>
+      <select
+        class="form-select"
+        aria-label="activa"
+        [(ngModel)]="filtroActivaEliminada"
+        name="activaeliminada"
+      >
+        <option value="Todas">Todas</option>
+        <option value="Activas">Activas</option>
+        <option value="Eliminadas">Eliminadas</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div *ngIf="ordenes.length === 0" class="alert alert-warning">
+        No hay ordenes de compra cargadas en el sistema. Realiza una compra para
+        visualizarlas.
       </div>
     </div>
+    </div>
+
     <div class="col">
       <table class="table" *ngIf="ordenes.length > 0">
         <thead>
@@ -53,7 +63,11 @@
           class="table__body"
           *ngFor="let orden of ordenes; let i = index"
           [ngStyle]="{
-            'background-color': !orden.eliminada ? (orden.estadoOrden.nombre_estado === 'Entregada' ? '#65dcb9' : 'inherit') : '#ccc'
+            'background-color': !orden.eliminada
+              ? orden.estadoOrden.nombre_estado === 'Entregada'
+                ? '#65dcb9'
+                : 'inherit'
+              : '#ccc'
           }"
         >
           <ng-container
@@ -73,7 +87,13 @@
               <td>{{ orden.proveedor.razon_social }}</td>
 
               <td>{{ sumarTotal(orden) | currency }}</td>
-              <td>{{ orden.eliminada ? 'Cancelada' : orden.estadoOrden.nombre_estado }}</td>
+              <td>
+                {{
+                  orden.eliminada
+                    ? "Cancelada"
+                    : orden.estadoOrden.nombre_estado
+                }}
+              </td>
               <td>
                 <button
                   (click)="openModal(orden)"
@@ -84,12 +104,13 @@
                     height="20"
                     src="https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png"
                     alt="visible--v1"
-                    
                   />
                 </button>
-                <button *ngIf="orden.estadoOrden.nombre_estado !== 'Entregada'" class="btn btn-outline-success m-2"
-                [disabled]="orden.eliminada"
-                (click)="ordenEntregada(orden.id)"
+                <button
+                  *ngIf="orden.estadoOrden.nombre_estado !== 'Entregada'"
+                  class="btn btn-outline-success m-2"
+                  [disabled]="orden.eliminada"
+                  (click)="ordenEntregada(orden.id)"
                 >
                   <img
                     width="20"
@@ -99,7 +120,10 @@
                   />
                 </button>
                 <button
-                  *ngIf="!orden.eliminada && orden.estadoOrden.nombre_estado !== 'Entregada'"
+                  *ngIf="
+                    !orden.eliminada &&
+                    orden.estadoOrden.nombre_estado !== 'Entregada'
+                  "
                   class="btn btn-outline-danger m-2"
                   (click)="eliminarOrden(orden.id)"
                   [disabled]="orden.estadoOrden.nombre_estado == 'Entregada'"
@@ -112,7 +136,10 @@
                   />
                 </button>
                 <button
-                  *ngIf="orden.eliminada && orden.estadoOrden.nombre_estado !== 'Entregada'"
+                  *ngIf="
+                    orden.eliminada &&
+                    orden.estadoOrden.nombre_estado !== 'Entregada'
+                  "
                   class="btn btn-outline-primary m-2"
                   (click)="restaurarOrden(orden.id)"
                   [disabled]="orden.estadoOrden.nombre_estado == 'Entregada'"
@@ -129,5 +156,5 @@
         </tbody>
       </table>
     </div>
-  </div>
+  
 </div>

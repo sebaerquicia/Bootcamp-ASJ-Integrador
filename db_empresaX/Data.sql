@@ -1,7 +1,7 @@
 -- Categorias de productos
 INSERT INTO "Categorias" ("nombre_categoria", "updated_at", "created_at")
 VALUES
-    ('Electr�nicos', GETDATE(), GETDATE()),
+    ('Electronicos', GETDATE(), GETDATE()),
     ('Ropa', GETDATE(), GETDATE()),
     ('Hogar', GETDATE(), GETDATE()),
     ('Juguetes', GETDATE(), GETDATE()),
@@ -9,9 +9,30 @@ VALUES
     ('Libros', GETDATE(), GETDATE()),
     ('Alimentos', GETDATE(), GETDATE()),
     ('Belleza', GETDATE(), GETDATE());
+--SQL CATEGORIAS
+INSERT INTO categorias (nombre_categoria, updated_at, created_at, eliminada)
+VALUES
+    ('Electronicos', GETDATE(), GETDATE(), 0),
+    ('Ropa', GETDATE(), GETDATE(), 0),
+    ('Hogar', GETDATE(), GETDATE(), 0),
+    ('Juguetes', GETDATE(), GETDATE(), 0),
+    ('Deportes', GETDATE(), GETDATE(), 0),
+    ('Libros', GETDATE(), GETDATE(), 0),
+    ('Alimentos', GETDATE(), GETDATE(), 0),
+    ('Belleza', GETDATE(), GETDATE(), 0);
 
 -- Estados de ordenes de compra
 INSERT INTO "EstadosOrden" ("nombre_estado")
+VALUES
+    ('En Proceso'),
+    ('Aprobada'),
+    ('En Camino'),
+    ('Entregada'),
+    ('Cancelada');
+
+
+--SQL ESTADOSORDEN
+INSERT INTO estadosorden (nombre_estado)
 VALUES
     ('En Proceso'),
     ('Aprobada'),
@@ -28,10 +49,19 @@ VALUES
     ('No Responsable'),
     ('Consumidor Final');
 
+--SQL CONDICIONESIVA
+INSERT INTO condicionesiva (nombre_iva)
+VALUES
+    ('Responsable Inscripto'),
+    ('Monotributista'),
+    ('Exento'),
+    ('No Responsable'),
+    ('Consumidor Final');
+
 -- Rubros de los proveedores
 INSERT INTO "Rubros" ("nombre_rubro")
 VALUES
-    ('Electr�nicos'),
+    ('Electronicos'),
     ('Ropa'),
     ('Hogar'),
     ('Juguetes'),
@@ -40,98 +70,108 @@ VALUES
     ('Alimentos'),
     ('Belleza');
 
-INSERT INTO "Roles" ("nombre_rol", "updated_at", "created_at")
+
+--SQL RUBROS
+INSERT INTO rubros (nombre_rubro)
 VALUES
-    ('Due�o', GETDATE(), GETDATE()),
-    ('Gerente de Compras', GETDATE(), GETDATE()),
-    ('Representante de Ventas', GETDATE(), GETDATE()),
-    ('Contador', GETDATE(), GETDATE()),
-    ('Encargado de Log�stica', GETDATE(), GETDATE());
+    ('Electronicos'),
+    ('Ropa'),
+    ('Hogar'),
+    ('Juguetes'),
+    ('Deportes'),
+    ('Libros'),
+    ('Alimentos'),
+    ('Belleza');
+
 
 -- Paises latinoamericanos de los que pueden ser mis proveedores
 INSERT INTO "Paises" ("nombre_pais")
 VALUES
     ('Argentina'),
     ('Brasil'),
-    ('M�xico'),
+    ('Mexico'),
     ('Chile'),
     ('Colombia');
 
 -- Provincias de cada Pais
 
-INSERT INTO "Provincias" ("nombre_provincia", "id_pais")
+INSERT INTO "Provincias" ("nombre_provincia", "pais_id")
 VALUES
     ('Buenos Aires', 1),
-    ('C�rdoba', 1),
+    ('Cordoba', 1),
     ('Santa Fe', 1),
     ('Mendoza', 1),
-    ('Tucum�n', 1);
+    ('Tucuman', 1);
 
 -- Provincias de Brasil
-INSERT INTO "Provincias" ("nombre_provincia", "id_pais")
+INSERT INTO "Provincias" ("nombre_provincia", "pais_id")
 VALUES
-    ('S�o Paulo', 2),
+    ('Sao Paulo', 2),
     ('Rio de Janeiro', 2),
     ('Minas Gerais', 2),
     ('Bahia', 2),
     ('Rio Grande do Sul', 2);
 
--- Provincias de M�xico
-INSERT INTO "Provincias" ("nombre_provincia", "id_pais")
+
+
+-- Provincias de Mexico
+INSERT INTO "Provincias" ("nombre_provincia", "pais_id")
 VALUES
-    ('Ciudad de M�xico', 3),
-    ('Estado de M�xico', 3),
+    ('Ciudad de Mexico', 3),
+    ('Estado de Mexico', 3),
     ('Jalisco', 3),
-    ('Nuevo Le�n', 3),
+    ('Nuevo Leon', 3),
     ('Puebla', 3);
 
+
 -- Provincias de Chile
-INSERT INTO "Provincias" ("nombre_provincia", "id_pais")
+INSERT INTO "Provincias" ("nombre_provincia", "pais_id")
 VALUES
     ('Santiago', 4),
-    ('Valpara�so', 4),
-    ('Biob�o', 4),
-    ('La Araucan�a', 4),
+    ('Valparaiso', 4),
+    ('Biobao', 4),
+    ('La Araucania', 4),
     ('Coquimbo', 4);
 
 -- Provincias de Colombia
-INSERT INTO "Provincias" ("nombre_provincia", "id_pais")
+INSERT INTO "Provincias" ("nombre_provincia", "pais_id")
 VALUES
-    ('Bogot�', 5),
+    ('Bogota', 5),
     ('Antioquia', 5),
     ('Valle del Cauca', 5),
     ('Cundinamarca', 5),
-    ('Atl�ntico', 5);
+    ('Atlantico', 5);
 
 -- Datos de Proveedores
 INSERT INTO "Proveedores" (
     "codigo_proveedor",
     "datos_contacto_id",
-    "id_rubro_proveedor",
+    "rubro_proveedor_id",
     "razon_social",
-    "id_provincia",
+    "provincia_id",
     "localidad",
     "codigo_postal",
     "calle",
     "numero_calle",
     "cuit_proveedor",
-    "id_iva",
+    "iva_id",
 	"web",
 	"img",
     "updated_at",
-    "created_at"
+    "created_at",
+    "eliminado"
 )
 VALUES
-    ('PROVMCD1', 1, 7, 'MC Donalds', 3, 'Rosario', 2000, 'Caferatta', 1234, 21345678907, 3,'www.mcdonalds.com', 'imagenronald.img', GETDATE(), GETDATE()),
-    ('PROVPOP1', 2, 2, 'Popeye', 3, 'Rosario', 2000, 'Avellaneda', 1368, 22456789017, 2,'www.popeye.com', NULL, GETDATE(), GETDATE()),
-    ('PROVMAC1', 3, 8, 'MAC', 1, 'San Isidro', 1642, 'Pellegrini', 789, 20567890128, 1, 'www.mac.com', 'lapizlabial.img', GETDATE(), GETDATE()),
-    ('PROVFRAV1', 4, 1, 'Fravega', 3, 'Rosario', 2000, 'San Martin', 1011, 20678901238, 1, 'www.fravega.com.ar', NULL, GETDATE(), GETDATE()),
-    ('PROVYENN1',5 , 6, 'Yenny', 16, 'Cerrillos', 4407, 'Las Aves', 6582, 20789012347, 4, NULL, NULL, GETDATE(), GETDATE()),
-    ('PROVMOST1',6 , 7, 'Mostaza', 2, 'Capital', 5000, 'Las Heras', 1415, 20890123458, 1, 'www.mostaza.com.ar', 'hamburguesaza.jpg', GETDATE(), GETDATE()),
-    ('PROVNIKE1', 7, 5, 'Nike', 2, 'Capital', 5000, 'San Juan', 1617, 20901234567, 3, 'www.nike.com', 'nikepipe.img', GETDATE(), GETDATE()),
-    ('PROVSP78',8 , 2, 'Sport 78', 3, 'Rosario', 2000, 'Rioja', 1819, 21012345678, 3, 'www.sport78.com', 'sport.jpeg', GETDATE(), GETDATE()),
-    ('PROVMEGA1',9 , 3, 'Megatone', 1, 'Capital', 1000, 'San Luis', 2021, 20123456788, 4, 'www.megatone.com.ar', NULL, GETDATE(), GETDATE()),
-    ('PROVAPPLE1', 10, 1, 'Apple', 1, 'La Plata',1000, 'Calle 74', 2100, 20345608908, 4, 'www.apple.com', 'iphone.img', GETDATE(), GETDATE());
+    ('PROVMCD1', 1, 7, 'MC Donalds', 3, 'Rosario', 2000, 'Caferatta', 1234, 21345678907, 3,'www.mcdonalds.com', 'imagenronald.img', GETDATE(), GETDATE(), 0),
+    ('PROVPOP1', 2, 2, 'Popeye', 3, 'Rosario', 2000, 'Avellaneda', 1368, 22456789017, 2,'www.popeye.com', NULL, GETDATE(), GETDATE(), 0),
+    ('PROVMAC1', 3, 8, 'MAC', 1, 'San Isidro', 1642, 'Pellegrini', 789, 20567890128, 1, 'www.mac.com', 'lapizlabial.img', GETDATE(), GETDATE(), 0),
+    ('PROVFRAV1', 4, 1, 'Fravega', 3, 'Rosario', 2000, 'San Martin', 1011, 20678901238, 1, 'www.fravega.com.ar', NULL, GETDATE(), GETDATE(), 0),
+    ('PROVYENN1',5 , 6, 'Yenny', 16, 'Cerrillos', 4407, 'Las Aves', 6582, 20789012347, 4, NULL, NULL, GETDATE(), GETDATE(), 0),
+    ('PROVMOST1',6 , 7, 'Mostaza', 2, 'Capital', 5000, 'Las Heras', 1415, 20890123458, 1, 'www.mostaza.com.ar', 'hamburguesaza.jpg', GETDATE(), GETDATE(), 0),
+    ('PROVNIKE1', 7, 5, 'Nike', 2, 'Capital', 5000, 'San Juan', 1617, 20901234567, 3, 'www.nike.com', 'nikepipe.img', GETDATE(), GETDATE(), 0),
+    ('PROVSP78',8 , 2, 'Sport 78', 3, 'Rosario', 2000, 'Rioja', 1819, 21012345678, 3, 'www.sport78.com', 'sport.jpeg', GETDATE(), GETDATE(), 0),
+    ('PROVMEGA1',9 , 3, 'Megatone', 1, 'Capital', 1000, 'San Luis', 2021, 20123456788, 4, 'www.megatone.com.ar', NULL, GETDATE(), GETDATE(), 0),
+    ('PROVAPPLE1', 10, 1, 'Apple', 1, 'La Plata',1000, 'Calle 74', 2100, 20345608908, 4, 'www.apple.com', 'iphone.img', GETDATE(), GETDATE(), 0);
 	
 
 
@@ -172,16 +212,16 @@ INSERT INTO "DatosDeContacto" (
     "email_contacto"
 )
 VALUES
-    ('Vendedor', 'Juan', 'P�rez', 123456789, 'juan.perez@gmail.com'),
-    ('Vendedor', 'Ana', 'G�mez', 987654321, 'ana.gomez@hotmail.com'),
-    ('Vendedor', 'Carlos', 'Rodr�guez', 456789012, 'carlos.rodriguez@gmail.com'),
-    ('Vendedor', 'Luisa', 'Mart�nez', 789012345, 'luisa.martinez@gmail.com'),
-    ('Vendedor', 'Pedro', 'Fern�ndez', 234567890, 'pedro.fernandez@hotmail.com'),
-    ('Vendedor', 'Mar�a', 'L�pez', 351678901, 'maria.lopez@gmail.com'),
-    ('Vendedor', 'Mart�n', 'S�nchez', 3516789013, 'martin.sanchez@gmail.com'),
-    ('Vendedor', 'Sof�a', 'D�az', 678901234, 'sofia.diaz@hotmail.com'),
-    ('Vendedor', 'Eduardo', 'Ram�rez', 890123456, 'eduardo.ramirez@hotmail.com'),
-    ('Vendedor', 'Laura', 'Guti�rrez', 901234567, 'laura.gutierrez@hotmail.com');
+    ('Vendedor', 'Juan', 'Perez', 123456789, 'juan.perez@gmail.com'),
+    ('Vendedor', 'Ana', 'Gomez', 987654321, 'ana.gomez@hotmail.com'),
+    ('Vendedor', 'Carlos', 'Rodriguez', 456789012, 'carlos.rodriguez@gmail.com'),
+    ('Vendedor', 'Luisa', 'Martinez', 789012345, 'luisa.martinez@gmail.com'),
+    ('Vendedor', 'Pedro', 'Fernandez', 234567890, 'pedro.fernandez@hotmail.com'),
+    ('Vendedor', 'Maria', 'Lopez', 351678901, 'maria.lopez@gmail.com'),
+    ('Vendedor', 'Martin', 'Sanchez', 3516789013, 'martin.sanchez@gmail.com'),
+    ('Vendedor', 'Sofia', 'Diaz', 678901234, 'sofia.diaz@hotmail.com'),
+    ('Vendedor', 'Eduardo', 'Ramirez', 890123456, 'eduardo.ramirez@hotmail.com'),
+    ('Vendedor', 'Laura', 'Gutierrez', 901234567, 'laura.gutierrez@hotmail.com');
 
 /* INSERT INTO DatosDeContacto (
     rol,
@@ -207,8 +247,8 @@ VALUES
 -- Productos por proveedor
 
 INSERT INTO "Productos" (
-    "id_proveedor",
-    "id_categoria",
+    "proveedor_id",
+    "categoria_id",
     "codigo_sku",
     "nombre_producto",
     "descripcion",
@@ -220,7 +260,7 @@ INSERT INTO "Productos" (
 VALUES
     -- Productos para el Proveedor MC Donalds
     (1, 7, 'SKU001', 'Hamburguesa Completa', 'Con cheddar y panceta', 'url_imagen1.jpg', 6000, GETDATE(), GETDATE()),
-    (1, 7, 'SKU002', 'Cajita Feliz', 'Para ni�os, trae juguete', 'url_imagen2.jpg', 6500, GETDATE(), GETDATE()),
+    (1, 7, 'SKU002', 'Cajita Feliz', 'Para niños, trae juguete', 'url_imagen2.jpg', 6500, GETDATE(), GETDATE()),
 
     -- Productos para el Proveedor Popeye
     (2, 2, 'SKU003', 'Iron Man', 'Figura de accion coleccionable, mide 50 cm', 'url_imagen3.jpg', 25000, GETDATE(), GETDATE()),
@@ -305,42 +345,40 @@ VALUES
 
 
 
-	-- Ordenes de compra
+-- Ordenes de compra
 
 INSERT INTO OrdenesDeCompra (
     estado_id,
     numero_orden,
+    proveedor_id,
     fecha_emision,
     fecha_entrega_esperada,
-    informacion_orden
+    informacion_orden,
+    eliminada
 )
 VALUES
-    (3, 1001, '2024-01-10', '2024-01-25', 'Traer lo antes posible'),
-    (2, 1002, '2024-01-09', '2024-02-01', 'Entregar en recepcion'),
-    (4, 1003, '2023-03-05', '2023-03-15', 'Tocar timbre'),
-    (4, 1004, '2023-04-20', '2023-04-30', ''),
-    (5, 1005, '2023-12-30', '2024-01-05', '');
+    (3, 1001, 1, '2024-01-10', '2024-01-25', 'Traer lo antes posible', 0),
+    (2, 1002, 2, '2024-01-09', '2024-02-01', 'Entregar en recepcion', 0),
+    (4, 1003, 3, '2023-03-05', '2023-03-15', 'Tocar timbre', 0),
+    (4, 1004, 4, '2023-04-20', '2023-04-30', NULL, 0),
+    (5, 1005, 5, '2023-12-30', '2024-01-05', NULL, 1);
 
 
 
 
-	-- Detalles de ordenes de compra
-	select * from DetallesOrdenes
-INSERT INTO DetallesOrdenes (
+-- Detalles de ordenes de compra
+
+INSERT INTO DetallesOrden (
 	orden_id,
-    proveedor_id,
     producto_id,
     cantidad_producto,
     precio_hist,
     total
 )
 VALUES
-    (1, 12, 40, 10, 6000, 60000),
-	(1, 12, 41, 1, 6500, 6500),
-    (2, 14, 44, 5, 12000, 60000),
-    (3, 21, 58, 1, 1230000, 1230000),
-    (4, 16, 49, 12, 11000, 132000),
-    (5, 20, 57, 5, 330000, 1650000);
-
-	select * from DetallesOrdenes
-	select * from productos
+    (1, 2, 10, 6000, 60000),
+	(1, 3, 1, 6500, 6500),
+    (2, 6, 5, 12000, 60000),
+    (3, 20, 1, 1230000, 1230000),
+    (4, 11, 12, 11000, 132000),
+    (5, 19, 5, 330000, 1650000);

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcamp.integradorback.models.ProductoModel;
-import com.bootcamp.integradorback.models.ProveedorModel;
 import com.bootcamp.integradorback.services.ProductoService;
 import com.bootcamp.integradorback.exceptions.ResourceNotFoundException;
 

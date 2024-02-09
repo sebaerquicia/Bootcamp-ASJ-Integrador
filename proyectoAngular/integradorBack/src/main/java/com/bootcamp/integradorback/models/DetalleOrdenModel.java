@@ -2,6 +2,7 @@ package com.bootcamp.integradorback.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +27,8 @@ public class DetalleOrdenModel {
 	@ManyToOne (fetch = FetchType.EAGER)
 	@JoinColumn(name="producto_id", referencedColumnName = "id", nullable = false, updatable = false)
 	private ProductoModel producto;
+	
+	@Column(nullable = false)
 	private Integer cantidad_producto;
 	private double precio_hist;
 	private double total;
