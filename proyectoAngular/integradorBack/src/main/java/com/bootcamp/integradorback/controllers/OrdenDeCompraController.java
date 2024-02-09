@@ -53,14 +53,9 @@ public class OrdenDeCompraController {
         return ResponseEntity.ok(ordenes);
     }
     
-//    @PutMapping("/{id}")
-//    public ResponseEntity<String> updateOrden(@PathVariable int id, @RequestBody OrdenDeCompraModel orden) {
-//        String mensaje = ordenService.modificarOrden(id, orden);
-//        return ResponseEntity.ok(mensaje);
-//    }
     @PutMapping("/entregada/{id}")
-    public ResponseEntity<String> ordenEntregada(@PathVariable int id, @RequestBody OrdenDeCompraModel orden) {
-        String mensaje = ordenService.entregarOrden(id, orden);
+    public ResponseEntity<OrdenDeCompraModel> ordenEntregada(@PathVariable int id, @RequestBody OrdenDeCompraModel orden) {
+        OrdenDeCompraModel mensaje = ordenService.entregarOrden(id, orden);
         return ResponseEntity.ok(mensaje);
     }
     

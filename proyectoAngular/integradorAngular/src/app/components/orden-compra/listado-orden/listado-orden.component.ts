@@ -54,7 +54,7 @@ export class ListadoOrdenComponent {
       if (result.isConfirmed) {
         this.ordenesService.eliminarOrden(id).subscribe((msj) => {
           console.log(msj);
-          this.actualizarLista();
+         this.actualizarLista();
         });
         Swal.fire(
           '¡Eliminado!',
@@ -94,9 +94,8 @@ export class ListadoOrdenComponent {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.ordenesService.entregarOrden(id).subscribe((msj) => {
+        this.ordenesService.entregarOrden(id).subscribe(() => {
           this.actualizarLista();
-          console.log(msj);
         });
         Swal.fire(
           '¡Entregada!',

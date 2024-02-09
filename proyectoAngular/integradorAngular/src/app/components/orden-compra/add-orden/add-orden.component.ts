@@ -283,6 +283,9 @@ export class AddOrdenComponent implements OnInit {
     if (formulario.valid && this.detallesProductos.length > 0) {
       if (!this.modificacion) {
         const fechaEntrega = new Date(formulario.value.fechaEntrega);
+        let offset = new Date (formulario.value.fechaEntrega).getTimezoneOffset();
+        let difference = offset/60;
+        fechaEntrega.setHours(fechaEntrega.getHours() + difference);
         console.log(fechaEntrega)
         if (!fechaEntrega || this.fechaEntregaMayor(fechaEntrega)) {
           this.mostrarErrorFechaEntrega();
@@ -337,7 +340,7 @@ export class AddOrdenComponent implements OnInit {
           fecha_entrega_esperada: fechaEntrega,
           detalles: this.detallesProductos,
         };
-
+        console.log(ordenNueva)
         this.ordenesService.guardarOrden(ordenNueva).subscribe(
           () => {
             Swal.fire('¡Éxito!', 'La orden se ha agregado correctamente.', 'success');

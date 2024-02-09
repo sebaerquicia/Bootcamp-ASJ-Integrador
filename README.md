@@ -267,14 +267,14 @@ INSERT INTO "DatosDeContacto" (
 )
 VALUES
     ('Vendedor', 'Juan', 'Perez', 123456789, 'juan.perez@gmail.com'),
-    ('Vendedor', 'Ana', 'Gomez', 987654321, 'ana.gomez@hotmail.com'),
+    ('Gerente', 'Ana', 'Gomez', 987654321, 'ana.gomez@hotmail.com'),
     ('Vendedor', 'Carlos', 'Rodriguez', 456789012, 'carlos.rodriguez@gmail.com'),
     ('Vendedor', 'Luisa', 'Martinez', 789012345, 'luisa.martinez@gmail.com'),
-    ('Vendedor', 'Pedro', 'Fernandez', 234567890, 'pedro.fernandez@hotmail.com'),
+    ('Administrador', 'Pedro', 'Fernandez', 234567890, 'pedro.fernandez@hotmail.com'),
     ('Vendedor', 'Maria', 'Lopez', 351678901, 'maria.lopez@gmail.com'),
     ('Vendedor', 'Martin', 'Sanchez', 3516789013, 'martin.sanchez@gmail.com'),
     ('Vendedor', 'Sofia', 'Diaz', 678901234, 'sofia.diaz@hotmail.com'),
-    ('Vendedor', 'Eduardo', 'Ramirez', 890123456, 'eduardo.ramirez@hotmail.com'),
+    ('Jefe', 'Eduardo', 'Ramirez', 890123456, 'eduardo.ramirez@hotmail.com'),
     ('Vendedor', 'Laura', 'Gutierrez', 901234567, 'laura.gutierrez@hotmail.com');
 
 
@@ -298,48 +298,16 @@ INSERT INTO "Proveedores" (
     "eliminado"
 )
 VALUES
-    ('PROVMCD1', 1, 7, 'MC Donalds', 3, 'Rosario', 2000, 'Caferatta', 1234, 21345678907, 3,'www.mcdonalds.com', 'imagenronald.img', GETDATE(), GETDATE(), 0),
-    ('PROVPOP1', 2, 2, 'Popeye', 3, 'Rosario', 2000, 'Avellaneda', 1368, 22456789017, 2,'www.popeye.com', NULL, GETDATE(), GETDATE(), 0),
-    ('PROVMAC1', 3, 8, 'MAC', 1, 'San Isidro', 1642, 'Pellegrini', 789, 20567890128, 1, 'www.mac.com', 'lapizlabial.img', GETDATE(), GETDATE(), 0),
-    ('PROVFRAV1', 4, 1, 'Fravega', 3, 'Rosario', 2000, 'San Martin', 1011, 20678901238, 1, 'www.fravega.com.ar', NULL, GETDATE(), GETDATE(), 0),
+    ('PROVMCD1', 1, 7, 'MC Donalds', 3, 'Rosario', 2000, 'Caferatta', 1234, 21345678907, 3,'https://www.mcdonalds.com', 'https://pbs.twimg.com/profile_images/1604944600321368064/FrLrbKGB_400x400.jpg', GETDATE(), GETDATE(), 0),
+    ('PROVPOP1', 2, 2, 'Popeye', 3, 'Rosario', 2000, 'Avellaneda', 1368, 22456789017, 2,'https://static.abc.es/media/cultura/2019/01/17/35465187-kJGI--1248x698@abc.jpg', NULL, GETDATE(), GETDATE(), 0),
+    ('PROVMAC1', 3, 8, 'MAC', 1, 'San Isidro', 1642, 'Pellegrini', 789, 20567890128, 1, 'https://www.mac.com', 'https://static.beautytocare.com/cdn-cgi/image/width=1600,height=1600,f=auto/media/catalog/product//m/-/m-a-c-cosmetics-matte-lipstick-606-kinda-sexy-3g_2.jpg', GETDATE(), GETDATE(), 0),
+    ('PROVFRAV1', 4, 1, 'Fravega', 3, 'Rosario', 2000, 'San Martin', 1011, 20678901238, 1, 'https://www.fravega.com.ar', NULL, GETDATE(), GETDATE(), 0),
     ('PROVYENN1',5 , 6, 'Yenny', 16, 'Cerrillos', 4407, 'Las Aves', 6582, 20789012347, 4, NULL, NULL, GETDATE(), GETDATE(), 0),
-    ('PROVMOST1',6 , 7, 'Mostaza', 2, 'Capital', 5000, 'Las Heras', 1415, 20890123458, 1, 'www.mostaza.com.ar', 'hamburguesaza.jpg', GETDATE(), GETDATE(), 0),
-    ('PROVNIKE1', 7, 5, 'Nike', 2, 'Capital', 5000, 'San Juan', 1617, 20901234567, 3, 'www.nike.com', 'nikepipe.img', GETDATE(), GETDATE(), 0),
-    ('PROVSP78',8 , 2, 'Sport 78', 3, 'Rosario', 2000, 'Rioja', 1819, 21012345678, 3, 'www.sport78.com', 'sport.jpeg', GETDATE(), GETDATE(), 0),
-    ('PROVMEGA1',9 , 3, 'Megatone', 1, 'Capital', 1000, 'San Luis', 2021, 20123456788, 4, 'www.megatone.com.ar', NULL, GETDATE(), GETDATE(), 0),
-    ('PROVAPPLE1', 10, 1, 'Apple', 1, 'La Plata',1000, 'Calle 74', 2100, 20345608908, 4, 'www.apple.com', 'iphone.img', GETDATE(), GETDATE(), 0);
-
-
--- Productos
-INSERT INTO "Proveedores" (
-    "codigo_proveedor",
-    "datos_contacto_id",
-    "rubro_proveedor_id",
-    "razon_social",
-    "provincia_id",
-    "localidad",
-    "codigo_postal",
-    "calle",
-    "numero_calle",
-    "cuit_proveedor",
-    "iva_id",
-	"web",
-	"img",
-    "updated_at",
-    "created_at",
-    "eliminado"
-)
-VALUES
-    ('PROVMCD1', 1, 7, 'MC Donalds', 3, 'Rosario', 2000, 'Caferatta', 1234, 21345678907, 3,'www.mcdonalds.com', 'imagenronald.img', GETDATE(), GETDATE(), 0),
-    ('PROVPOP1', 2, 2, 'Popeye', 3, 'Rosario', 2000, 'Avellaneda', 1368, 22456789017, 2,'www.popeye.com', NULL, GETDATE(), GETDATE(), 0),
-    ('PROVMAC1', 3, 8, 'MAC', 1, 'San Isidro', 1642, 'Pellegrini', 789, 20567890128, 1, 'www.mac.com', 'lapizlabial.img', GETDATE(), GETDATE(), 0),
-    ('PROVFRAV1', 4, 1, 'Fravega', 3, 'Rosario', 2000, 'San Martin', 1011, 20678901238, 1, 'www.fravega.com.ar', NULL, GETDATE(), GETDATE(), 0),
-    ('PROVYENN1',5 , 6, 'Yenny', 16, 'Cerrillos', 4407, 'Las Aves', 6582, 20789012347, 4, NULL, NULL, GETDATE(), GETDATE(), 0),
-    ('PROVMOST1',6 , 7, 'Mostaza', 2, 'Capital', 5000, 'Las Heras', 1415, 20890123458, 1, 'www.mostaza.com.ar', 'hamburguesaza.jpg', GETDATE(), GETDATE(), 0),
-    ('PROVNIKE1', 7, 5, 'Nike', 2, 'Capital', 5000, 'San Juan', 1617, 20901234567, 3, 'www.nike.com', 'nikepipe.img', GETDATE(), GETDATE(), 0),
-    ('PROVSP78',8 , 2, 'Sport 78', 3, 'Rosario', 2000, 'Rioja', 1819, 21012345678, 3, 'www.sport78.com', 'sport.jpeg', GETDATE(), GETDATE(), 0),
-    ('PROVMEGA1',9 , 3, 'Megatone', 1, 'Capital', 1000, 'San Luis', 2021, 20123456788, 4, 'www.megatone.com.ar', NULL, GETDATE(), GETDATE(), 0),
-    ('PROVAPPLE1', 10, 1, 'Apple', 1, 'La Plata',1000, 'Calle 74', 2100, 20345608908, 4, 'www.apple.com', 'iphone.img', GETDATE(), GETDATE(), 0);
+    ('PROVMOST1',6 , 7, 'Mostaza', 2, 'Capital', 5000, 'Las Heras', 1415, 20890123458, 1, 'https://www.mostaza.com.ar', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPUPuEjfpPoD_l48bGboU0qbV4Nomd2ucEnA&usqp=CAU', GETDATE(), GETDATE(), 0),
+    ('PROVNIKE1', 7, 5, 'Nike', 2, 'Capital', 5000, 'San Juan', 1617, 20901234567, 3, 'https://www.nike.com', 'https://thumbs.dreamstime.com/b/ilustraci%C3%B3n-vectorial-del-logotipo-nike-en-fondo-blanco-editorial-de-aislada-192037117.jpg', GETDATE(), GETDATE(), 0),
+    ('PROVSP78',8 , 2, 'Sport 78', 3, 'Rosario', 2000, 'Rioja', 1819, 21012345678, 3, 'https://www.sport78.com', 'sport.jpeg', GETDATE(), GETDATE(), 0),
+    ('PROVMEGA1',9 , 3, 'Megatone', 1, 'Capital', 1000, 'San Luis', 2021, 20123456788, 4, 'https://www.megatone.com.ar', NULL, GETDATE(), GETDATE(), 0),
+    ('PROVAPPLE1', 10, 1, 'Apple', 1, 'La Plata',1000, 'Calle 74', 2100, 20345608908, 4, 'https://www.apple.com', 'https://infonegocios.info/content/images/2022/07/20/21392/conversions/apple-logo-top-100-brands-01-cba-medium-size.jpg', GETDATE(), GETDATE(), 0);
 
 
 -- Productos
@@ -357,25 +325,25 @@ INSERT INTO "Productos" (
 )
 VALUES
     -- Productos para el Proveedor MC Donalds
-    (1, 7, 'SKU001', 'Hamburguesa Completa', 'Con cheddar y panceta', 'url_imagen1.jpg', 6000, GETDATE(), GETDATE(), 0),
-    (1, 7, 'SKU002', 'Cajita Feliz', 'Para niños, trae juguete', 'url_imagen2.jpg', 6500, GETDATE(), GETDATE(), 0),
+    (1, 7, 'SKU001', 'Hamburguesa Completa', 'Con cheddar y panceta', 'https://pronacatqma.com/images/com_yoorecipe/banner_superior/18096_1.jpg', 6000, GETDATE(), GETDATE(), 0),
+    (1, 7, 'SKU002', 'Cajita Feliz', 'Para niños, trae juguete', 'https://cache-backend-mcd.mcdonaldscupones.com/media/image/product$kaXT6bJZ/200/200/original?country=ar', 6500, GETDATE(), GETDATE(), 0),
 
     -- Productos para el Proveedor Popeye
-    (2, 2, 'SKU003', 'Iron Man', 'Figura de accion coleccionable, mide 50 cm', 'url_imagen3.jpg', 25000, GETDATE(), GETDATE(), 0),
+    (2, 2, 'SKU003', 'Iron Man', 'Figura de accion coleccionable, mide 50 cm', 'https://d28hi93gr697ol.cloudfront.net/b8c2e4b8-9af7-7284-9b21-3641cfc56928/img/Producto/ceb21fee-c519-1f02-717b-9189947b78f4/Marvel-iron-man-62a207b6852c6.jpg', 25000, GETDATE(), GETDATE(), 0),
     (2, 2, 'SKU004', 'Blade Blade', 'Trompo de metal re copado', 'url_imagen4.jpg', 10000, GETDATE(), GETDATE(), 0),
 	 -- Productos para el Proveedor MAC
-    (3, 8, 'SKU005', 'Lapiz Labial Mate', 'Lapiz labial color mate color 56', 'url_imagen1.jpg', 12000, GETDATE(), GETDATE(), 0),
-    (3, 8, 'SKU006', 'Rubor', 'Rubor color 55', 'url_imagen2.jpg', 8700, GETDATE(), GETDATE(), 0),
+    (3, 8, 'SKU005', 'Lapiz Labial Mate', 'Lapiz labial color mate color 56', 'https://dorothygray.com.ar/uploads/imagenes/7794740062840-01_396620489.jpg', 12000, GETDATE(), GETDATE(), 0),
+    (3, 8, 'SKU006', 'Rubor', 'Rubor color 55', 'https://getthelookar.vtexassets.com/arquivos/ids/158473-800-auto?v=637245563445800000&width=800&height=auto&aspect=true', 8700, GETDATE(), GETDATE(), 0),
 
     -- Productos para el Proveedor Fravega
-    (4, 1, 'SKU007', 'Heladera Samsung', 'Heladera de 354l, dos puertas no frost', 'url_imagen3.jpg', 850000, GETDATE(), GETDATE(), 0),
-    (4, 1, 'SKU008', 'Lavarropas Ariston', 'Lavarropas importado marca ariston, carga frontal 7l', 'url_imagen4.jpg', 740000, GETDATE(), GETDATE(), 0),
+    (4, 1, 'SKU007', 'Heladera Samsung', 'Heladera de 354l, dos puertas no frost', 'https://images.start.com.ar/RT32K5930SL-2.jpg', 850000, GETDATE(), GETDATE(), 0),
+    (4, 1, 'SKU008', 'Lavarropas Ariston', 'Lavarropas importado marca ariston, carga frontal 7l', 'https://lh3.googleusercontent.com/proxy/8N_Mda5J-G6448Z4H1ozE4fn-kcDoyBBBJKVY0YjjIpTeyyLOtFtrGIMqMxZ48OhsadvJCTTnKEBi4AzP9iY8sFs3ZyaL0s_HR2w7fRTB7laidA44fdmYusc8bzP202BCNXy0mB1Puk', 740000, GETDATE(), GETDATE(), 0),
 	 -- Productos para el Proveedor Yenny Chile
     (5, 6, 'SKU009', 'Programacion 1', 'Fundamentos de programacion, para principiantes', '', 12000, GETDATE(), GETDATE(), 0),
     (5, 6, 'SKU010', 'Java, How To', 'Como manejar Java com un pro', '', 11000, GETDATE(), GETDATE(), 0),
 
     -- Productos para el Proveedor Mostaza
-    (6, 7, 'SKU011', 'Papas Grandes', 'Papas tama�o xl', '', 3500, GETDATE(), GETDATE(), 0),
+    (6, 7, 'SKU011', 'Papas Grandes', 'Papas tamaño xl', '', 3500, GETDATE(), GETDATE(), 0),
     (6, 7, 'SKU012', 'Hamburguesa Dibu', 'Dibu completa con lechuga, cheddar, tomate y cebolla', 'url_mega.jpg', 7500, GETDATE(), GETDATE(), 0),
 	 -- Productos para el Proveedor Nike
     (7, 5, 'SKU013', 'Pelota de futbol', 'PElota mundial 2022', 'url_imagen11.jpg', 35000, GETDATE(), GETDATE(), 0),
@@ -389,8 +357,8 @@ VALUES
     (9, 1, 'SKU018', 'Samsung Galaxy A32', 'Celular gama media, 3gb ram, 12 mpx camara frontal', 'url_imagenGalaxy.jpg', 330000, GETDATE(), GETDATE(), 0),
 
     -- Productos para el Proveedor Apple
-    (10, 1, 'SKU019', 'MacBook Air m2 13 pulgadas', '8GB ram, 256 SSD', 'url_imagenApple.jpg', 1230000, GETDATE(), GETDATE(), 0),
-    (10, 1, 'SKU020', 'Iphone 14', 'Iphone 14 2022, 4gb ram', '', 860000, GETDATE(), GETDATE(), 0);
+    (10, 1, 'SKU019', 'MacBook Air m2 13 pulgadas', '8GB ram, 256 SSD', 'https://http2.mlstatic.com/D_NQ_NP_674451-MLA69550481714_052023-O.webp', 1230000, GETDATE(), GETDATE(), 0),
+    (10, 1, 'SKU020', 'Iphone 14', 'Iphone 14 2022, 4gb ram', 'https://tienda.personal.com.ar/images/720/webp/i_Phone_14_Purple_856c41edf8.png', 860000, GETDATE(), GETDATE(), 0);
 
 
 -- Ordenes de compra

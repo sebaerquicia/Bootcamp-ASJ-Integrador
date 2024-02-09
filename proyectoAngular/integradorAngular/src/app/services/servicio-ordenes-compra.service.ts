@@ -52,8 +52,6 @@ export class ServicioOrdenesCompraService {
 
   entregarOrden(id: number): Observable<any> {
     return this.http.put(this.url + '/entregada/' + id, {
-      observe: 'response',
-      responseType: 'text',
     });
   }
 

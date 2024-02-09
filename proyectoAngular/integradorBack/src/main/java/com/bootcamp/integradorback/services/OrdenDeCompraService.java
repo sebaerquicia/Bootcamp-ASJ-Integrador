@@ -60,15 +60,15 @@ public class OrdenDeCompraService {
         }
     }
 
-    public String entregarOrden(int id, OrdenDeCompraModel orden) {
+    public OrdenDeCompraModel entregarOrden(int id, OrdenDeCompraModel orden) {
         try {
             Optional<OrdenDeCompraModel> existingOrden = ordenRepository.findById(id);
             Optional<EstadoOrdenModel> estadoEntregado = estadoOrdenRepository.findById(4);
             if (existingOrden.isPresent()) {
                 OrdenDeCompraModel o = existingOrden.get();
                 o.setEstadoOrden(estadoEntregado.get());
-                ordenRepository.save(o);
-                return "Orden #" + id + " modificada";
+                
+                return ordenRepository.save(o);
             } else {
                 throw new ResourceNotFoundException("Orden de compra no encontrada con ID: " + id);
             }
