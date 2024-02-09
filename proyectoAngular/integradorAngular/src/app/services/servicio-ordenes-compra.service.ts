@@ -19,6 +19,12 @@ export class ServicioOrdenesCompraService {
   getOrdenes(): Observable<any> {
     return this.http.get(this.url);
   }
+  
+  getOrdenesActivas(): Observable<any> {
+    return this.http
+      .get(this.url + '/activas')
+      .pipe(catchError(this.handleError));
+  }
 
   guardarOrden(orden: OrdenBack): Observable<any> {
     return this.http.post(this.url, orden, {

@@ -45,9 +45,10 @@ export class AltaCategoriaComponent implements OnInit {
       });
       this.productosService.getCategorias().subscribe((data) => {
         this.categorias = data;
-        console.log(this.categorias);
+        this.ngOnInit();
+        this.resetearFormulario(miForm);
       });
-      this.ngOnInit();
+      
     } else {
       Swal.fire({
         title: 'Campo vacío!',
@@ -97,8 +98,8 @@ export class AltaCategoriaComponent implements OnInit {
         this.productosService.getCategorias().subscribe((data) => {
           this.categorias = data;
           console.log(this.categorias);
+          this.ngOnInit();
         });
-        this.ngOnInit();
       }
     });
   }
@@ -131,8 +132,8 @@ export class AltaCategoriaComponent implements OnInit {
             this.productosService.getCategorias().subscribe((data) => {
               this.categorias = data;
               console.log(this.categorias);
+              this.ngOnInit();
             });
-            this.ngOnInit();
           }
         );
       }
@@ -166,11 +167,15 @@ export class AltaCategoriaComponent implements OnInit {
           () => {
             this.productosService.getCategorias().subscribe((data) => {
               this.categorias = data;
+              this.ngOnInit();
             });
-            this.ngOnInit();
           }
         );
       }
     });
+  }
+
+  resetearFormulario(miForm: NgForm): void {
+    miForm.resetForm();
   }
 }

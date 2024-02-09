@@ -1,29 +1,20 @@
-<nav *ngIf="isAuthenticated()" class="sticky-lg-top  navbar navbar-expand-lg navbar-light bg-light py-4">
+<nav *ngIf="isAuthenticated()" class="sticky-lg-top navbar navbar-expand-lg navbar-light bg-light py-4">
   <div class="container-fluid">
     <div class="d-flex">
-      <!-- Button trigger modal -->
-      <button
-        type="button"
-        class="btn  px-3"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasExample"
-      >
-      <img width="20" height="20" src="https://img.icons8.com/ios-filled/50/menu--v6.png" alt="menu--v6"/>
+      <button type="button" class="btn px-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">
+        <img width="20" height="20" src="https://img.icons8.com/ios-filled/50/menu--v6.png" alt="menu--v6"/>
       </button>
     </div>
     <div class="navbar-brand mx-auto">
-    <a href=""  routerLink="" >ASJ SERVICIOS
-  </a></div>
-        <span *ngIf="isAuthenticated()" class="navbar-text me-3">
-          ¡Hola, {{ getUsername() }}!
-        </span>
-    
-        <!-- Botón para salir -->
-        <button *ngIf="isAuthenticated()" class="btn btn-outline-danger" (click)="logout()">Salir</button>
-      </div>
-    
-  
-
+      <a href="" routerLink="">ASJ SERVICIOS</a>
+    </div>
+    <span *ngIf="isAuthenticated()" class="navbar-text me-3">
+      ¡Hola, {{ getUsername() }}!
+    </span>
+    <button *ngIf="isAuthenticated()" class="btn btn-outline-danger" (click)="logout()">
+      <img width="24" height="24" src="https://img.icons8.com/external-tal-revivo-shadow-tal-revivo/24/external-logout-screen-from-the-working-portfolio-of-a-user-classic-shadow-tal-revivo.png" alt="external-logout-screen-from-the-working-portfolio-of-a-user-classic-shadow-tal-revivo"/>
+    </button>
+  </div>
 </nav>
 
 <!-- Sidebar -->
@@ -34,62 +25,68 @@
   </div>
   <div class="offcanvas-body" id="sidebar">
     <ul class="nav nav-pills flex-column mb-auto">
+      <!-- Proveedores -->
       <li class="nav-item">
-        <h4><a href="" routerLink="" class="nav-link link-dark" data-bs-toggle="collapse" data-bs-dismiss="offcanvas" data-bs-target="#submenu-dashboard" aria-expanded="false">
-          Dashboard
-        </a></h4>
-      </li>
-      <li class="nav-item">
-        <h4><a href="#" class="nav-link link-dark" data-bs-toggle="collapse" data-bs-target="#submenu-prov" aria-expanded="false">
-          Proveedores
-        </a></h4>
+        <h4>
+          <a href="#" class="nav-link link-dark" data-bs-toggle="collapse" data-bs-target="#submenu-prov" aria-expanded="false" routerLinkActive="active">
+            Proveedores
+          </a>
+        </h4>
         <div class="collapse" id="submenu-prov" data-bs-parent="#sidebar">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link" routerLink="proveedores/listado-proveedores" data-bs-dismiss="offcanvas">
+              <a class="nav-link" routerLink="proveedores/listado-proveedores" data-bs-dismiss="offcanvas" routerLinkActive="active">
                 <p>Listado proveedores</p>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="proveedores/alta-proveedores" data-bs-dismiss="offcanvas">
+              <a class="nav-link" routerLink="proveedores/alta-proveedores" data-bs-dismiss="offcanvas" routerLinkActive="active">
                 <p>Agregar Proveedor</p>
               </a>
             </li>
           </ul>
         </div>
       </li>
+
+      <!-- Productos -->
       <li class="nav-item">
-        <h4><a href="#" class="nav-link link-dark" data-bs-toggle="collapse" data-bs-target="#submenu-prod" aria-expanded="false">
-          Productos
-        </a></h4>
+        <h4>
+          <a href="#" class="nav-link link-dark" data-bs-toggle="collapse" data-bs-target="#submenu-prod" aria-expanded="false" routerLinkActive="active">
+            Productos
+          </a>
+        </h4>
         <div class="collapse" id="submenu-prod" data-bs-parent="#sidebar">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link" routerLink="productos/listado-productos" data-bs-dismiss="offcanvas">
+              <a class="nav-link" routerLink="productos/listado-productos" data-bs-dismiss="offcanvas" routerLinkActive="active">
                 <p>Listado productos</p>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="productos/alta-productos" data-bs-dismiss="offcanvas">
+              <a class="nav-link" routerLink="productos/alta-productos" data-bs-dismiss="offcanvas" routerLinkActive="active">
                 <p>Agregar Producto</p>
               </a>
             </li>
           </ul>
         </div>
       </li>
+
+      <!-- Ordenes de compra -->
       <li class="nav-item">
-        <h4><a href="#" class="nav-link link-dark" data-bs-toggle="collapse" data-bs-target="#submenu-orders" aria-expanded="false">
-          Ordenes de compra
-        </a></h4>
+        <h4>
+          <a href="#" class="nav-link link-dark" data-bs-toggle="collapse" data-bs-target="#submenu-orders" aria-expanded="false" routerLinkActive="active">
+            Ordenes de compra
+          </a>
+        </h4>
         <div class="collapse" id="submenu-orders" data-bs-parent="#sidebar">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link" routerLink="ordenes-compra/listado-ordenes" data-bs-dismiss="offcanvas">
+              <a class="nav-link" routerLink="ordenes-compra/listado-ordenes" data-bs-dismiss="offcanvas" routerLinkActive="active">
                 <p>Listado ordenes de compra</p>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="ordenes-compra/alta-ordenes" data-bs-dismiss="offcanvas">
+              <a class="nav-link" routerLink="ordenes-compra/alta-ordenes" data-bs-dismiss="offcanvas" routerLinkActive="active">
                 <p>Agregar Orden de compra</p>
               </a>
             </li>

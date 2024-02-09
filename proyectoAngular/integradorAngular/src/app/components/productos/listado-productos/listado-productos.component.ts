@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
   styleUrl: './listado-productos.component.css',
 })
 export class ListadoProductosComponent implements OnInit {
+  searchTerm: string = '';
   productos: ProductoBack[] = [];
   filtroActivoEliminado: string = 'Todos';
   categorias: any[] = [];
@@ -31,6 +32,7 @@ export class ListadoProductosComponent implements OnInit {
     config.keyboard = false;
   }
   ngOnInit(): void {
+
     this.actualizarLista();
     this.productosService.getCategorias().subscribe((data) => {
       this.categorias = data;

@@ -32,6 +32,15 @@ public class ProveedorService {
         }
     }
     
+    //Para obtener proveedores activos
+    public List<ProveedorModel> getProveedoresActivos() {
+        try {
+        	 return provRepository.obtenerProveedoresActivos();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener los proveedores", e);
+        }
+    }
+    
     // Para obtener un proveedor
     public Optional<ProveedorModel> obtenerProveedorById(int id) {
         try {

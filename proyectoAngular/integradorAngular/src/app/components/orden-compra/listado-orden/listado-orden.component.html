@@ -73,7 +73,7 @@
               <td>{{ orden.proveedor.razon_social }}</td>
 
               <td>{{ sumarTotal(orden) | currency }}</td>
-              <td>{{ orden.estadoOrden.nombre_estado }}</td>
+              <td>{{ orden.eliminada ? 'Cancelada' : orden.estadoOrden.nombre_estado }}</td>
               <td>
                 <button
                   (click)="openModal(orden)"

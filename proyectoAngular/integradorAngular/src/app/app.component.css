@@ -8,3 +8,8 @@
     box-sizing: border-box;
     list-style: none;
   }
+  .imagenes{
+    height: 3.5rem;
+    width: 3.8rem;
+    border-radius: 10%;
+  }

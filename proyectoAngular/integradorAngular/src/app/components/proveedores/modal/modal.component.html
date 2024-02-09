@@ -2,6 +2,7 @@
   <h2 class="modal-title">{{ proveedor.razon_social | titlecase }}</h2>
   <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
 </div>
+
 <div class="modal-body">
   <div class="row">
     <div class="col">
@@ -9,43 +10,38 @@
         src="{{ proveedor.img }}"
         onerror="this.onerror=null; this.src='https://www.tea-tron.com/antorodriguez/blog/wp-content/uploads/2016/04/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png';"
         alt="FotoProveedor"
-        class="imagenes"
+        class="img-fluid rounded-circle"
+        style="max-width: 200px;"
       />
     </div>
     <div class="col">
-      <h3>Código: {{ proveedor.codigo_proveedor }}</h3>
-      <h4>Rubro: {{ proveedor.rubro_proveedor.nombre_rubro }}</h4>
+      <h3 class="mb-4">Información General</h3>
+      <p><strong>Código:</strong> {{ proveedor.codigo_proveedor }}</p>
+      <p><strong>Rubro:</strong> {{ proveedor.rubro_proveedor.nombre_rubro }}</p>
+      <p><strong>Sitio web:</strong> <a href="http://{{ proveedor.web }}" target="_blank" rel="noopener noreferrer">{{ proveedor.web }}</a></p>
       <p>
-        Sitio web:
-        <a
-          href="http://{{ proveedor.web }}"
-          target="_blank"
-          rel="noopener noreferrer"
-          >{{ proveedor.web }}</a
-        >
-      </p>
-      <p>
-        Dirección: {{ proveedor.calle }} {{ proveedor.numero_calle }},
+        <strong>Dirección:</strong> {{ proveedor.calle }} {{ proveedor.numero_calle }},
         {{ proveedor.localidad }}, {{ proveedor.provincia.nombre_provincia }},
         {{ proveedor.provincia.pais.nombre_pais }}
       </p>
     </div>
   </div>
+
+  <hr />
+
   <div class="row">
-    <hr />
     <div class="col">
-      <h3>Data Fiscal</h3>
-      <p>IVA: {{ proveedor.iva.nombre_iva }}</p>
-      <p>CUIT: {{ proveedor.cuit_proveedor }}</p>
+      <h3 class="mb-4">Datos Fiscales</h3>
+      <p><strong>IVA:</strong> {{ proveedor.iva.nombre_iva }}</p>
+      <p><strong>CUIT:</strong> {{ proveedor.cuit_proveedor }}</p>
     </div>
 
     <div class="col">
-      <h3>Datos de contacto</h3>
-
-      <p>Email: {{ proveedor.contacto.email_contacto }}</p>
-      <p>Teléfono: {{ proveedor.contacto.telefono_contacto }}</p>
+      <h3 class="mb-4">Datos de Contacto</h3>
+      <p><strong>Email:</strong> {{ proveedor.contacto.email_contacto }}</p>
+      <p><strong>Teléfono:</strong> {{ proveedor.contacto.telefono_contacto }}</p>
       <p>
-        Contacto: {{ proveedor.contacto.nombre_contacto }}
+        <strong>Contacto:</strong> {{ proveedor.contacto.nombre_contacto }}
         {{ proveedor.contacto.apellido_contacto }} | Tel:
         {{ proveedor.contacto.telefono_contacto }} | eMail:
         {{ proveedor.contacto.email_contacto }}
@@ -53,8 +49,7 @@
     </div>
   </div>
 </div>
+
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="modal.close()">
-    Cerrar
-  </button>
+  <button type="button" class="btn btn-secondary" (click)="modal.close()">Cerrar</button>
 </div>

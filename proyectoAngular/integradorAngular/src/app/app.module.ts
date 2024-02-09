@@ -22,6 +22,7 @@ import { ModalProductoComponent } from './components/productos/modal-producto/mo
 import { ModalOrdenComponent } from './components/orden-compra/modal-orden/modal-orden.component';
 import { AltaCategoriaComponent } from './components/productos/alta-categoria/alta-categoria.component';
 import { LoginComponent } from './components/login/login.component';
+import { FilterByNamePipe } from './pipes/filter-by-name.pipe';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { LoginComponent } from './components/login/login.component';
     ModalProductoComponent,
     ModalOrdenComponent,
     AltaCategoriaComponent,
-    LoginComponent
+    LoginComponent,
+    FilterByNamePipe
   ],
   imports: [
     BrowserModule,

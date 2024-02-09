@@ -28,6 +28,16 @@ public class OrdenDeCompraService {
         }
     }
     
+    
+    public List<OrdenDeCompraModel> obtenerOrdenesActivas() {
+        try {
+            return ordenRepository.obtenerOrdenesActivas();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener las órdenes de compra", e);
+        }
+    }
+    
+    
     public Optional<OrdenDeCompraModel> obtenerOrdenById(int id) {
         try {
             Optional<OrdenDeCompraModel> orden = ordenRepository.findById(id);

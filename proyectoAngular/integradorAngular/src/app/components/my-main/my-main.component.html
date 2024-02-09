@@ -1,39 +1,76 @@
-<div class="container mt-4">
-    <div class="row mt-5">
-        <!-- Card de Proveedores -->
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://cdn-icons-png.flaticon.com/512/4003/4003697.png" class="card-img-top" alt="ImagenProveedores">
-                <div class="card-body">
-                    <h5 class="card-title">Proveedores</h5>
-                    <p class="card-text">Módulo de gestion de proveedores. Aquí puedes agregar, editar y eliminar según tus necesidades</p>
-                    <a href="#" class="btn" routerLink="proveedores/listado-proveedores">Ir ya!</a>
-                </div>
-            </div>
+<div class="container mt-4 min-vh-100 ">
+  <div class="row mt-5">
+    <!-- Card de Proveedores -->
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4003/4003697.png"
+          class="card-img-top"
+          alt="ImagenProveedores"
+        />
+        <div class="card-body">
+          <h3 class="card-title">Proveedores</h3>
+          <p class="card-text">
+            Módulo de gestion de proveedores. Aquí puedes agregar, editar y
+            eliminar según tus necesidades
+          </p>
+          <a href="#" class="btn" routerLink="proveedores/listado-proveedores"
+            >Ir ya!</a
+          >
+          <hr>
+          <div>
+            <h4 class="text-success">Activos: {{ cantProveedores }}</h4>
+          </div>
         </div>
-        
-        <!-- Card de Productos -->
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://cdn-icons-png.flaticon.com/512/1198/1198286.png" class="card-img-top" alt="ImagenProductos">
-                <div class="card-body">
-                    <h5 class="card-title">Productos</h5>
-                    <p class="card-text">Módulo de gestion de productos. Aquí puedes agregar, editar y eliminar según tus necesidades</p>
-                    <a href="#" class="btn" routerLink="productos/listado-productos">Ir ya!</a>
-                </div>
-            </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/1198/1198286.png"
+          class="card-img-top"
+          alt="ImagenProductos"
+        />
+        <div class="card-body">
+          <h3 class="card-title">Productos</h3>
+          <p class="card-text">
+            Módulo de gestion de productos. Aquí puedes agregar, editar y
+            eliminar según tus necesidades
+          </p>
+          <a href="#" class="btn" routerLink="productos/listado-productos"
+            >Ir ya!</a
+          >
+          <hr>
+          <div>
+            <h4 class="text-success">Activos: {{ cantProductos }}</h4>
+          </div>
         </div>
-        
-        <!-- Card de Ordenes de Compra -->
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://cdn-icons-png.flaticon.com/512/11000/11000453.png" class="card-img-top" alt="ImagenOrdenCompra">
-                <div class="card-body">
-                    <h5 class="card-title">Ordenes de Compra</h5>
-                    <p class="card-text">Módulo de gestion de ordenes. Realiza y modifica tus ordenes de compra. Gestiona sus entregas y cancelaciones.</p>
-                    <a href="#" class="btn " routerLink="ordenes-compra/listado-ordenes">Ir ya!</a>
-                </div>
-            </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/11000/11000453.png"
+          class="card-img-top"
+          alt="ImagenOrdenCompra"
+        />
+        <div class="card-body">
+          <h3 class="card-title">Ordenes de Compra</h3>
+          <p class="card-text">
+            Módulo de gestion de ordenes. Realiza y modifica tus ordenes de
+            compra. Gestiona sus entregas y cancelaciones.
+          </p>
+          <a href="#" class="btn" routerLink="ordenes-compra/listado-ordenes"
+            >Ir ya!</a
+          >
+          <hr>
+          <div>
+            <h4 class="text-success">Activas: {{ cantOrdenes }}</h4>
+          </div>
         </div>
+      </div>
     </div>
   </div>
+</div>

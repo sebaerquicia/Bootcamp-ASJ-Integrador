@@ -17,6 +17,15 @@ export class ServicioProductosService {
   getProductos(): Observable<any> {
     return this.http.get(this.url);
   }
+
+
+  getProductosActivos(): Observable<any> {
+    return this.http
+      .get(this.url + '/activos')
+      .pipe(catchError(this.handleError));
+  }
+
+  
   guardarProducto(producto: ProductoBack): Observable<any> {
     return this.http
       .post(this.url, producto, {

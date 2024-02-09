@@ -34,6 +34,12 @@ public class OrdenDeCompraController {
         return ResponseEntity.ok(ordenes);
     }
     
+    @GetMapping("/activas")
+    public ResponseEntity<List<OrdenDeCompraModel>> getOrdenesActivas() {
+        List<OrdenDeCompraModel> ordenes = ordenService.obtenerOrdenesActivas();
+        return ResponseEntity.ok(ordenes);
+    }
+    
     @GetMapping("/{id}")
     public ResponseEntity<OrdenDeCompraModel> getOrdenesById(@PathVariable int id) {
         OrdenDeCompraModel orden = ordenService.obtenerOrdenById(id)

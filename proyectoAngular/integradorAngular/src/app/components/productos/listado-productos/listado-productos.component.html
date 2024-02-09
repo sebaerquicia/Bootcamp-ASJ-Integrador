@@ -9,14 +9,23 @@
     </div>
   </div>
   <div class="col mb-3">
-    <button class="btn btn-success"
-    (click)="agregar()">+ Agregar</button>
+    <button class="btn btn-success" (click)="agregar()">+ Agregar</button>
   </div>
   <div class="row">
     <div class="col">
       <h3>Productos en sistema</h3>
       <div class="row">
-        <div class="col-3 pt-2">
+        <div class="col-md-4 pt-2 ">
+          <label for="filtroNombre">Filtrar por nombre</label>
+          <input
+          name="filtroNombre"
+            type="text"
+            class="form-control mb-3"
+            placeholder="Buscar por nombre de producto"
+            [(ngModel)]="searchTerm"
+          />
+        </div>
+        <div class="col-4 pt-2">
           <label for="activoeliminado">Filtrar por Activos/Eliminados </label>
           <select
             class="form-select"
@@ -29,7 +38,7 @@
             <option value="Eliminados">Eliminados</option>
           </select>
         </div>
-        <div class="col-3 pt-2">
+        <div class="col-4 pt-2">
           <label for="">Filtrar por Categoria</label>
           <select
             #categoriasFiltro="ngModel"
@@ -49,18 +58,10 @@
           </select>
         </div>
 
-        <div class="col">
-          <a routerLink="../categorias" class="btn"
-            ><img
-              width="40"
-              height="40"
-              src="https://img.icons8.com/ios-glyphs/30/add--v1.png"
-              alt="add--v1"
-          /></a>
-        </div>
+       
       </div>
       <div class="row">
-        <div class="col my-3">
+        <div class="col my-3 ">
           <p>Filtrar por Precio:</p>
           <button
             (click)="ordenarPorPrecio(true)"
@@ -76,6 +77,11 @@
           >
             Precio (Mayor a Menor)
           </button>
+        </div>
+        <div class="col text-end ">
+          <a routerLink="../categorias" class="btn btn-outline-info"
+            >+ Categorias</a
+          >
         </div>
       </div>
       <div class="row">
@@ -98,7 +104,10 @@
           <tbody
             id="tableBody"
             class="table__body"
-            *ngFor="let producto of productos; let i = index"
+            *ngFor="
+              let producto of productos | filterByName : searchTerm;
+              let i = index
+            "
             [ngStyle]="{
               'background-color': !producto.eliminado ? 'inherit' : '#ccc'
             }"

@@ -35,6 +35,14 @@ public class ProductoService {
         }
     }
     
+    //Para obtener productos activos
+    public List<ProductoModel> obtenerProductosActivos() {
+        try {
+            return productoRepository.obtenerProductosActivos();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener los productos Activos", e);
+        }
+    }
     // Para obtener un producto por id
     public Optional<ProductoModel> obtenerProductoById(int id) {
         try {
