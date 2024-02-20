@@ -29,7 +29,7 @@ public class ProveedorModel {
 	private String codigo_proveedor;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="rubro_proveedor_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@JoinColumn(name="rubro_proveedor_id", referencedColumnName = "id", nullable = false)
 	private RubroModel rubro_proveedor;
 	
 	@NotNull 
@@ -37,7 +37,7 @@ public class ProveedorModel {
 	private String razon_social ;
 		
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="provincia_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@JoinColumn(name="provincia_id", referencedColumnName = "id", nullable = false)
 	private ProvinciaModel provincia;
 	private String localidad;
 	private Integer codigo_postal;
@@ -52,7 +52,7 @@ public class ProveedorModel {
 	@JoinColumn(name = "datosContacto_id", referencedColumnName = "id", nullable = false)
 	private DatosDeContactoModel contacto;
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="iva_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@JoinColumn(name="iva_id", referencedColumnName = "id", nullable = false)
 	private CondicionIvaModel iva;
 	private String web;
 	private String img;

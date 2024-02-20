@@ -79,7 +79,7 @@ export class AltaProductosComponent implements OnInit {
     this.productosService.getProductos().subscribe((data) => {
       this.productos = data;
     });
-    this.proveedoresService.getProveedores().subscribe((data) => {
+    this.proveedoresService.getProveedoresActivos().subscribe((data) => {
       this.proveedores = data;
     });
     this.productosService.buscarCategoriasActivas().subscribe((data) => {
